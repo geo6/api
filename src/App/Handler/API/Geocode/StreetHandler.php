@@ -1,13 +1,11 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
-use App\Query\Geocode\Components;
-use App\Query\Geocode\Street;
 use App\Middleware\DbAdapterMiddleware;
-use ArrayObject;
+use App\Query\Geocode\Street;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -57,12 +55,12 @@ class StreetHandler implements RequestHandlerInterface
 
         return new JsonResponse([
             'query' => [
-                'source' => $source,
-                'locality' => $locality,
+                'source'     => $source,
+                'locality'   => $locality,
                 'postalcode' => $postalcode,
-                'street' => $street,
+                'street'     => $street,
             ],
-            'type' => 'FeatureCollection',
+            'type'     => 'FeatureCollection',
             'features' => $features,
         ]);
     }

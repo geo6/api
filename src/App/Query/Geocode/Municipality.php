@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
@@ -14,7 +14,8 @@ class Municipality
 {
     /**
      * @param Adapter $adapter
-     * @param string $name
+     * @param string  $name
+     *
      * @return ResultSet
      */
     public static function get(Adapter $adapter, string $name) : ResultSet
@@ -43,12 +44,14 @@ class Municipality
             ->unnest();
 
         $qsz = $sql->buildSqlString($select);
+
         return $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE);
     }
 
     /**
      * @param Adapter $adapter
-     * @param integer $id
+     * @param int     $id
+     *
      * @return ArrayObject
      */
     public static function getById(Adapter $adapter, int $id) : ArrayObject
@@ -66,20 +69,22 @@ class Municipality
             ->limit(1);
 
         $qsz = $sql->buildSqlString($select);
+
         return $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE)->current();
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $municipality
+     *
      * @return array
      */
     private static function getComponents(Adapter $adapter, ArrayObject $municipality) : array
     {
         $components = [
             [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'    => 'municipality',
+                'id'      => $municipality->nis5,
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
             ],
@@ -90,18 +95,19 @@ class Municipality
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $municipality
+     *
      * @return Feature
      */
     public static function toGeoJSON(Adapter $adapter, ArrayObject $municipality) : Feature
     {
         return new Feature(null, [
-            'type' => 'municipality',
-            'id' => $municipality->nis5,
+            'type'         => 'municipality',
+            'id'           => $municipality->nis5,
             'formatted_fr' => $municipality->name_fr,
             'formatted_nl' => $municipality->name_nl,
-            'components' => self::getComponents($adapter, $municipality),
+            'components'   => self::getComponents($adapter, $municipality),
         ], $municipality->nis5);
     }
 }

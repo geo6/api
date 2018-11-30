@@ -1,14 +1,12 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
+use App\Middleware\DbAdapterMiddleware;
 use App\Query\Geocode\Municipality;
 use App\Query\Geocode\PostalCode;
-use App\Middleware\DbAdapterMiddleware;
-use ArrayObject;
-use GeoJson\Feature\Feature;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -75,8 +73,8 @@ class ZoneHandler implements RequestHandlerInterface
         }
 
         return new JsonResponse([
-            'query' => $query,
-            'type' => 'FeatureCollection',
+            'query'    => $query,
+            'type'     => 'FeatureCollection',
             'features' => $features,
         ]);
     }

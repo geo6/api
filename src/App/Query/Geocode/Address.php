@@ -1,10 +1,9 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
-use App\Query\Geocode\Street;
 use ArrayObject;
 use GeoJson\Feature\Feature;
 use GeoJson\Geometry\Point;
@@ -17,12 +16,13 @@ use Zend\Db\Sql\Sql;
 class Address
 {
     /**
-     * @param Adapter $adapter
-     * @param string $source
-     * @param string $number
-     * @param string $street
+     * @param Adapter     $adapter
+     * @param string      $source
+     * @param string      $number
+     * @param string      $street
      * @param string|null $locality
      * @param string|null $postalcode
+     *
      * @return ResultSet
      */
     public static function get(
@@ -59,7 +59,7 @@ class Address
                 'source',
                 'date',
                 'longitude' => new Expression('ST_X(the_Geog::geometry)'),
-                'latitude' => new Expression('ST_Y(the_Geog::geometry)'),
+                'latitude'  => new Expression('ST_Y(the_Geog::geometry)'),
             ])
             ->join(
                 ['s' => sprintf('%s_street', $source)],
@@ -76,7 +76,7 @@ class Address
                 [
                     'mun_name_fr' => 'name_fr',
                     'mun_name_nl' => 'name_nl',
-                    'mun_parent' => 'parent',
+                    'mun_parent'  => 'parent',
                 ]
             );
 
@@ -105,12 +105,14 @@ class Address
         }
 
         $qsz = $sql->buildSqlString($select);
+
         return $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE);
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $address
+     *
      * @return array
      */
     private static function getComponents(Adapter $adapter, ArrayObject $address) : array
@@ -127,34 +129,34 @@ class Address
 
         $components = [
             [
-                'type' => 'location_type',
+                'type'    => 'location_type',
                 'name_fr' => $address->locationtype,
                 'name_nl' => $address->locationtype,
             ],
             [
-                'type' => 'street_number',
+                'type'    => 'street_number',
                 'name_fr' => $address->hnr,
                 'name_nl' => $address->hnr,
             ],
             [
-                'type' => 'street',
+                'type'    => 'street',
                 'name_fr' => $address->name_fr,
                 'name_nl' => $address->name_nl,
             ],
             [
-                'type' => 'locality',
+                'type'    => 'locality',
                 'name_fr' => $locality_fr ?? null,
                 'name_nl' => $locality_nl ?? null,
             ],
             [
-                'type' => 'postal_code',
-                'id' => $address->postalcode,
+                'type'    => 'postal_code',
+                'id'      => $address->postalcode,
                 'name_fr' => $postalcode->name_fr,
                 'name_nl' => $postalcode->name_nl,
             ],
             [
-                'type' => 'municipality',
-                'id' => $address->nis5,
+                'type'    => 'municipality',
+                'id'      => $address->nis5,
                 'name_fr' => $address->mun_name_fr,
                 'name_nl' => $address->mun_name_nl,
             ],
@@ -167,8 +169,9 @@ class Address
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $address
+     *
      * @return Feature
      */
     public static function toGeoJSON(Adapter $adapter, ArrayObject $address) : Feature
@@ -186,14 +189,14 @@ class Address
         return new Feature(
             new Point([
                 round(floatval($address->longitude), 6),
-                round(floatval($address->latitude), 6)
+                round(floatval($address->latitude), 6),
             ]),
             [
-                'type' => 'street_number',
-                'source' => sprintf('%s (%s)', $address->source, date('d/m/Y', strtotime($address->date))),
+                'type'         => 'street_number',
+                'source'       => sprintf('%s (%s)', $address->source, date('d/m/Y', strtotime($address->date))),
                 'formatted_fr' => $formatted_fr,
                 'formatted_nl' => $formatted_nl,
-                'components' => self::getComponents($adapter, $address),
+                'components'   => self::getComponents($adapter, $address),
             ]
         );
     }

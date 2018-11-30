@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
@@ -10,6 +10,7 @@ class Components
      * Get Province names.
      *
      * @param string $parent
+     *
      * @return array
      */
     public static function getProvince(? string $parent) : array
@@ -72,6 +73,7 @@ class Components
      * Get Region names.
      *
      * @param string $parent
+     *
      * @return array
      */
     public static function getRegion(? string $parent) : array
@@ -118,8 +120,8 @@ class Components
     public static function getCountry() : array
     {
         return [
-            'type' => 'country',
-            'id' => 'be',
+            'type'    => 'country',
+            'id'      => 'be',
             'name_fr' => 'Belgique',
             'name_nl' => 'België',
         ];

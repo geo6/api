@@ -6,7 +6,7 @@ use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
 use Zend\Expressive\MiddlewareFactory;
 
-/**
+/*
  * Setup routes with a single request method:
  *
  * $app->get('/', App\Handler\HomePageHandler::class, 'home');
@@ -37,7 +37,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/test/geocode', App\Handler\GeocodeHandler::class, 'test.geocode');
     $app->get('/test/latlng', App\Handler\LatLngHandler::class, 'test.latlng');
-    $app->get('/test/zone' , App\Handler\ZoneHandler::class, 'test.zone');
+    $app->get('/test/zone', App\Handler\ZoneHandler::class, 'test.zone');
 
     $app->get('/geocode/getDatabaseList', App\Handler\API\Geocode\DatabaseHandler::class, 'api.geocode.database');
 

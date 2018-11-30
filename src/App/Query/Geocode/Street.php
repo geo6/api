@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
@@ -14,11 +14,12 @@ use Zend\Db\Sql\Sql;
 class Street
 {
     /**
-     * @param Adapter $adapter
-     * @param string $source
-     * @param string $street
+     * @param Adapter     $adapter
+     * @param string      $source
+     * @param string      $street
      * @param string|null $locality
      * @param string|null $postalcode
+     *
      * @return ResultSet
      */
     public static function get(
@@ -30,7 +31,7 @@ class Street
     ) : ResultSet {
         $sql = new Sql($adapter);
 
-        /**
+        /*
          * Get NIS5.
          */
         if (!is_null($locality)) {
@@ -91,8 +92,7 @@ class Street
                 'nis5',
                 'source',
                 'date',
-                'nbr_address' =>
-                    is_null($postalcode) ?
+                'nbr_address' => is_null($postalcode) ?
                     new Expression(sprintf('(SELECT COUNT(*) FROM %s_address a WHERE a.strid = s.strid)', $source)) :
                     new Expression(sprintf('(SELECT COUNT(*) FROM %s_address a WHERE a.strid = s.strid AND a.postalcode = ?)', $source), $postalcode),
             ])
@@ -102,7 +102,7 @@ class Street
                 [
                     'mun_name_fr' => 'name_fr',
                     'mun_name_nl' => 'name_nl',
-                    'mun_parent' => 'parent',
+                    'mun_parent'  => 'parent',
                 ]
             );
 
@@ -161,25 +161,27 @@ class Street
         }
 
         $qsz = $sql->buildSqlString($select);
+
         return $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE);
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $street
+     *
      * @return array
      */
     private static function getComponents(Adapter $adapter, ArrayObject $street) : array
     {
         $components = [
             [
-                'type' => 'street',
+                'type'    => 'street',
                 'name_fr' => !is_null($street->name_fr) ? $street->name_fr : null,
                 'name_nl' => !is_null($street->name_nl) ? $street->name_nl : null,
             ],
             [
-                'type' => 'municipality',
-                'id' => $street->nis5,
+                'type'    => 'municipality',
+                'id'      => $street->nis5,
                 'name_fr' => !is_null($street->mun_name_fr) ? $street->mun_name_fr : null,
                 'name_nl' => !is_null($street->mun_name_nl) ? $street->mun_name_nl : null,
             ],
@@ -192,8 +194,9 @@ class Street
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $street
+     *
      * @return Feature
      */
     public static function toGeoJSON(Adapter $adapter, ArrayObject $street) : Feature
@@ -209,12 +212,12 @@ class Street
         }
 
         return new Feature(null, [
-            'type' => 'street',
-            'source' => sprintf('%s (%s)', $street->source, date('d/m/Y', strtotime($street->date))),
+            'type'         => 'street',
+            'source'       => sprintf('%s (%s)', $street->source, date('d/m/Y', strtotime($street->date))),
             'formatted_fr' => $formatted_fr,
             'formatted_nl' => $formatted_nl,
-            'nbr_address' => $street->nbr_address,
-            'components' => self::getComponents($adapter, $street),
+            'nbr_address'  => $street->nbr_address,
+            'components'   => self::getComponents($adapter, $street),
         ]);
     }
 }

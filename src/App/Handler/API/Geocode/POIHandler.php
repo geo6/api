@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
@@ -9,9 +9,7 @@ use App\Query\Geocode\POI;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Db\Adapter\Adapter;
 use Zend\Db\Metadata\Metadata;
-use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
 
 class POIHandler implements RequestHandlerInterface
@@ -30,7 +28,7 @@ class POIHandler implements RequestHandlerInterface
             return new JsonResponse([
                 'query' => [
                     'source' => $source,
-                    'poi' => $poi,
+                    'poi'    => $poi,
                 ],
                 'error' => sprintf('Source "%s" does not exist.', $source),
             ], 400);
@@ -56,9 +54,9 @@ class POIHandler implements RequestHandlerInterface
         return new JsonResponse([
             'query' => [
                 'source' => $source,
-                'poi' => $poi,
+                'poi'    => $poi,
             ],
-            'type' => 'FeatureCollection',
+            'type'     => 'FeatureCollection',
             'features' => $features,
         ]);
     }

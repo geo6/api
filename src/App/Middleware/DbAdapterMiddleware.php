@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use Exception;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,7 +27,7 @@ class DbAdapterMiddleware implements MiddlewareInterface
     {
         $adapter = new Adapter(
             array_merge([
-                'driver' => 'Pdo_Pgsql',
+                'driver'         => 'Pdo_Pgsql',
                 'driver_options' => [
                     PDO::ATTR_STRINGIFY_FETCHES => false,
                 ],

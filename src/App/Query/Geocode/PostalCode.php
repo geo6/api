@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
@@ -14,7 +14,8 @@ class PostalCode
 {
     /**
      * @param Adapter $adapter
-     * @param string $name
+     * @param string  $name
+     *
      * @return ResultSet
      */
     public static function get(Adapter $adapter, string $name) : ResultSet
@@ -55,7 +56,8 @@ class PostalCode
 
     /**
      * @param Adapter $adapter
-     * @param string $code
+     * @param string  $code
+     *
      * @return ArrayObject
      */
     public static function getByCode(Adapter $adapter, string $code) : ArrayObject
@@ -72,8 +74,8 @@ class PostalCode
                 'level',
             ])
             ->where([
-                'valid' => true,
-                'postalcode' => $code
+                'valid'      => true,
+                'postalcode' => $code,
             ])
             ->order('level');
 
@@ -85,15 +87,16 @@ class PostalCode
 
     /**
      * @param ResultSet $results
+     *
      * @return ArrayObject
      */
     private static function buildPostalCode(ResultSet $results) : ArrayObject
     {
         $data = [
-            'postalcode' => null,
-            'name_fr' => null,
-            'name_nl' => null,
-            'nis5' => [],
+            'postalcode'  => null,
+            'name_fr'     => null,
+            'name_nl'     => null,
+            'nis5'        => [],
             'locality_fr' => null,
             'locality_nl' => null,
         ];
@@ -163,21 +166,22 @@ class PostalCode
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $postalcode
+     *
      * @return array
      */
     private static function getComponents(Adapter $adapter, ArrayObject $postalcode) : array
     {
         $components = [
             [
-                'type' => 'locality',
+                'type'    => 'locality',
                 'name_fr' => $postalcode->locality_fr,
                 'name_nl' => $postalcode->locality_nl,
             ],
             [
-                'type' => 'postal_code',
-                'id' => $postalcode->postalcode,
+                'type'    => 'postal_code',
+                'id'      => $postalcode->postalcode,
                 'name_fr' => $postalcode->name_fr,
                 'name_nl' => $postalcode->name_nl,
             ],
@@ -188,18 +192,19 @@ class PostalCode
     }
 
     /**
-     * @param Adapter $adapter
+     * @param Adapter     $adapter
      * @param ArrayObject $postalcode
+     *
      * @return Feature
      */
     public static function toGeoJSON(Adapter $adapter, ArrayObject $postalcode) : Feature
     {
         return new Feature(null, [
-            'type' => 'postal_code',
-            'id' => $postalcode->postalcode,
+            'type'         => 'postal_code',
+            'id'           => $postalcode->postalcode,
             'formatted_fr' => sprintf('%s %s', $postalcode->postalcode, $postalcode->name_fr),
             'formatted_nl' => sprintf('%s %s', $postalcode->postalcode, $postalcode->name_nl),
-            'components' => self::getComponents($adapter, $postalcode),
+            'components'   => self::getComponents($adapter, $postalcode),
         ], $postalcode->postalcode);
     }
 }
