@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
+use ArrayObject;
 use GeoJson\Feature\Feature;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
@@ -44,17 +45,18 @@ class Street
 
                 $nis5 = array_merge(
                     $nis5,
-                    array_column(Zone::getMunicipalityByName($adapter, $locality)->toArray(), 'nis5')
+                    array_column(Municipality::get($adapter, $locality)->toArray(), 'nis5')
                 );
-                $nis5 = array_merge(
-                    $nis5,
-                    array_column(Zone::getPostalCodeByName($adapter, $locality)->toArray(), 'nis5')
-                );
+
+                $postalcodes = PostalCode::get($adapter, $locality);
+                foreach ($postalcodes as $pc) {
+                    $nis5 = array_merge($nis5, $pc->nis5);
+                }
 
                 $nis5 = array_unique($nis5);
             }
         } elseif (!is_null($postalcode)) {
-            $nis5 = Zone::getPostalCodeByCode($adapter, $postalcode)->nis5;
+            $nis5 = PostalCode::getByCode($adapter, $postalcode)->nis5;
         }
 
         /**
@@ -202,12 +204,12 @@ class Street
     public static function toGeoJSON(Adapter $adapter, ArrayObject $street) : Feature
     {
         $formatted_fr = null;
-        if (!is_null($address->name_fr)) {
+        if (!is_null($street->name_fr)) {
             $formatted_fr = sprintf('%s, %s', $street->name_fr, $street->mun_name_fr);
         }
 
         $formatted_nl = null;
-        if (!is_null($address->name_nl)) {
+        if (!is_null($street->name_nl)) {
             $formatted_nl = sprintf('%s, %s', $street->name_nl, $street->mun_name_nl);
         }
 
