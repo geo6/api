@@ -7,11 +7,11 @@ namespace App\Query;
 use ArrayObject;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\I18n\Filter\Alnum;
-use Zend\Expressive\Router\RouterInterface;
 
 class Zone
 {
@@ -45,9 +45,9 @@ class Zone
     }
 
     /**
-     * @param Adapter $adapter
-     * @param string $key
-     * @param string $value
+     * @param Adapter         $adapter
+     * @param string          $key
+     * @param string          $value
      * @param RouterInterface $router
      *
      * @return array

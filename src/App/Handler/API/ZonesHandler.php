@@ -8,13 +8,10 @@ use App\Middleware\DbAdapterMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
 use App\Query\Zone;
-use ArrayObject;
 use GeoJson\Feature\Feature;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouterInterface;
 

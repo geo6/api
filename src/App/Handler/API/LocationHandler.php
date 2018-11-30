@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
@@ -76,11 +76,11 @@ class LocationHandler implements RequestHandlerInterface
 
         $components = [
             [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'    => 'municipality',
+                'id'      => $municipality->nis5,
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
-                'image' => file_exists('data/maps/municipality/' . $municipality->nis5 . '.png') ? $root . $this->router->generateUri('api.zones.maps', ['key' => 'municipality', 'slug' => $municipality->nis5]) : null,
+                'image'   => file_exists('data/maps/municipality/'.$municipality->nis5.'.png') ? $root.$this->router->generateUri('api.zones.maps', ['key' => 'municipality', 'slug' => $municipality->nis5]) : null,
             ],
             Components::getProvince($municipality->parent),
             Components::getRegion($municipality->parent),
@@ -95,15 +95,15 @@ class LocationHandler implements RequestHandlerInterface
         }
 
         return new JsonResponse([
-            'query' => $query,
-            'type' => 'Feature',
-            'id' => $municipality->nis5,
+            'query'      => $query,
+            'type'       => 'Feature',
+            'id'         => $municipality->nis5,
             'properties' => [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'         => 'municipality',
+                'id'           => $municipality->nis5,
                 'formatted_fr' => $municipality->name_fr,
                 'formatted_nl' => $municipality->name_nl,
-                'components' => $components,
+                'components'   => $components,
             ],
             'geometry' => null,
         ]);
