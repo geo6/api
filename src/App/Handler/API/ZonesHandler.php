@@ -7,6 +7,7 @@ namespace App\Handler\API;
 use App\Middleware\DbAdapterMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
+use App\Query\Zone;
 use ArrayObject;
 use GeoJson\Feature\Feature;
 use Psr\Http\Message\ResponseInterface;
@@ -16,10 +17,6 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouterInterface;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\I18n\Filter\Alnum;
 
 class ZonesHandler implements RequestHandlerInterface
 {
@@ -33,8 +30,6 @@ class ZonesHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
-
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
 
         $nis5 = intval($request->getAttribute('nis5'));
@@ -54,24 +49,11 @@ class ZonesHandler implements RequestHandlerInterface
             Components::getCountry(),
         ];
 
-        $zones = self::getZones($adapter, $nis5);
+        $zones = Zone::get($adapter, $nis5);
         $keys = array_keys($zones->getArrayCopy());
 
         foreach ($keys as $key) {
-            $filterChain = new FilterChain();
-            $filterChain
-                ->attach(new Alnum())
-                ->attach(new CamelCaseToDash())
-                ->attach(new StringToLower());
-
-            $slug = $filterChain->filter($zones->{$key});
-
-            $components[] = [
-                'type'    => $key,
-                'name_fr' => $zones->{$key},
-                'name_nl' => $zones->{$key},
-                'image'   => file_exists('data/maps/'.$key.'/'.$slug.'.png') ? $root.$this->router->generateUri('api.zones.maps', ['key' => $key, 'slug' => $slug]) : null,
-            ];
+            $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
         }
 
         return new JsonResponse([
@@ -89,34 +71,5 @@ class ZonesHandler implements RequestHandlerInterface
             ],
             'geometry' => null,
         ]);
-    }
-
-    /**
-     * @param Adapter $adapter
-     * @param int     $nis5
-     *
-     * @return ArrayObject
-     */
-    private static function getZones(Adapter $adapter, int $nis5) : ArrayObject
-    {
-        $sql = new Sql($adapter);
-
-        $select = $sql->select()
-            ->from('mun_zones')
-            ->columns([
-                'judicialdistrict',
-                // 'judicialdistrict_before2012',
-                'judicialcanton',
-                'police',
-                'civilprotection',
-                'emergency',
-                'fireservice',
-            ])
-            ->where(['nis5' => $nis5])
-            ->limit(1);
-
-        $qsz = $sql->buildSqlString($select);
-
-        return $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE)->current();
     }
 }
