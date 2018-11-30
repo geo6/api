@@ -117,7 +117,7 @@ class Address
      */
     private static function getComponents(Adapter $adapter, ArrayObject $address) : array
     {
-        $postalcode = Zone::getPostalCodeByCode($adapter, $address->postalcode);
+        $postalcode = PostalCode::getByCode($adapter, $address->postalcode);
 
         if (!is_null($address->locality_fr) || !is_null($address->locality_nl)) {
             $locality_fr = $address->locality_fr;
