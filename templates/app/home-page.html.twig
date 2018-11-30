@@ -1,0 +1,84 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-content: stretch;
+        align-items: stretch;
+    }
+
+    .card-content,
+    .card-button {
+        order: 0;
+        flex: 0 1 auto;
+        align-self: auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <img src="{{ asset('logo.png') }}" height="100">
+    <h1>
+        GEO-6 API
+    </h1>
+</div>
+<hr>
+
+<div class="card-deck">
+    <div class="card text-center">
+        <div class="card-header">
+            <i class="fas fa-home"></i>
+            Geocoding
+        </div>
+        <div class="card-body">
+            <div class="card-content mb-3">
+                <h5 class="card-title mb-3">Locate an address or a POI</h5>
+                <p class="card-text">
+                    Based on open-data :<br>
+                    <a href="https://bric.brussels/en/our-solutions/urbis-solutions/urbis-data" target="_blank">UrbIS</a>
+                    (Brussels),
+                    <a href="https://overheid.vlaanderen.be/informatie-vlaanderen/producten-diensten/centraal-referentieadressenbestand-crab"
+                        target="_blank">CRAB</a> (Vlaanderen).
+                    <br><br>
+                    Can be extended with your own data !
+                </p>
+            </div>
+            <a href="{{ path('test.geocode') }}" class="btn btn-outline-primary card-button">Test it !</a>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-header">
+            <i class="fas fa-map-pin"></i>
+            Location
+        </div>
+        <div class="card-body">
+            <div class="card-content">
+                <h5 class="card-title">Get information about a location</h5>
+                <p class="card-text mt-3">Works with Longitude, Latitude and X, Y.</p>
+            </div>
+            <a href="{{ path('test.latlng') }}" class="btn btn-outline-primary card-button">Test it !</a>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-header">
+            <i class="far fa-hospital"></i>
+            Zones
+        </div>
+        <div class="card-body">
+            <div class="card-content">
+                <h5 class="card-title">Get administrative information and maps related to a municipality</h5>
+                <p class="card-text mt-3"></p>
+            </div>
+            <a href="{{ path('test.zone') }}" class="btn btn-outline-primary card-button">Test it !</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
