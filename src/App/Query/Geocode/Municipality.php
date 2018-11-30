@@ -64,6 +64,7 @@ class Municipality
                 'nis5',
                 'name_fr',
                 'name_nl',
+                'parent',
             ])
             ->where(['nis5' => $id])
             ->limit(1);
@@ -88,6 +89,8 @@ class Municipality
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
             ],
+            Components::getProvince($municipality->parent),
+            Components::getRegion($municipality->parent),
             Components::getCountry(),
         ];
 
