@@ -28,6 +28,7 @@ class Municipality
                 'nis5',
                 'name_fr',
                 'name_nl',
+                'parent',
             ]);
         $select
             ->where
