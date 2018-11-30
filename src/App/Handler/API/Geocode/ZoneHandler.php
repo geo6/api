@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Handler\API\Geocode;
 
 use App\Middleware\DbAdapterMiddleware;
-use App\Query\Geocode\Municipality;
-use App\Query\Geocode\PostalCode;
+use App\Query\Municipality;
+use App\Query\PostalCode;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

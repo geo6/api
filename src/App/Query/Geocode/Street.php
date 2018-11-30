@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
+use App\Query\Components;
+use App\Query\Municipality;
+use App\Query\PostalCode;
 use ArrayObject;
 use GeoJson\Feature\Feature;
 use Zend\Db\Adapter\Adapter;

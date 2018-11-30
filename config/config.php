@@ -22,7 +22,9 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Router\ConfigProvider::class,
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
     \Zend\Expressive\Twig\ConfigProvider::class,
+    \Zend\Filter\ConfigProvider::class,
     \Zend\HttpHandlerRunner\ConfigProvider::class,
+    \Zend\I18n\ConfigProvider::class,
 
     // Swoole config to overwrite some services (if installed)
     class_exists(\Zend\Expressive\Swoole\ConfigProvider::class)

@@ -63,5 +63,8 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/geocode/getPOI/{source}/{poi}', App\Handler\API\Geocode\POIHandler::class, 'api.geocode.source.poi.old');
     $app->get('/geocode/getPOI/{poi}', App\Handler\API\Geocode\POIHandler::class, 'api.geocode.poi.old');
 
+    $app->get('/zones/{nis5:[0-9]{5}}', App\Handler\API\ZonesHandler::class, 'api.zones');
+    $app->get('/zones/map/{key}/{slug}.png', App\Handler\API\MapHandler::class, 'api.zones.maps');
+
     $app->get('/ping', App\Handler\PingHandler::class, 'api.ping');
 };

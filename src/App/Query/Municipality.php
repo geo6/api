@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Query\Geocode;
+namespace App\Query;
 
 use ArrayObject;
 use GeoJson\Feature\Feature;
