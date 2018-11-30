@@ -40,8 +40,9 @@ class ConfigProvider
                 Handler\API\Geocode\ZoneHandler::class     => Handler\API\Geocode\ZoneHandler::class,
             ],
             'factories'  => [
-                Handler\HomePageHandler::class  => Handler\HomePageHandlerFactory::class,
-                Handler\API\ZonesHandler::class => Handler\API\ZonesHandlerFactory::class,
+                Handler\HomePageHandler::class     => Handler\HomePageHandlerFactory::class,
+                Handler\API\LocationHandler::class => Handler\API\LocationHandlerFactory::class,
+                Handler\API\ZonesHandler::class    => Handler\API\ZonesHandlerFactory::class,
 
                 Middleware\DbAdapterMiddleware::class => Middleware\DbAdapterMiddlewareFactory::class,
             ],
