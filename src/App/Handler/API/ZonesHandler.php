@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
@@ -16,10 +16,10 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouterInterface;
-use Zend\I18n\Filter\Alnum;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
+use Zend\I18n\Filter\Alnum;
 
 class ZonesHandler implements RequestHandlerInterface
 {
@@ -33,7 +33,7 @@ class ZonesHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $root = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ($_SERVER['SERVER_PORT'] !== 80 ? ':' . $_SERVER['SERVER_PORT'] : '');
+        $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
 
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
 
@@ -43,11 +43,11 @@ class ZonesHandler implements RequestHandlerInterface
 
         $components = [
             [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'    => 'municipality',
+                'id'      => $municipality->nis5,
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
-                'image' => file_exists('data/maps/municipality/' . $municipality->nis5 . '.png') ? $root . $this->router->generateUri('api.zones.maps', ['key' => 'municipality', 'slug' => $municipality->nis5]) : null,
+                'image'   => file_exists('data/maps/municipality/'.$municipality->nis5.'.png') ? $root.$this->router->generateUri('api.zones.maps', ['key' => 'municipality', 'slug' => $municipality->nis5]) : null,
             ],
             Components::getProvince($municipality->parent),
             Components::getRegion($municipality->parent),
@@ -67,10 +67,10 @@ class ZonesHandler implements RequestHandlerInterface
             $slug = $filterChain->filter($zones->{$key});
 
             $components[] = [
-                'type' => $key,
+                'type'    => $key,
                 'name_fr' => $zones->{$key},
                 'name_nl' => $zones->{$key},
-                'image' => file_exists('data/maps/' . $key . '/' . $slug . '.png') ? $root . $this->router->generateUri('api.zones.maps', ['key' => $key, 'slug' => $slug]) : null,
+                'image'   => file_exists('data/maps/'.$key.'/'.$slug.'.png') ? $root.$this->router->generateUri('api.zones.maps', ['key' => $key, 'slug' => $slug]) : null,
             ];
         }
 
@@ -78,14 +78,14 @@ class ZonesHandler implements RequestHandlerInterface
             'query' => [
                 'nis5' => $nis5,
             ],
-            'type' => 'Feature',
-            'id' => $municipality->nis5,
+            'type'       => 'Feature',
+            'id'         => $municipality->nis5,
             'properties' => [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'         => 'municipality',
+                'id'           => $municipality->nis5,
                 'formatted_fr' => $municipality->name_fr,
                 'formatted_nl' => $municipality->name_nl,
-                'components' => $components,
+                'components'   => $components,
             ],
             'geometry' => null,
         ]);
@@ -93,7 +93,7 @@ class ZonesHandler implements RequestHandlerInterface
 
     /**
      * @param Adapter $adapter
-     * @param integer $nis5
+     * @param int     $nis5
      *
      * @return ArrayObject
      */

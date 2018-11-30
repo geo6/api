@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Query\Geocode;
 
-use App\Query\PostalCode;
 use App\Query\Components;
+use App\Query\PostalCode;
 use ArrayObject;
 use GeoJson\Feature\Feature;
 use GeoJson\Geometry\Point;
