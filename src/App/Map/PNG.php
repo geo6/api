@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Map;
 
@@ -52,7 +52,7 @@ class PNG
 
     private function addCopyright() : void
     {
-        $copyright = 'Map Data © OpenStreetMap contributors, Statistics Belgium © ' . date('Y') . ' GEO-6';
+        $copyright = 'Map Data © OpenStreetMap contributors, Statistics Belgium © '.date('Y').' GEO-6';
 
         $bbox = imageftbbox(7, 90, self::FONT, $copyright);
 
