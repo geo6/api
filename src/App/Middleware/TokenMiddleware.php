@@ -66,10 +66,6 @@ class TokenMiddleware implements MiddlewareInterface
     {
         $route = $request->getAttribute(RouteResult::class);
 
-        if ($route->getMatchedRouteName() === 'api.ping') {
-            $this->debug = true;
-        }
-
         $this->getTokenFromHeader($request);
 
         $server = $request->getServerParams();
@@ -82,7 +78,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         $this->valid = $this->checkToken();
 
-        if ($this->debug === false && $this->valid === false) {
+        if ($this->debug === false && $route->getMatchedRouteName() !== 'api.ping' && $this->valid === false) {
             return new EmptyResponse(403);
         }
 
