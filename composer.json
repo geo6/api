@@ -69,7 +69,7 @@
         "development-enable": "zf-development-mode enable",
         "development-status": "zf-development-mode status",
         "expressive": "expressive --ansi",
-        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "serve": "php -S localhost:8080 -t public/",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
