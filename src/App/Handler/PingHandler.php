@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -18,7 +18,7 @@ class PingHandler implements RequestHandlerInterface
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         return new JsonResponse([
-            'ack' => time(),
+            'ack'   => time(),
             'token' => $token,
         ]);
     }

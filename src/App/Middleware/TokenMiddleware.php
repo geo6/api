@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Middleware;
 
@@ -48,7 +48,7 @@ class TokenMiddleware implements MiddlewareInterface
 
     /**
      * @param array $access
-     * @param boolean $debug
+     * @param bool  $debug
      */
     public function __construct(array $access, bool $debug)
     {
@@ -57,7 +57,7 @@ class TokenMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
+     * @param ServerRequestInterface  $request
      * @param RequestHandlerInterface $handler
      *
      * @return ResponseInterface
@@ -87,12 +87,12 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         $data = new ArrayObject([
-            'debug' => $this->debug,
-            'consumer' => $this->consumer,
-            'referer' => $this->referer,
+            'debug'     => $this->debug,
+            'consumer'  => $this->consumer,
+            'referer'   => $this->referer,
             'timestamp' => $this->timestamp,
-            'query' => $this->query,
-            'valid' => $this->valid,
+            'query'     => $this->query,
+            'valid'     => $this->valid,
         ], ArrayObject::ARRAY_AS_PROPS);
 
         return $handler->handle($request->withAttribute(self::TOKEN_ATTRIBUTE, $data));
@@ -119,17 +119,17 @@ class TokenMiddleware implements MiddlewareInterface
      */
     private function generateToken(string $secret) : string
     {
-        $token = $this->consumer . '__';
-        $token .= $this->timestamp . '__';
-        $token .= $this->hostname . '__';
-        $token .= $this->method . '__';
+        $token = $this->consumer.'__';
+        $token .= $this->timestamp.'__';
+        $token .= $this->hostname.'__';
+        $token .= $this->method.'__';
         $token .= $this->query;
 
-        return crypt($token, '$6$' . $secret . '$');
+        return crypt($token, '$6$'.$secret.'$');
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function checkToken() : bool
     {

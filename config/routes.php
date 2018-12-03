@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use App\Handler\API\Geocode\AddressHandler;
-use App\Handler\API\Geocode\POIHandler;
 use App\Handler\API\Geocode\DatabaseHandler;
-use App\Handler\API\Geocode\ZoneHandler;
+use App\Handler\API\Geocode\POIHandler;
 use App\Handler\API\Geocode\StreetHandler;
+use App\Handler\API\Geocode\ZoneHandler;
 use App\Handler\API\LocationHandler;
 use App\Handler\API\MapHandler;
 use App\Handler\API\ZonesHandler;
