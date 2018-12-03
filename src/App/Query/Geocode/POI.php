@@ -36,8 +36,8 @@ class POI
                 'nis5',
                 'source',
                 'date',
-                'longitude' => new Expression('ST_X(the_geog::geometry)'),
-                'latitude'  => new Expression('ST_Y(the_geog::geometry)'),
+                'longitude' => new Expression('ST_X(poi.the_geog::geometry)'),
+                'latitude'  => new Expression('ST_Y(poi.the_geog::geometry)'),
             ])
             ->join(
                 ['m' => 'municipalities'],
