@@ -60,8 +60,8 @@ class Address
                 'locationtype',
                 'source',
                 'date',
-                'longitude' => new Expression('ST_X(the_Geog::geometry)'),
-                'latitude'  => new Expression('ST_Y(the_Geog::geometry)'),
+                'longitude' => new Expression('ST_X(a.the_Geog::geometry)'),
+                'latitude'  => new Expression('ST_Y(a.the_Geog::geometry)'),
             ])
             ->join(
                 ['s' => sprintf('%s_street', $source)],
