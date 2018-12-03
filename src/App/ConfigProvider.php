@@ -39,7 +39,11 @@ class ConfigProvider
                 Handler\API\PingHandler::class             => Handler\API\PingHandler::class,
             ],
             'factories'  => [
-                Handler\HomePageHandler::class     => Handler\HomePageHandlerFactory::class,
+                Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                Handler\GeocodeHandler::class  => Handler\GeocodeHandlerFactory::class,
+                Handler\LocationHandler::class => Handler\LocationHandlerFactory::class,
+                Handler\ZoneHandler::class     => Handler\ZoneHandlerFactory::class,
+
                 Handler\API\LocationHandler::class => Handler\API\LocationHandlerFactory::class,
                 Handler\API\ZonesHandler::class    => Handler\API\ZonesHandlerFactory::class,
 

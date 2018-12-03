@@ -46,7 +46,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
 
     $app->get('/test/geocode', App\Handler\GeocodeHandler::class, 'test.geocode');
-    $app->get('/test/latlng', App\Handler\LatLngHandler::class, 'test.latlng');
+    $app->get('/test/latlng', App\Handler\LocationHandler::class, 'test.location');
     $app->get('/test/zone', App\Handler\ZoneHandler::class, 'test.zone');
 
     $app->get('/ping', [TokenMiddleware::class, PingHandler::class], 'api.ping');
