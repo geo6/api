@@ -45,6 +45,7 @@ class ConfigProvider
                 Handler\API\ZonesHandler::class    => Handler\API\ZonesHandlerFactory::class,
 
                 Middleware\DbAdapterMiddleware::class => Middleware\DbAdapterMiddlewareFactory::class,
+                Middleware\TokenMiddleware::class     => Middleware\TokenMiddlewareFactory::class,
             ],
         ];
     }

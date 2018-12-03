@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler\API;
 
 use App\Middleware\DbAdapterMiddleware;
+use App\Middleware\TokenMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
 use App\Query\Zone;
@@ -28,6 +29,7 @@ class LocationHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $longitude = $request->getAttribute('longitude');
         $latitude = $request->getAttribute('latitude');
@@ -94,7 +96,7 @@ class LocationHandler implements RequestHandlerInterface
             $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
         }
 
-        return new JsonResponse([
+        $json = [
             'query'      => $query,
             'type'       => 'Feature',
             'id'         => $municipality->nis5,
@@ -106,6 +108,11 @@ class LocationHandler implements RequestHandlerInterface
                 'components'   => $components,
             ],
             'geometry' => null,
-        ]);
+        ];
+        if ($token->debug === true) {
+            $json['token'] = $token;
+        }
+
+        return new JsonResponse($json);
     }
 }

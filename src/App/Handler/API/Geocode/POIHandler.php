@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler\API\Geocode;
 
 use App\Middleware\DbAdapterMiddleware;
+use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\POI;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,6 +18,7 @@ class POIHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $source = $request->getAttribute('source');
         $poi = $request->getAttribute('poi');
@@ -51,13 +53,18 @@ class POIHandler implements RequestHandlerInterface
             }
         }
 
-        return new JsonResponse([
+        $json = [
             'query' => [
                 'source' => $source,
                 'poi'    => $poi,
             ],
             'type'     => 'FeatureCollection',
             'features' => $features,
-        ]);
+        ];
+        if ($token->debug === true) {
+            $json['token'] = $token;
+        }
+
+        return new JsonResponse($json);
     }
 }

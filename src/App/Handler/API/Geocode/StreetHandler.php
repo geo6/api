@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler\API\Geocode;
 
 use App\Middleware\DbAdapterMiddleware;
+use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\Street;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,6 +17,7 @@ class StreetHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $source = $request->getAttribute('source');
         $locality = $request->getAttribute('locality');
@@ -53,7 +55,7 @@ class StreetHandler implements RequestHandlerInterface
             $locality = intval($locality);
         }
 
-        return new JsonResponse([
+        $json = [
             'query' => [
                 'source'     => $source,
                 'locality'   => $locality,
@@ -62,6 +64,11 @@ class StreetHandler implements RequestHandlerInterface
             ],
             'type'     => 'FeatureCollection',
             'features' => $features,
-        ]);
+        ];
+        if ($token->debug === true) {
+            $json['token'] = $token;
+        }
+
+        return new JsonResponse($json);
     }
 }

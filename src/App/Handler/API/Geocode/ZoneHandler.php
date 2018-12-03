@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler\API\Geocode;
 
 use App\Middleware\DbAdapterMiddleware;
+use App\Middleware\TokenMiddleware;
 use App\Query\Municipality;
 use App\Query\PostalCode;
 use Psr\Http\Message\ResponseInterface;
@@ -17,6 +18,7 @@ class ZoneHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $locality = $request->getAttribute('locality');
 
@@ -72,10 +74,15 @@ class ZoneHandler implements RequestHandlerInterface
             }
         }
 
-        return new JsonResponse([
+        $json = [
             'query'    => $query,
             'type'     => 'FeatureCollection',
             'features' => $features,
-        ]);
+        ];
+        if ($token->debug === true) {
+            $json['token'] = $token;
+        }
+
+        return new JsonResponse($json);
     }
 }
