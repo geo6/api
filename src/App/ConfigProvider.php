@@ -32,12 +32,11 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                Handler\PingHandler::class => Handler\PingHandler::class,
-
                 Handler\API\Geocode\DatabaseHandler::class => Handler\API\Geocode\DatabaseHandler::class,
                 Handler\API\Geocode\POIHandler::class      => Handler\API\Geocode\POIHandler::class,
                 Handler\API\Geocode\StreetHandler::class   => Handler\API\Geocode\StreetHandler::class,
                 Handler\API\Geocode\ZoneHandler::class     => Handler\API\Geocode\ZoneHandler::class,
+                Handler\API\PingHandler::class             => Handler\API\PingHandler::class,
             ],
             'factories'  => [
                 Handler\HomePageHandler::class     => Handler\HomePageHandlerFactory::class,

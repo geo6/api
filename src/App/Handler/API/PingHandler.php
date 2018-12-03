@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Handler;
+namespace App\Handler\API;
 
 use App\Middleware\TokenMiddleware;
 use Psr\Http\Message\ResponseInterface;
@@ -18,7 +18,7 @@ class PingHandler implements RequestHandlerInterface
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         return new JsonResponse([
-            'ack'   => time(),
+            'now'   => time(),
             'token' => $token,
         ]);
     }
