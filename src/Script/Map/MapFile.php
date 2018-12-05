@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Script\Map;
 
@@ -285,8 +285,8 @@ class MapFile
         $layer->connectiontype = \MapFile\Layer::CONNECTIONTYPE_POSTGIS;
         $layer->type = \MapFile\Layer::TYPE_POLYGON;
 
-        $layer->connection = 'host=' . $host . ' port=' . $port . ' dbname=' . $dbname . ' user=' . $user . ' password=' . $password;
-        $layer->data = 'the_geom from (SELECT nis5, the_geog::geometry AS the_geom FROM municipalities WHERE nis5 IN(' . implode(',', $municipalities) . ')) as subquery using unique nis5 using srid=4326';
+        $layer->connection = 'host='.$host.' port='.$port.' dbname='.$dbname.' user='.$user.' password='.$password;
+        $layer->data = 'the_geom from (SELECT nis5, the_geog::geometry AS the_geom FROM municipalities WHERE nis5 IN('.implode(',', $municipalities).')) as subquery using unique nis5 using srid=4326';
 
         $class = new \MapFile\LayerClass();
 

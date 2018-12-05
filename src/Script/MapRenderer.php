@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Script;
 
@@ -8,6 +8,7 @@ use Composer\Composer;
 use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
+use ErrorException;
 use PDO;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Expression;
@@ -16,7 +17,6 @@ use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\I18n\Filter\Alnum;
-use ErrorException;
 
 class MapRenderer
 {
@@ -96,16 +96,16 @@ class MapRenderer
         $composerFile = Factory::getComposerFile();
 
         // Calculate project root from composer.json, if necessary
-        $this->projectRoot = $projectRoot ? : realpath(dirname($composerFile));
-        $this->projectRoot = rtrim($this->projectRoot, '/\\') . '/';
+        $this->projectRoot = $projectRoot ?: realpath(dirname($composerFile));
+        $this->projectRoot = rtrim($this->projectRoot, '/\\').'/';
 
         // Parse the composer.json
         // $this->parseComposerDefinition($composer, $composerFile);
 
-        $this->config = require $this->projectRoot . 'config/autoload/local.php';
+        $this->config = require $this->projectRoot.'config/autoload/local.php';
 
         // Source path for this file
-        $this->installerSource = realpath(__DIR__) . '/';
+        $this->installerSource = realpath(__DIR__).'/';
     }
 
     private function clear() : void
@@ -113,7 +113,7 @@ class MapRenderer
         $directory = sprintf('data/maps/%s', $this->layer);
 
         if (file_exists($directory) && is_dir($directory)) {
-            $glob = glob($directory . '/*');
+            $glob = glob($directory.'/*');
             foreach ($glob as $g) {
                 if (!is_dir($g)) {
                     unlink($g);
@@ -129,7 +129,7 @@ class MapRenderer
         $directory = sprintf('data/maps/%s/temp', $this->layer);
 
         if (file_exists($directory) && is_dir($directory)) {
-            $glob = glob($directory . '/*');
+            $glob = glob($directory.'/*');
             foreach ($glob as $g) {
                 if (!is_dir($g)) {
                     unlink($g);
@@ -163,19 +163,19 @@ class MapRenderer
             $answer = $this->io->ask(implode($query));
 
             switch (true) {
-                case ($answer === '1'):
+                case $answer === '1':
                     return 'civilprotection';
-                case ($answer === '2'):
+                case $answer === '2':
                     return 'emergency';
-                case ($answer === '3'):
+                case $answer === '3':
                     return 'fireservice';
-                case ($answer === '4'):
+                case $answer === '4':
                     return 'judicialcanton';
-                case ($answer === '5'):
+                case $answer === '5':
                     return 'judicialdistrict';
-                case ($answer === '6'):
+                case $answer === '6':
                     return 'municipality';
-                case ($answer === '7'):
+                case $answer === '7':
                     return 'police';
                 default:
                     // @codeCoverageIgnoreStart
@@ -189,7 +189,7 @@ class MapRenderer
     {
         $adapter = new Adapter(
             array_merge([
-                'driver' => 'Pdo_Pgsql',
+                'driver'         => 'Pdo_Pgsql',
                 'driver_options' => [
                     PDO::ATTR_STRINGIFY_FETCHES => false,
                 ],
@@ -210,7 +210,7 @@ class MapRenderer
                 [
                     'mun_name_fr' => new Expression('array_to_json(array_agg(m.name_fr))'),
                     'mun_name_nl' => new Expression('array_to_json(array_agg(m.name_nl))'),
-                    'extent' => new Expression('Box2D(ST_Transform(ST_SetSRID(ST_Extent(m.the_geog::geometry), 4326), 3857))'),
+                    'extent'      => new Expression('Box2D(ST_Transform(ST_SetSRID(ST_Extent(m.the_geog::geometry), 4326), 3857))'),
                 ]
             )
             ->group([
@@ -246,7 +246,7 @@ class MapRenderer
                 $name = ucwords(strtolower($mun_name_fr[$i]), "- \t\r\n\f\v");
 
                 if ($mun_name_nl[$i] !== $mun_name_fr[$i]) {
-                    $name .= '/' . ucwords(strtolower($mun_name_nl[$i]), "- \t\r\n\f\v");
+                    $name .= '/'.ucwords(strtolower($mun_name_nl[$i]), "- \t\r\n\f\v");
                 }
 
                 $mun_names[] = $name;
@@ -266,11 +266,11 @@ class MapRenderer
             }
 
             $list[] = [
-                $this->layer => $r->{$this->layer},
-                'slug' => $slug,
-                'nis5' => json_decode($r->nis5),
+                $this->layer     => $r->{$this->layer},
+                'slug'           => $slug,
+                'nis5'           => json_decode($r->nis5),
                 'municipalities' => $mun_names,
-                'extent' => $extent,
+                'extent'         => $extent,
             ];
         }
 
@@ -281,7 +281,7 @@ class MapRenderer
     {
         $adapter = new Adapter(
             array_merge([
-                'driver' => 'Pdo_Pgsql',
+                'driver'         => 'Pdo_Pgsql',
                 'driver_options' => [
                     PDO::ATTR_STRINGIFY_FETCHES => false,
                 ],
@@ -311,7 +311,7 @@ class MapRenderer
             $mun_name = ucwords(strtolower($r->name_fr), "- \t\r\n\f\v");
 
             if ($r->name_nl !== $r->name_fr) {
-                $mun_name .= '/' . ucwords(strtolower($r->name_nl), "- \t\r\n\f\v");
+                $mun_name .= '/'.ucwords(strtolower($r->name_nl), "- \t\r\n\f\v");
             }
 
             $extent = [];
@@ -327,11 +327,11 @@ class MapRenderer
             }
 
             $list[] = [
-                'municipality' => $mun_name,
-                'slug' => (string) $r->nis5,
-                'nis5' => [$r->nis5],
+                'municipality'   => $mun_name,
+                'slug'           => (string) $r->nis5,
+                'nis5'           => [$r->nis5],
                 'municipalities' => [$mun_name],
-                'extent' => $extent,
+                'extent'         => $extent,
             ];
         }
 
@@ -416,30 +416,30 @@ class MapRenderer
 
         switch ($this->layer) {
             case 'civilprotection':
-                $png->addTitle('Civil Protection : ' . $name, $this->getColor());
+                $png->addTitle('Civil Protection : '.$name, $this->getColor());
                 // $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
             case 'emergency':
-                $png->addTitle('Emergency : ' . $name, $this->getColor());
+                $png->addTitle('Emergency : '.$name, $this->getColor());
                 // $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
             case 'fireservice':
-                $png->addTitle('Fire Service : ' . $name, $this->getColor());
+                $png->addTitle('Fire Service : '.$name, $this->getColor());
                 $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
             case 'judicialcanton':
-                $png->addTitle('Judicial Canton : ' . $name, $this->getColor());
+                $png->addTitle('Judicial Canton : '.$name, $this->getColor());
                 $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
             case 'judicialdistrict':
-                $png->addTitle('Judicial District : ' . $name, $this->getColor());
+                $png->addTitle('Judicial District : '.$name, $this->getColor());
                 // $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
             case 'municipality':
                 $png->addTitle($name, $this->getColor());
                 break;
             case 'police':
-                $png->addTitle('Police : ' . $name, $this->getColor());
+                $png->addTitle('Police : '.$name, $this->getColor());
                 $png->addListMunicipalities($municipalities, $this->getColor());
                 break;
         }

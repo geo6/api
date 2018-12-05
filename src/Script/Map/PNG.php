@@ -1,11 +1,10 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Script\Map;
 
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class PNG
 {
@@ -50,18 +49,18 @@ class PNG
         $process = new Process(
             sprintf(
                 'shp2img -m %s -o %s -l %s',
-                escapeshellarg($this->slug . '.map'),
-                escapeshellarg($this->slug . '-src.png'),
-                escapeshellarg('land landusegreen water majorroad province ' . $this->slug . ' city')
+                escapeshellarg($this->slug.'.map'),
+                escapeshellarg($this->slug.'-src.png'),
+                escapeshellarg('land landusegreen water majorroad province '.$this->slug.' city')
             ),
             sprintf('data/maps/%s/temp/', $this->key)
         );
 
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
-                echo 'ERR > ' . $buffer;
+                echo 'ERR > '.$buffer;
             } else {
-                echo 'OUT > ' . $buffer;
+                echo 'OUT > '.$buffer;
             }
         });
     }
@@ -71,17 +70,17 @@ class PNG
         $process = new Process(
             sprintf(
                 'scalebar %s %s',
-                escapeshellarg($this->slug . '.map'),
-                escapeshellarg($this->slug . '-scale.png')
+                escapeshellarg($this->slug.'.map'),
+                escapeshellarg($this->slug.'-scale.png')
             ),
             sprintf('data/maps/%s/temp/', $this->key)
         );
 
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
-                echo 'ERR > ' . $buffer;
+                echo 'ERR > '.$buffer;
             } else {
-                echo 'OUT > ' . $buffer;
+                echo 'OUT > '.$buffer;
             }
         });
     }
@@ -102,7 +101,7 @@ class PNG
 
     public function addCopyright() : void
     {
-        $copyright = 'Map Data © OpenStreetMap contributors, Statistics Belgium © ' . date('Y') . ' GEO-6';
+        $copyright = 'Map Data © OpenStreetMap contributors, Statistics Belgium © '.date('Y').' GEO-6';
 
         $bbox = imageftbbox(7, 90, self::FONT, $copyright);
 
