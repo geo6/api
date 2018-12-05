@@ -1,4 +1,7 @@
 *
 !cache
 !cache/.gitkeep
+!maps
+!maps/fonts.txt
+!maps/symbols.txt
 !.gitignore
