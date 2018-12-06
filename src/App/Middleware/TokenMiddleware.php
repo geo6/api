@@ -29,6 +29,9 @@ class TokenMiddleware implements MiddlewareInterface
     private $hostname;
 
     /** @var string */
+    private $ip;
+
+    /** @var string */
     private $method;
 
     /** @var string */
@@ -105,7 +108,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         $this->consumer = $request->getHeaderLine('X-Geo6-Consumer');
         $this->token = $request->getHeaderLine('X-Geo6-Token');
-        $this->timestamp = $request->getHeaderLine('X-Geo6-Timestamp');
+        $this->timestamp = intval($request->getHeaderLine('X-Geo6-Timestamp'));
     }
 
     /**
@@ -129,20 +132,20 @@ class TokenMiddleware implements MiddlewareInterface
      */
     private function checkToken() : bool
     {
-        if (empty($this->consumer) || !in_array($this->consumer, array_keys($this->access))) {
+        if (strlen($this->consumer) === 0 || !in_array($this->consumer, array_keys($this->access), true)) {
             return false;
         }
 
         $access = $this->access[$this->consumer];
 
-        if (isset($access['referer']) && !in_array($this->referer, $access['referer'])) {
+        if (isset($access['referer']) && !in_array($this->referer, $access['referer'], true)) {
             return false;
         }
-        if (isset($access['ip']) && !in_array($this->ip, $access['ip'])) {
+        if (isset($access['ip']) && !in_array($this->ip, $access['ip'], true)) {
             return false;
         }
 
-        if (empty($this->timestamp) || $this->timestamp > (time() + (5 * 60)) || $this->timestamp < (time() - (5 * 60))) {
+        if ($this->timestamp > (time() + (5 * 60)) || $this->timestamp < (time() - (5 * 60))) {
             return false;
         }
 

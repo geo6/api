@@ -53,7 +53,7 @@ class Street
 
                 $postalcodes = PostalCode::get($adapter, $locality);
                 foreach ($postalcodes as $pc) {
-                    $nis5 = array_merge($nis5, $pc->nis5);
+                    $nis5 = array_merge($nis5, $pc['nis5']);
                 }
 
                 $nis5 = array_unique($nis5);
@@ -124,7 +124,7 @@ class Street
             )
             ->unnest();
 
-        if (empty($streets)) {
+        if (count($streets) === 0) {
             $select->where->addPredicate($whereName);
         } else {
             $whereNameAlias = (new Predicate())
@@ -150,15 +150,14 @@ class Street
         }
 
         if (!is_null($postalcode)) {
+            $expression = sprintf(
+                '(SELECT COUNT(*) FROM %s_address a2 WHERE a2.strid = s.strid AND a2.postalcode = ?)',
+                $source
+            );
+
             $wherePostalCode = (new Predicate())
                 ->greaterThan(
-                    new Expression(
-                        sprintf(
-                            '(SELECT COUNT(*) FROM %s_address a2 WHERE a2.strid = s.strid AND a2.postalcode = ?)',
-                            $source
-                        ),
-                        $postalcode
-                    ),
+                    (string) (new Expression($expression, $postalcode)),
                     0
                 );
 

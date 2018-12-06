@@ -35,7 +35,7 @@ class MapRenderer
     /** @var string */
     private $layer;
 
-    /** @var string */
+    /** @var array */
     private $list;
 
     /** @var string */
@@ -87,7 +87,7 @@ class MapRenderer
         $installer->clearTemp();
     }
 
-    public function __construct(IOInterface $io, Composer $composer, string $projectRoot = null)
+    public function __construct(IOInterface $io, Composer $composer)
     {
         $this->io = $io;
         $this->composer = $composer;
@@ -96,7 +96,7 @@ class MapRenderer
         $composerFile = Factory::getComposerFile();
 
         // Calculate project root from composer.json, if necessary
-        $this->projectRoot = $projectRoot ?: realpath(dirname($composerFile));
+        $this->projectRoot = realpath(dirname($composerFile)) ?? '';
         $this->projectRoot = rtrim($this->projectRoot, '/\\').'/';
 
         // Parse the composer.json
@@ -340,7 +340,7 @@ class MapRenderer
 
     private function generateMapFile(string $slug, array $extent, array $nis5) : void
     {
-        $mapfile = new Map\Mapfile($this->layer, $slug, $extent);
+        $mapfile = new Map\MapFile($this->layer, $slug, $extent);
 
         $mapfile->addScalebar();
 
@@ -456,7 +456,7 @@ class MapRenderer
      */
     private static function removeAccents(string $string) : string
     {
-        if (!preg_match('/[\x80-\xff]/', $string)) {
+        if (preg_match('/[\x80-\xff]/', $string) !== 1) {
             return $string;
         }
 

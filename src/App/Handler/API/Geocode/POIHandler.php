@@ -26,7 +26,7 @@ class POIHandler implements RequestHandlerInterface
         $metadata = new Metadata($adapter);
         $sources = $metadata->getTableNames('poi');
 
-        if (!is_null($source) && !in_array($source, $sources)) {
+        if (!is_null($source) && !in_array($source, $sources, true)) {
             return new JsonResponse([
                 'query' => [
                     'source' => $source,

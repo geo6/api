@@ -25,7 +25,13 @@ class MapHandler implements RequestHandlerInterface
         }
 
         $content = file_get_contents($file);
+        if ($content === false) {
+            return new EmptyResponse(500);
+        }
         $gzcontent = gzencode($content);
+        if ($gzcontent === false) {
+            return new EmptyResponse(500);
+        }
 
         $body = new Stream('php://temp', 'wb+');
         $body->write($gzcontent);

@@ -41,7 +41,7 @@ class Address
          */
         $streets = array_column(Street::get($adapter, $source, $street, $locality, $postalcode)->toArray(), 'strid');
 
-        if (empty($streets)) {
+        if (count($streets) === 0) {
             return (new ResultSet())->initialize([]);
         }
 
@@ -87,7 +87,7 @@ class Address
 
         $select->where->addPredicate($whereStreets);
 
-        if (!empty($number)) {
+        if (strlen($number) > 0) {
             if ($alternateNumber === false) {
                 $whereNumber = (new Predicate())
                     ->equalTo('a.hnr', $number);

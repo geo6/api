@@ -7,7 +7,6 @@
     "require": {
         "php": "^7.1",
         "ext-intl": "*",
-        "ext-pgsql": "*",
         "jmikola/geojson": "^1.0",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
@@ -27,6 +26,8 @@
         "composer/composer": "^1.8",
         "filp/whoops": "^2.1.12",
         "jbelien/mapfile-php-library": "^1.3",
+        "phpstan/phpstan": "^0.10.6",
+        "phpstan/phpstan-strict-rules": "^0.10.1",
         "phpunit/phpunit": "^7.0.1",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^2.9.1",
@@ -64,9 +65,11 @@
         "post-create-project-cmd": [
             "@development-enable"
         ],
+        "analyze": "phpstan analyze -l max -c ./phpstan.installer.neon ./src ./config",
         "check": [
             "@cs-check",
-            "@test"
+            "@test",
+            "@analyze"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",

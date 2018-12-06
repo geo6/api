@@ -35,13 +35,21 @@ class ZonesHandler implements RequestHandlerInterface
 
         $municipality = Municipality::getById($adapter, $nis5);
 
+        if (file_exists('data/maps/municipality/' . $municipality->nis5 . '.png')) {
+            $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
+            $image = $root . $this->router->generateUri('api.zones.maps', [
+                'key'  => 'municipality',
+                'slug' => $municipality->nis5
+            ]);
+        }
+
         $components = [
             [
                 'type'    => 'municipality',
                 'id'      => $municipality->nis5,
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
-                'image'   => file_exists('data/maps/municipality/'.$municipality->nis5.'.png') ? $root.$this->router->generateUri('api.zones.maps', ['key' => 'municipality', 'slug' => $municipality->nis5]) : null,
+                'image'   => $image ?? null,
             ],
             Components::getProvince($municipality->parent),
             Components::getRegion($municipality->parent),

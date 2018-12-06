@@ -107,45 +107,45 @@ class PostalCode
 
         foreach ($results as $result) {
             if (is_null($data['postalcode'])) {
-                $data['postalcode'] = $result->postalcode;
+                $data['postalcode'] = $result['postalcode'];
             }
 
-            if ($result->level === 3) {
+            if ($result['level'] === 3) {
                 $locality[] = [
-                    'name_fr' => $result->name_fr,
-                    'name_nl' => $result->name_nl,
+                    'name_fr' => $result['name_fr'],
+                    'name_nl' => $result['name_nl'],
                 ];
             }
 
-            if (!in_array($result->nis5, $data['nis5'])) {
-                $data['nis5'][] = $result->nis5;
+            if (!in_array($result['nis5'], $data['nis5'], true)) {
+                $data['nis5'][] = $result['nis5'];
             }
 
             if (is_null($level)) {
-                $level = $result->level;
+                $level = $result['level'];
             }
 
-            if ($result->level === $level) {
-                if (!is_null($result->name_fr)) {
-                    $data['name_fr'] .= (!empty($data['name_fr']) ? ' - ' : '').$result->name_fr;
+            if ($result['level'] === $level) {
+                if (!is_null($result['name_fr'])) {
+                    $data['name_fr'] .= (strlen($data['name_fr'] ?? '') > 0 ? ' - ' : '').$result['name_fr'];
                 }
-                if (!is_null($result->name_nl)) {
-                    $data['name_nl'] .= (!empty($data['name_nl']) ? ' - ' : '').$result->name_nl;
+                if (!is_null($result['name_nl'])) {
+                    $data['name_nl'] .= (strlen($data['name_nl'] ?? '') > 0 ? ' - ' : '').$result['name_nl'];
                 }
             } else {
                 if ($nested === false) {
-                    if (!is_null($result->name_fr)) {
-                        $data['name_fr'] .= ' ('.$result->name_fr;
+                    if (!is_null($result['name_fr'])) {
+                        $data['name_fr'] .= ' ('.$result['name_fr'];
                     }
-                    if (!is_null($result->name_nl)) {
-                        $data['name_nl'] .= ' ('.$result->name_nl;
+                    if (!is_null($result['name_nl'])) {
+                        $data['name_nl'] .= ' ('.$result['name_nl'];
                     }
 
                     $nested = true;
                 }
             }
 
-            $level = $result->level;
+            $level = $result['level'];
         }
 
         if ($nested === true) {

@@ -5,19 +5,29 @@ declare(strict_types=1);
 namespace Script\Map;
 
 use Symfony\Component\Process\Process;
+use ErrorException;
 
 class PNG
 {
     const FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf';
     const FONTBOLD = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
 
+    /** @var string */
     private $key;
+
+    /** @var string */
     private $slug;
 
+    /** @var resource */
     private $image;
+
+    /** @var int */
     private $height;
+
+    /** @var int */
     private $width;
 
+    /** @var int */
     private $currentY = 0;
 
     public function __construct(string $key, string $slug)
@@ -28,9 +38,17 @@ class PNG
         $this->renderMap();
         $this->renderScale();
 
-        $this->image = imagecreatefrompng(
-            sprintf('data/maps/%s/temp/%s-src.png', $this->key, $this->slug)
-        );
+        $path = sprintf('data/maps/%s/temp/%s-src.png', $this->key, $this->slug);
+
+        $image = imagecreatefrompng($path);
+
+        if ($image === false) {
+            throw new ErrorException(
+                sprintf('Unable to imagecreatefrompng("%s").', $path)
+            );
+        }
+
+        $this->image = $image;
 
         $this->height = imagesy($this->image);
         $this->width = imagesx($this->image);
@@ -87,16 +105,22 @@ class PNG
 
     public function addScale() : void
     {
-        $scaleImage = imagecreatefrompng(
-            sprintf('data/maps/%s/temp/%s-scale.png', $this->key, $this->slug)
-        );
+        $path = sprintf('data/maps/%s/temp/%s-scale.png', $this->key, $this->slug);
 
-        $scaleHeight = imagesy($scaleImage);
-        $scaleWidth = imagesx($scaleImage);
+        $image = imagecreatefrompng($path);
 
-        imagecopymerge($this->image, $scaleImage, 5, ($this->height - $scaleHeight - 5), 0, 0, $scaleWidth, $scaleHeight, 75);
+        if ($image === false) {
+            throw new ErrorException(
+                sprintf('Unable to imagecreatefrompng("%s").', $path)
+            );
+        }
 
-        imagedestroy($scaleImage);
+        $height = imagesy($image);
+        $width = imagesx($image);
+
+        imagecopymerge($this->image, $image, 5, ($this->height - $height - 5), 0, 0, $width, $height, 75);
+
+        imagedestroy($image);
     }
 
     public function addCopyright() : void
@@ -105,40 +129,48 @@ class PNG
 
         $bbox = imageftbbox(7, 90, self::FONT, $copyright);
 
-        $copyrightHeight = abs($bbox[1]) + abs($bbox[5]) + 10;
-        $copyrightWidth = abs($bbox[0]) + abs($bbox[2]) + 10;
+        $height = (int) round(abs($bbox[1]) + abs($bbox[5]) + 10);
+        $width = (int) round(abs($bbox[0]) + abs($bbox[2]) + 10);
 
-        $copyrightImage = imagecreatetruecolor($copyrightWidth, $copyrightHeight);
+        $image = imagecreatetruecolor($width, $height);
 
-        imagefilledrectangle($copyrightImage, 0, 0, $copyrightWidth, $copyrightHeight, imagecolorallocate($copyrightImage, 255, 255, 255));
+        if ($image === false) {
+            throw new ErrorException('Unable to imagecreatetruecolor() for copyright.');
+        }
 
-        imagefttext($copyrightImage, 7, 90, ($copyrightWidth - 3 - $bbox[1]), ($copyrightHeight - 5), imagecolorexact($copyrightImage, 80, 80, 80), self::FONT, $copyright);
+        imagefilledrectangle($image, 0, 0, $width, $height, imagecolorallocate($image, 255, 255, 255));
 
-        imagecopymerge($this->image, $copyrightImage, ($this->width - $copyrightWidth - 5), ($this->height - $copyrightHeight - 5), 0, 0, $copyrightWidth, $copyrightHeight, 50);
+        imagefttext($image, 7, 90, ($width - 3 - $bbox[1]), ($height - 5), imagecolorexact($image, 80, 80, 80), self::FONT, $copyright);
 
-        imagedestroy($copyrightImage);
+        imagecopymerge($this->image, $image, ($this->width - $width - 5), ($this->height - $height - 5), 0, 0, $width, $height, 50);
+
+        imagedestroy($image);
     }
 
     public function addTitle(string $title, array $color) : void
     {
         $bbox = imageftbbox(10, 0, self::FONTBOLD, $title);
 
-        $titleHeight = abs($bbox[1]) + abs($bbox[5]) + 6;
-        $titleWidth = abs($bbox[0]) + abs($bbox[2]) + 6;
+        $height = (int) round(abs($bbox[1]) + abs($bbox[5]) + 6);
+        $width = (int) round(abs($bbox[0]) + abs($bbox[2]) + 6);
 
-        $titleImage = imagecreatetruecolor($titleWidth, $titleHeight);
+        $image = imagecreatetruecolor($width, $height);
 
-        imagefilledrectangle($titleImage, 0, 0, $titleWidth, $titleHeight, imagecolorallocate($titleImage, 255, 255, 255));
+        if ($image === false) {
+            throw new ErrorException('Unable to imagecreatetruecolor() for title.');
+        }
 
-        $height = $titleHeight - 3 - $bbox[1] - 1;
+        imagefilledrectangle($image, 0, 0, $width, $height, imagecolorallocate($image, 255, 255, 255));
 
-        imagefttext($titleImage, 10, 0, 3, $height, imagecolorexact($titleImage, $color[0], $color[1], $color[2]), self::FONTBOLD, $title);
+        $y = (int) round($height - 3 - $bbox[1] - 1);
 
-        imagecopymerge($this->image, $titleImage, 5, 5, 0, 0, $titleWidth, $titleHeight, 75);
+        imagefttext($image, 10, 0, 3, $y, imagecolorexact($image, $color[0], $color[1], $color[2]), self::FONTBOLD, $title);
 
-        $this->currentY += 5 + $height;
+        imagecopymerge($this->image, $image, 5, 5, 0, 0, $width, $height, 75);
 
-        imagedestroy($titleImage);
+        $this->currentY += 5 + $y;
+
+        imagedestroy($image);
     }
 
     public function addListMunicipalities(array $municipalities, array $color) : void
@@ -148,22 +180,26 @@ class PNG
 
         $bbox = imageftbbox(8, 0, self::FONT, $text);
 
-        $municipalitiesHeight = abs($bbox[1]) + abs($bbox[5]) + 6;
-        $municipalitiesWidth = abs($bbox[0]) + abs($bbox[2]) + 6;
+        $height = (int) round(abs($bbox[1]) + abs($bbox[5]) + 6);
+        $width = (int) round(abs($bbox[0]) + abs($bbox[2]) + 6);
 
-        $municipalitiesImage = imagecreatetruecolor($municipalitiesWidth, $municipalitiesHeight);
+        $image = imagecreatetruecolor($width, $height);
 
-        imagefilledrectangle($municipalitiesImage, 0, 0, $municipalitiesWidth, $municipalitiesHeight, imagecolorallocate($municipalitiesImage, 255, 255, 255));
+        if ($image === false) {
+            throw new ErrorException('Unable to imagecreatetruecolor() for municipalities.');
+        }
 
-        $height = $municipalitiesHeight - 3 - $bbox[1] - 1;
+        imagefilledrectangle($image, 0, 0, $width, $height, imagecolorallocate($image, 255, 255, 255));
 
-        imagefttext($municipalitiesImage, 8, 0, 3, $height, imagecolorexact($municipalitiesImage, $color[0], $color[1], $color[2]), self::FONT, $text);
+        $y = (int) round($height - 3 - $bbox[1] - 1);
 
-        imagecopymerge($this->image, $municipalitiesImage, 5, $this->currentY + 10, 0, 0, $municipalitiesWidth, $municipalitiesHeight, 75);
+        imagefttext($image, 8, 0, 3, $y, imagecolorexact($image, $color[0], $color[1], $color[2]), self::FONT, $text);
 
-        $this->currentY += 10 + $height;
+        imagecopymerge($this->image, $image, 5, $this->currentY + 10, 0, 0, $width, $height, 75);
 
-        imagedestroy($municipalitiesImage);
+        $this->currentY += 10 + $y;
+
+        imagedestroy($image);
     }
 
     public function save() : bool
