@@ -3,13 +3,6 @@
 {% block title %}Geocode{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <img src="{{ asset('/logo.png') }}" height="100">
-    <h1>
-        GEO-6 API
-    </h1>
-</div>
-<hr>
 
 <div>
     <h2>
@@ -18,6 +11,143 @@
     </h2>
     <h3 class="text-muted">Locate an address or a POI</h3>
     <hr>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-database" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getDatabaseList</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-database">
+            {% include '@app/_response.html.twig' with {'query': database.query, 'time': database.time, 'status': database.status, 'response': database.response} %}
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-poi" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getPOIList/[:source/]:name</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-poi">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:source</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Point of interest database</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:name</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">Point of interest name</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': poi.query, 'time': poi.time, 'status': poi.status, 'response': poi.response} %}
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-zone" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getZoneList/:locality</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-zone">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:locality</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">Municipality, Locality, Postal Code, NIS-5, ...</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': zone.query, 'time': zone.time, 'status': zone.status, 'response': zone.response} %}
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-street" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getStreetList/[:source/][:locality/][:postalcode/]:streetname</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-street">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:source</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Database: <code>urbis</code>, <code>crab</code></td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:locality</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Municipality, Locality, Postal Code, NIS-5, ...</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:postalcode</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Postal Code</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:streetname</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">Streetname</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': street.query, 'time': street.time, 'status': street.status, 'response': street.response} %}
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-address" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getAddressList/[:source/][:locality/][:postalcode/]:streetname/:housenumber</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-address">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:source</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Database: <code>urbis</code>, <code>crab</code></td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:locality</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Municipality, Locality, Postal Code, NIS-5, ...</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:postalcode</code></th>
+                    <td class="col-3"><em>string</em> (optional)</td>
+                    <td class="col-6">Postal Code</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:streetname</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">Streetname</td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:housenumber</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">House number</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': address.query, 'time': address.time, 'status': address.status, 'response': address.response} %}
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}

@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Handler;
 
+use App\Test\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -34,7 +35,16 @@ class LocationHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $data = [];
+        $data = [
+            'latlng' => Request::get(
+                $request,
+                $this->router->generateUri('api.latlng', ['latitude' => 50.89794, 'longitude' => 4.36302])
+            ),
+            'xy' => Request::get(
+                $request,
+                $this->router->generateUri('api.xy', ['x' => 149597, 'y' => 176400])
+            ),
+        ];
 
         return new HtmlResponse($this->template->render('app::location', $data));
     }

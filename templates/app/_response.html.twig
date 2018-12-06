@@ -1,0 +1,13 @@
+<h5>Response</h5>
+<div>
+    {% if status >= 200 and status < 300 %}
+    <span class="badge badge-success">{{ status }}</span>
+    {% elseif status >= 300 and status < 400 %}
+    <span class="badge badge-warning">{{ status }}</span>
+    {% elseif status >= 400 %}
+    <span class="badge badge-danger">{{ status }}</span>
+    {% endif %}
+    <code style="font-size:inherit;">{{ query }}</code>
+    <span class="float-right text-info">{{ time }} milliseconds</span>
+</div>
+<pre class="p-3 bg-secondary text-white" style="height:50vh;">{{ response | raw }}</pre>

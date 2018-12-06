@@ -3,13 +3,6 @@
 {% block title %}Location{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <img src="{{ asset('/logo.png') }}" height="100">
-    <h1>
-        GEO-6 API
-    </h1>
-</div>
-<hr>
 
 <div>
     <h2>
@@ -18,6 +11,59 @@
     </h2>
     <h3 class="text-muted">Get information about a location</h3>
     <hr>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-latlng" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/latlng/:latitude/:longitude</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-latlng">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:latitude</code></th>
+                    <td class="col-3"><em>float</em></td>
+                    <td class="col-6">Latitude (EPSG:4326)</td>
+                </tr>
+                <tr>
+                    <th><code>:longitude</code></th>
+                    <td><em>float</em></td>
+                    <td>Longitude (EPSG:4326)</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': latlng.query, 'time': latlng.time, 'status': latlng.status, 'response': latlng.response} %}
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-xy" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/xy/:x/:y</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-xy">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th class="col-3"><code>:x</code></th>
+                    <td class="col-3"><em>float</em></td>
+                    <td class="col-6">X (EPSG:31370)</td>
+                </tr>
+                <tr>
+                    <th><code>:y</code></th>
+                    <td><em>float</em></td>
+                    <td>Y (EPSG:31370)</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' with {'query': xy.query, 'time': xy.time, 'status': xy.status, 'response': xy.response} %}
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}

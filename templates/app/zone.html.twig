@@ -3,13 +3,6 @@
 {% block title %}Geocode{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <img src="{{ asset('/logo.png') }}" height="100">
-    <h1>
-        GEO-6 API
-    </h1>
-</div>
-<hr>
 
 <div>
     <h2>
@@ -18,6 +11,27 @@
     </h2>
     <h3 class="text-muted">Get administrative information and maps related to a municipality</h3>
     <hr>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-zones" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/zones/:id</code>
+        </h4>
+        <hr>
+
+        <div class="collapse show" id="api-zones">
+            <h5>Parameters</h5>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th><code>:id</code></th>
+                    <td><em>integer</em></td>
+                    <td>NIS5 code of a belgian municipality</td>
+                </tr>
+            </table>
+
+            {% include '@app/_response.html.twig' %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}

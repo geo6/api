@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Handler;
 
+use App\Test\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -34,7 +35,10 @@ class ZoneHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $data = [];
+        $data = Request::get(
+            $request,
+            $this->router->generateUri('api.zones', ['nis5' => 21004])
+        );
 
         return new HtmlResponse($this->template->render('app::zone', $data));
     }

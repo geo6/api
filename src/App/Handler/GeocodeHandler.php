@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use App\Test\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -34,7 +35,28 @@ class GeocodeHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $data = [];
+        $data = [
+            'database' => Request::get(
+                $request,
+                $this->router->generateUri('api.geocode.database')
+            ),
+            'poi' => Request::get(
+                $request,
+                $this->router->generateUri('api.geocode.poi', ['source' => 'urbis', 'poi' => 'Manneken Pis'])
+            ),
+            'zone' => Request::get(
+                $request,
+                $this->router->generateUri('api.geocode.zone', ['locality' => 'Bruxelles'])
+            ),
+            'street' => Request::get(
+                $request,
+                $this->router->generateUri('api.geocode.street.source.3', ['source' => 'urbis', 'locality' => 'Bruxelles', 'postalcode' => '1020', 'street' => 'araucaria'])
+            ),
+            'address' => Request::get(
+                $request,
+                $this->router->generateUri('api.geocode.address.source.4', ['source' => 'urbis', 'locality' => 'Bruxelles', 'postalcode' => '1020', 'street' => 'araucaria', 'number' => '147'])
+            ),
+        ];
 
         return new HtmlResponse($this->template->render('app::geocode', $data));
     }
