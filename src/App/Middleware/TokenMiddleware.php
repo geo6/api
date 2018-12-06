@@ -73,7 +73,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         $server = $request->getServerParams();
 
-        $this->hostname = 'localhost'/*$server['SERVER_NAME'] ?? ''*/;
+        $this->hostname = $server['SERVER_NAME'] ?? '';
         $this->ip = $server['REMOTE_ADDR'] ?? '';
         $this->method = $request->getMethod();
 
@@ -81,7 +81,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         $this->valid = $this->checkToken();
 
-        if ($this->debug === false && $route->getMatchedRouteName() !== 'api.ping' && $this->valid === false) {
+        if ($this->debug === false && $this->ip !== $_SERVER['SERVER_ADDR'] && $route->getMatchedRouteName() !== 'api.ping' && $this->valid === false) {
             return new EmptyResponse(403);
         }
 
