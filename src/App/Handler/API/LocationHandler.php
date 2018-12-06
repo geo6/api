@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
@@ -61,7 +61,7 @@ class LocationHandler implements RequestHandlerInterface
         } else {
             $query = [
                 'longitude' => floatval($longitude),
-                'latitude' => floatval($latitude),
+                'latitude'  => floatval($latitude),
             ];
 
             $select
@@ -70,7 +70,7 @@ class LocationHandler implements RequestHandlerInterface
                     'ST_Contains(the_geog::geometry, ST_SetSRID(ST_MakePoint(?, ?), 4326))',
                     [
                         $query['longitude'],
-                        $query['latitude']
+                        $query['latitude'],
                     ]
                 );
         }
@@ -82,21 +82,21 @@ class LocationHandler implements RequestHandlerInterface
 
         $municipality = Municipality::getById($adapter, $nis5);
 
-        if (file_exists('data/maps/municipality/' . $municipality->nis5 . '.png')) {
+        if (file_exists('data/maps/municipality/'.$municipality->nis5.'.png')) {
             $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
-            $image = $root . $this->router->generateUri('api.zones.maps', [
+            $image = $root.$this->router->generateUri('api.zones.maps', [
                 'key'  => 'municipality',
-                'slug' => $municipality->nis5
+                'slug' => $municipality->nis5,
             ]);
         }
 
         $components = [
             [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'    => 'municipality',
+                'id'      => $municipality->nis5,
                 'name_fr' => $municipality->name_fr,
                 'name_nl' => $municipality->name_nl,
-                'image' => $image ?? null,
+                'image'   => $image ?? null,
             ],
             Components::getProvince($municipality->parent),
             Components::getRegion($municipality->parent),
@@ -111,15 +111,15 @@ class LocationHandler implements RequestHandlerInterface
         }
 
         $json = [
-            'query' => $query,
-            'type' => 'Feature',
-            'id' => $municipality->nis5,
+            'query'      => $query,
+            'type'       => 'Feature',
+            'id'         => $municipality->nis5,
             'properties' => [
-                'type' => 'municipality',
-                'id' => $municipality->nis5,
+                'type'         => 'municipality',
+                'id'           => $municipality->nis5,
                 'formatted_fr' => $municipality->name_fr,
                 'formatted_nl' => $municipality->name_nl,
-                'components' => $components,
+                'components'   => $components,
             ],
             'geometry' => null,
         ];

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Script\Map;
 
-use Symfony\Component\Process\Process;
 use ErrorException;
+use Symfony\Component\Process\Process;
 
 class PNG
 {
