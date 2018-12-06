@@ -6,7 +6,9 @@
     "license": "",
     "require": {
         "php": "^7.1",
+        "ext-curl": "*",
         "ext-intl": "*",
+        "ext-pdo_pgsql": "*",
         "jmikola/geojson": "^1.0",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
