@@ -10,6 +10,7 @@
         "ext-intl": "*",
         "ext-pdo_pgsql": "*",
         "jmikola/geojson": "^1.0",
+        "mtymek/blast-base-url": "^1.0",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
         "zendframework/zend-db": "^2.9",

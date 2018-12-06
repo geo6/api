@@ -141,6 +141,67 @@
             "time": "2015-09-27T15:35:21+00:00"
         },
         {
+            "name": "mtymek/blast-base-url",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtymek/blast-base-url.git",
+                "reference": "43c0cc0eb7ceff65909f8426521b590f3627149a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtymek/blast-base-url/zipball/43c0cc0eb7ceff65909f8426521b590f3627149a",
+                "reference": "43c0cc0eb7ceff65909f8426521b590f3627149a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-diactoros": "^1.3",
+                "zendframework/zend-expressive-helpers": "^1.4 || ^2.0",
+                "zendframework/zend-expressive-zendviewrenderer": "^1.0",
+                "zendframework/zend-servicemanager": "^2.6"
+            },
+            "type": "library",
+            "extra": {
+                "zf": {
+                    "component": "Blast\\BaseUrl",
+                    "config-provider": "Blast\\BaseUrl\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Blast\\BaseUrl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mateusz Tymek",
+                    "email": "mtymek@gmail.com"
+                }
+            ],
+            "description": "PSR-7 middleware and helpers for working with base URL.",
+            "keywords": [
+                "base url",
+                "baseurl",
+                "expressive",
+                "middleware",
+                "psr-7",
+                "psr7"
+            ],
+            "time": "2018-05-15T14:41:46+00:00"
+        },
+        {
             "name": "nikic/fast-route",
             "version": "v1.3.0",
             "source": {
@@ -442,6 +503,46 @@
                 "response"
             ],
             "time": "2018-10-30T17:12:04+00:00"
+        },
+        {
+            "name": "ralouphie/getallheaders",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ralouphie/getallheaders.git",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.0",
+                "satooshi/php-coveralls": ">=1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/getallheaders.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                }
+            ],
+            "description": "A polyfill for getallheaders.",
+            "time": "2016-02-11T07:05:27+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -5310,7 +5411,9 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
-        "ext-intl": "*"
+        "ext-curl": "*",
+        "ext-intl": "*",
+        "ext-pdo_pgsql": "*"
     },
     "platform-dev": {
         "ext-gd": "*"
