@@ -113,7 +113,6 @@ class LocationHandler implements RequestHandlerInterface
         $json = [
             'query'      => $query,
             'type'       => 'Feature',
-            'id'         => $municipality->nis5,
             'properties' => [
                 'type'         => 'municipality',
                 'id'           => $municipality->nis5,
