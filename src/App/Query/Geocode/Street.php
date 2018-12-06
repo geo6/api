@@ -157,7 +157,7 @@ class Street
 
             $wherePostalCode = (new Predicate())
                 ->greaterThan(
-                    (string) (new Expression($expression, $postalcode)),
+                    new Expression($expression, $postalcode),
                     0
                 );
 
