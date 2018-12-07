@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
@@ -96,13 +96,13 @@ class AddressHandler implements RequestHandlerInterface
 
         $json = [
             'query' => [
-                'source' => $source,
-                'locality' => $locality,
+                'source'     => $source,
+                'locality'   => $locality,
                 'postalcode' => $postalcode,
-                'street' => $street,
-                'number' => $number,
+                'street'     => $street,
+                'number'     => $number,
             ],
-            'type' => 'FeatureCollection',
+            'type'     => 'FeatureCollection',
             'features' => $features,
         ];
         if ($token->debug === true) {
