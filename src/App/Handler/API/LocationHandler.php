@@ -78,42 +78,43 @@ class LocationHandler implements RequestHandlerInterface
         $qsz = $sql->buildSqlString($select);
 
         $result = $adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE);
-        $nis5 = $result->current()->nis5;
 
-        $municipality = Municipality::getById($adapter, $nis5);
+        if ($result->count() === 0) {
+            $features = [];
+        } else {
+            $nis5 = $result->current()->nis5;
 
-        if (file_exists('data/maps/municipality/'.$municipality->nis5.'.png')) {
-            $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
-            $image = $root.$this->router->generateUri('api.zones.maps', [
-                'key'  => 'municipality',
-                'slug' => $municipality->nis5,
-            ]);
-        }
+            $municipality = Municipality::getById($adapter, $nis5);
 
-        $components = [
-            [
-                'type'    => 'municipality',
-                'id'      => $municipality->nis5,
-                'name_fr' => $municipality->name_fr,
-                'name_nl' => $municipality->name_nl,
-                'image'   => $image ?? null,
-            ],
-            Components::getProvince($municipality->parent),
-            Components::getRegion($municipality->parent),
-            Components::getCountry(),
-        ];
+            if (file_exists('data/maps/municipality/'.$municipality->nis5.'.png')) {
+                $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] !== 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
+                $image = $root.$this->router->generateUri('api.zones.maps', [
+                    'key'  => 'municipality',
+                    'slug' => $municipality->nis5,
+                ]);
+            }
 
-        $zones = Zone::get($adapter, $nis5);
-        $keys = array_keys($zones->getArrayCopy());
+            $components = [
+                [
+                    'type'    => 'municipality',
+                    'id'      => $municipality->nis5,
+                    'name_fr' => $municipality->name_fr,
+                    'name_nl' => $municipality->name_nl,
+                    'image'   => $image ?? null,
+                ],
+                Components::getProvince($municipality->parent),
+                Components::getRegion($municipality->parent),
+                Components::getCountry(),
+            ];
 
-        foreach ($keys as $key) {
-            $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
-        }
+            $zones = Zone::get($adapter, $nis5);
+            $keys = array_keys($zones->getArrayCopy());
 
-        $json = [
-            'query'    => $query,
-            'type'     => 'FeatureCollection',
-            'features' => [
+            foreach ($keys as $key) {
+                $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
+            }
+
+            $features = [
                 [
                     'type'       => 'Feature',
                     'id'         => $municipality->nis5,
@@ -126,7 +127,13 @@ class LocationHandler implements RequestHandlerInterface
                     ],
                     'geometry' => null,
                 ],
-            ],
+            ];
+        }
+
+        $json = [
+            'query'    => $query,
+            'type'     => 'FeatureCollection',
+            'features' => $features,
         ];
         if ($token->debug === true) {
             $json['token'] = $token;
