@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use ArrayObject;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouteResult;
-use Exception;
 
 class TokenMiddleware implements MiddlewareInterface
 {
