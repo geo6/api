@@ -35,11 +35,18 @@
         <div class="container">
             <hr />
             {% block footer %}
-            <p>
-                &copy; {{ "now" | date("Y") }} GEO-6 -
-                <a target="_blank" href="https://geo6.be/terms.html">Terms of use</a> -
-                <a target="_blank" href="https://geo6.be/privacy.html">Privacy</a>
-            </p>
+            <div class="row">
+                <div class="col">
+                    &copy; {{ "now" | date("Y") }} GEO-6 -
+                    <a target="_blank" href="https://geo6.be/terms.html">Terms of use</a> -
+                    <a target="_blank" href="https://geo6.be/privacy.html">Privacy</a>
+                </div>
+                <div class="col text-right">
+                    <a href="https://github.com/geo6/api" target="_blank" style="color:inherit;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
             {% endblock %}
         </div>
     </footer>
