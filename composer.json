@@ -8,7 +8,6 @@
         "php": "^7.1",
         "ext-curl": "*",
         "ext-intl": "*",
-        "ext-pdo_pgsql": "*",
         "guzzlehttp/guzzle": "^6.3",
         "jmikola/geojson": "^1.0",
         "mtymek/blast-base-url": "^1.0",
