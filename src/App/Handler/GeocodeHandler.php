@@ -54,6 +54,10 @@ class GeocodeHandler implements RequestHandlerInterface
             ),
             'address' => Request::get(
                 $request,
+                $this->router->generateUri('api.geocode.address.1', ['address' => '147 Av. de l\'Araucaria 1020 Bruxelles'])
+            ),
+            'addressData' => Request::get(
+                $request,
                 $this->router->generateUri('api.geocode.address.source.4', ['source' => 'urbis', 'locality' => 'Bruxelles', 'postalcode' => '1020', 'street' => 'araucaria', 'number' => '147'])
             ),
         ];

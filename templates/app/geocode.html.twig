@@ -108,13 +108,34 @@
     </div>
 
     <div>
-        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-address" style="cursor:pointer;">
+            <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-address" style="cursor:pointer;">
+                <span class="badge badge-primary">GET</span>
+                <code>/geocode/getAddressList/:address</code>
+            </h4>
+            <hr>
+
+            <div class="collapse show" id="api-address">
+                <h5>Parameters</h5>
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th class="col-3"><code>:address</code></th>
+                        <td class="col-3"><em>string</em></td>
+                        <td class="col-6">Full address (House number, Streetname, Postal code, Locality)</td>
+                    </tr>
+                </table>
+
+                {% include '@app/_response.html.twig' with {'query': address.query, 'time': address.time, 'status': address.status, 'response': address.response} %}
+            </div>
+        </div>
+
+    <div>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-address-data" style="cursor:pointer;">
             <span class="badge badge-primary">GET</span>
             <code>/geocode/getAddressList/[:source/][:locality/][:postalcode/]:streetname/:housenumber</code>
         </h4>
         <hr>
 
-        <div class="collapse show" id="api-address">
+        <div class="collapse show" id="api-address-data">
             <h5>Parameters</h5>
             <table class="table table-bordered table-sm">
                 <tr>
@@ -144,7 +165,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': address.query, 'time': address.time, 'status': address.status, 'response': address.response} %}
+            {% include '@app/_response.html.twig' with {'query': addressData.query, 'time': addressData.time, 'status': addressData.status, 'response': addressData.response} %}
         </div>
     </div>
 
