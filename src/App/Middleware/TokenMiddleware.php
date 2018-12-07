@@ -141,7 +141,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         $access = $this->access[$this->consumer];
 
-        if (isset($access['referer']) && !in_array($this->referer, $access['referer'], true)) {
+        if (isset($access['referer']) && !in_array(parse_url($this->referer, PHP_URL_HOST), $access['referer'], true)) {
             throw new Exception(
                 sprintf('Unauthorized referer "%s".', $this->referer)
             );
