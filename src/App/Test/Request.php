@@ -23,7 +23,7 @@ class Request
         $root = 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['SERVER_NAME'].(!in_array($_SERVER['SERVER_PORT'], [80, 443], false) ? ':'.$_SERVER['SERVER_PORT'] : '');
 
         $basepath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
-        $query = $basepath.$query;
+        $query = rtrim($basepath, '/').$query;
 
         $client = new Client([
             'base_uri' => $root,
