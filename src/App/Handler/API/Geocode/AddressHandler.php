@@ -66,7 +66,24 @@ class AddressHandler implements RequestHandlerInterface
             'urbis',
         ];
 
-        $features = [];
+        $json = [
+            'query' => [
+                'source'     => $source,
+                'locality'   => !is_null($locality) && preg_match('/^[0-9]{5}$/', $locality) === 1 ? intval($locality) : $locality,
+                'postalcode' => $postalcode,
+                'street'     => $street,
+                'number'     => $number,
+            ],
+            'type'     => 'FeatureCollection',
+            'features' => [],
+        ];
+        if ($token->debug === true) {
+            $json['token'] = $token;
+        }
+
+        if (is_null($street)) {
+            return new JsonResponse($json);
+        }
 
         if (!is_null($source)) {
             $results = Address::get($adapter, $source, $number ?? '', $street, $locality, $postalcode);
@@ -75,7 +92,7 @@ class AddressHandler implements RequestHandlerInterface
             }
 
             foreach ($results as $result) {
-                $features[] = Address::toGeoJSON($adapter, $result);
+                $json['features'][] = Address::toGeoJSON($adapter, $result);
             }
         } else {
             foreach ($sources as $s) {
@@ -85,28 +102,9 @@ class AddressHandler implements RequestHandlerInterface
                 }
 
                 foreach ($results as $result) {
-                    $features[] = Address::toGeoJSON($adapter, $result);
+                    $json['features'][] = Address::toGeoJSON($adapter, $result);
                 }
             }
-        }
-
-        if (!is_null($locality) && preg_match('/^[0-9]{5}$/', $locality) === 1) {
-            $locality = intval($locality);
-        }
-
-        $json = [
-            'query' => [
-                'source'     => $source,
-                'locality'   => $locality,
-                'postalcode' => $postalcode,
-                'street'     => $street,
-                'number'     => $number,
-            ],
-            'type'     => 'FeatureCollection',
-            'features' => $features,
-        ];
-        if ($token->debug === true) {
-            $json['token'] = $token;
         }
 
         return new JsonResponse($json);
