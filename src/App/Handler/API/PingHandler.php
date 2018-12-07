@@ -16,10 +16,14 @@ class PingHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
+        $server = $request->getServerParams();
 
         return new JsonResponse([
-            'now'   => time(),
-            'token' => $token,
+            'now'        => time(),
+            'token'      => $token,
+            'ip'         => $server['REMOTE_ADDR'] ?? null,
+            'referer'    => $server['HTTP_REFERER'] ?? null,
+            'user-agent' => $server['HTTP_USER_AGENT'] ?? null,
         ]);
     }
 }
