@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Handler\API\Geocode;
 
@@ -19,11 +19,41 @@ class AddressHandler implements RequestHandlerInterface
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
-        $source = $request->getAttribute('source');
-        $locality = $request->getAttribute('locality');
-        $postalcode = $request->getAttribute('postalcode');
-        $street = $request->getAttribute('street');
-        $number = $request->getAttribute('number');
+        $address = $request->getAttribute('address');
+
+        if (!is_null($address)) {
+            $expand = \Postal\Expand::expand_address($address);
+            $parsed = \Postal\Parser::parse_address($expand[0]);
+
+            $source = null;
+            $locality = null;
+            $postalcode = null;
+            $street = null;
+            $number = null;
+
+            foreach ($parsed as $component) {
+                switch ($component['label']) {
+                    case 'city':
+                        $locality = $component['value'];
+                        break;
+                    case 'postcode':
+                        $postalcode = $component['value'];
+                        break;
+                    case 'road':
+                        $street = $component['value'];
+                        break;
+                    case 'house_number':
+                        $number = $component['value'];
+                        break;
+                }
+            }
+        } else {
+            $source = $request->getAttribute('source');
+            $locality = $request->getAttribute('locality');
+            $postalcode = $request->getAttribute('postalcode');
+            $street = $request->getAttribute('street');
+            $number = $request->getAttribute('number');
+        }
 
         if (!is_null($locality) && preg_match('/^(?:B-)?[0-9]{4}$/', $locality) === 1 && is_null($postalcode)) {
             $postalcode = $locality;
@@ -66,13 +96,13 @@ class AddressHandler implements RequestHandlerInterface
 
         $json = [
             'query' => [
-                'source'     => $source,
-                'locality'   => $locality,
+                'source' => $source,
+                'locality' => $locality,
                 'postalcode' => $postalcode,
-                'street'     => $street,
-                'number'     => $number,
+                'street' => $street,
+                'number' => $number,
             ],
-            'type'     => 'FeatureCollection',
+            'type' => 'FeatureCollection',
             'features' => $features,
         ];
         if ($token->debug === true) {

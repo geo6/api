@@ -69,6 +69,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/geocode/getAddressList/{locality}/{postalcode}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.4');
     $app->get('/geocode/getAddressList/{locality}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.3');
     $app->get('/geocode/getAddressList/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.2');
+    $app->get('/geocode/getAddressList/{address}', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.1');
 
     $app->get('/geocode/getPOIList/{source}/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi.source');
     $app->get('/geocode/getPOIList/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi');
