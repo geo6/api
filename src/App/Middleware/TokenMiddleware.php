@@ -9,8 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\EmptyResponse;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouteResult;
+use Exception;
 
 class TokenMiddleware implements MiddlewareInterface
 {
@@ -46,9 +47,6 @@ class TokenMiddleware implements MiddlewareInterface
     /** @var int */
     private $timestamp;
 
-    /** @var bool */
-    private $valid = false;
-
     /**
      * @param array $access
      * @param bool  $debug
@@ -79,10 +77,16 @@ class TokenMiddleware implements MiddlewareInterface
 
         $this->query = $this->getQuery($request->getUri()->getPath());
 
-        $this->valid = $this->checkToken();
+        try {
+            $this->checkToken();
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
 
-        if ($this->debug === false && $this->ip !== $_SERVER['SERVER_ADDR'] && $route->getMatchedRouteName() !== 'api.ping' && $this->valid === false) {
-            return new EmptyResponse(403);
+        if ($this->debug === false && $this->ip !== $_SERVER['SERVER_ADDR'] && $route->getMatchedRouteName() !== 'api.ping' && isset($error)) {
+            return new JsonResponse([
+                'error' => $error,
+            ], 403);
         }
 
         $data = new ArrayObject([
@@ -91,7 +95,7 @@ class TokenMiddleware implements MiddlewareInterface
             'referer'   => $this->referer,
             'timestamp' => $this->timestamp,
             'query'     => $this->query,
-            'valid'     => $this->valid,
+            'error'     => $error ?? null,
         ], ArrayObject::ARRAY_AS_PROPS);
 
         return $handler->handle($request->withAttribute(self::TOKEN_ATTRIBUTE, $data));
@@ -127,31 +131,44 @@ class TokenMiddleware implements MiddlewareInterface
         return crypt($token, '$6$'.$secret.'$');
     }
 
-    /**
-     * @return bool
-     */
-    private function checkToken() : bool
+    private function checkToken() : void
     {
         if (strlen($this->consumer) === 0 || !in_array($this->consumer, array_keys($this->access), true)) {
-            return false;
+            throw new Exception(
+                sprintf('Invalid consumer "%s".', $this->consumer)
+            );
         }
 
         $access = $this->access[$this->consumer];
 
         if (isset($access['referer']) && !in_array($this->referer, $access['referer'], true)) {
-            return false;
+            throw new Exception(
+                sprintf('Unauthorized referer "%s".', $this->referer)
+            );
         }
         if (isset($access['ip']) && !in_array($this->ip, $access['ip'], true)) {
-            return false;
+            throw new Exception(
+                sprintf('Unauthorized ip "%s".', $this->ip)
+            );
         }
 
-        if ($this->timestamp > (time() + (5 * 60)) || $this->timestamp < (time() - (5 * 60))) {
-            return false;
+        if ($this->timestamp < (time() - (5 * 60))) {
+            throw new Exception(
+                sprintf('Expired token. Token timestamp is "%s".', date('c', $this->timestamp))
+            );
+        }
+        if ($this->timestamp > (time() + (5 * 60))) {
+            throw new Exception(
+                sprintf('Invalid timestamp. Token timestamp is "%s".', date('c', $this->timestamp))
+            );
         }
 
         $token = $this->generateToken($access['secret']);
-
-        return hash_equals($token, $this->token);
+        if (hash_equals($token, $this->token) !== true) {
+            throw new Exception(
+                'Invalid token.'
+            );
+        }
     }
 
     /**
