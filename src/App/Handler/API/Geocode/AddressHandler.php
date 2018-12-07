@@ -22,8 +22,8 @@ class AddressHandler implements RequestHandlerInterface
         $address = $request->getAttribute('address');
 
         if (!is_null($address)) {
-            $expand = \Postal\Expand::expand_address($address);
-            $parsed = \Postal\Parser::parse_address($expand[0]);
+            $expanded = \Postal\Expand::expand_address($address);
+            $parsed = \Postal\Parser::parse_address($expanded[0]);
 
             $source = null;
             $locality = null;
