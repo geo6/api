@@ -16,4 +16,6 @@ return [
         'username' => '',
         'password' => '',
     ],
+    'access' => [
+    ],
 ];
