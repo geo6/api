@@ -62,6 +62,10 @@ class Street
             $nis5 = PostalCode::getByCode($adapter, $postalcode)->nis5;
         }
 
+        if (count($nis5) === 0) {
+            return (new ResultSet())->initialize([]);
+        }
+
         /**
          * Get alias street identifier.
          */
