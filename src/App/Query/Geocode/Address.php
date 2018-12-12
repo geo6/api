@@ -80,7 +80,11 @@ class Address
                     'mun_name_nl' => 'name_nl',
                     'mun_parent'  => 'parent',
                 ]
-            );
+            )
+            ->order([
+                'a.hnr',
+                new Expression('REGEXP_REPLACE(a.hnr,\'^([0-9]+).*\',\'\\1\')::int'),
+            ]);
 
         $whereStreets = (new Predicate())
             ->in('a.strid', $streets);
