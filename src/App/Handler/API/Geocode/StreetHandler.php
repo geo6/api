@@ -30,10 +30,24 @@ class StreetHandler implements RequestHandlerInterface
             $locality = null;
         }
 
-        $sources = [
-            'crab',
-            'urbis',
-        ];
+        $sources = $token['database']['address'];
+
+        if (!is_null($source) && !in_array($source, $sources, true)) {
+            $json = [
+                'query' => [
+                    'source'     => $source,
+                    'locality'   => $locality,
+                    'postalcode' => $postalcode,
+                    'street'     => $street,
+                ],
+                'error' => sprintf('Access denied for "%s".', $source),
+            ];
+            if ($token['debug'] === true) {
+                $json['token'] = $token;
+            }
+
+            return new JsonResponse($json, 403);
+        }
 
         $features = [];
 

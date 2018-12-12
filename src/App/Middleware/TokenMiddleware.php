@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Middleware\DbAdapterMiddleware;
 use ArrayObject;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Metadata\Metadata;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Router\RouteResult;
 
@@ -19,6 +22,9 @@ class TokenMiddleware implements MiddlewareInterface
 
     /** @var array */
     private $access = [];
+
+    /** @var Adapter */
+    private $adapter;
 
     /** @var bool */
     private $debug = false;
@@ -67,6 +73,8 @@ class TokenMiddleware implements MiddlewareInterface
     {
         $route = $request->getAttribute(RouteResult::class);
 
+        $this->adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+
         $this->getTokenFromHeader($request);
 
         $server = $request->getServerParams();
@@ -92,6 +100,7 @@ class TokenMiddleware implements MiddlewareInterface
         $data = [
             'debug'     => $this->debug,
             'consumer'  => $this->consumer,
+            'database'  => $this->getDatabases(),
             'referer'   => $this->referer,
             'timestamp' => $this->timestamp,
             'query'     => $this->query,
@@ -187,5 +196,52 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         return $path;
+    }
+
+    private function getDatabases() : array
+    {
+        $address = [
+            'crab',
+            'urbis',
+        ];
+        $poi = [
+            'urbis',
+        ];
+
+        $database = $this->access[$this->consumer]['database'] ?? [];
+
+        if (isset($database['address'])) {
+            $address = array_merge($address, $database['address']);
+            $address = array_unique($address);
+            sort($address);
+        }
+
+        foreach ($address as $i => $a) {
+            if (!in_array($a, ['crab', 'picc', 'urbis'])) {
+                unset($address[$i]);
+                $address = array_values($address);
+            }
+        }
+
+        if (isset($database['poi'])) {
+            $poi = array_merge($poi, $database['poi']);
+            $poi = array_unique($poi);
+            sort($poi);
+        }
+
+        $metadata = new Metadata($this->adapter);
+        $sources_poi = $metadata->getTableNames('poi');
+
+        foreach ($poi as $i => $p) {
+            if (!in_array($p, $sources_poi)) {
+                unset($poi[$i]);
+                $poi = array_values($poi);
+            }
+        }
+
+        return [
+            'address' => $address,
+            'poi' => $poi,
+        ];
     }
 }

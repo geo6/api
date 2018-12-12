@@ -23,17 +23,21 @@ class POIHandler implements RequestHandlerInterface
         $source = $request->getAttribute('source');
         $poi = $request->getAttribute('poi');
 
-        $metadata = new Metadata($adapter);
-        $sources = $metadata->getTableNames('poi');
+        $sources = $token['database']['poi'];
 
         if (!is_null($source) && !in_array($source, $sources, true)) {
-            return new JsonResponse([
+            $json = [
                 'query' => [
                     'source' => $source,
                     'poi'    => $poi,
                 ],
-                'error' => sprintf('Source "%s" does not exist.', $source),
-            ], 400);
+                'error' => sprintf('Access denied for "%s".', $source),
+            ];
+            if ($token['debug'] === true) {
+                $json['token'] = $token;
+            }
+
+            return new JsonResponse($json, 403);
         }
 
         $features = [];
