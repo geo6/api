@@ -18,7 +18,7 @@ class DatabaseHandler implements RequestHandlerInterface
 
         $json = [
             'address' => $token['database']['address'],
-            'poi' => $token['database']['poi'],
+            'poi'     => $token['database']['poi'],
         ];
         if ($token['debug'] === true) {
             $json['token'] = $token;

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Middleware\DbAdapterMiddleware;
-use ArrayObject;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -241,7 +239,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         return [
             'address' => $address,
-            'poi' => $poi,
+            'poi'     => $poi,
         ];
     }
 }
