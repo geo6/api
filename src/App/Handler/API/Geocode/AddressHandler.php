@@ -77,7 +77,7 @@ class AddressHandler implements RequestHandlerInterface
             'type'     => 'FeatureCollection',
             'features' => [],
         ];
-        if ($token->debug === true) {
+        if ($token['debug'] === true) {
             $json['token'] = $token;
         }
 

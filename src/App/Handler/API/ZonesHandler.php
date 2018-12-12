@@ -78,7 +78,7 @@ class ZonesHandler implements RequestHandlerInterface
             ],
             'geometry' => null,
         ];
-        if ($token->debug === true) {
+        if ($token['debug'] === true) {
             $json['token'] = $token;
         }
 

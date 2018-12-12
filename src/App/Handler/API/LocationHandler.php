@@ -135,7 +135,7 @@ class LocationHandler implements RequestHandlerInterface
             'type'     => 'FeatureCollection',
             'features' => $features,
         ];
-        if ($token->debug === true) {
+        if ($token['debug'] === true) {
             $json['token'] = $token;
         }
 

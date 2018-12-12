@@ -29,7 +29,7 @@ class DatabaseHandler implements RequestHandlerInterface
             ],
             'poi' => $sources_poi,
         ];
-        if ($token->debug === true) {
+        if ($token['debug'] === true) {
             $json['token'] = $token;
         }
 

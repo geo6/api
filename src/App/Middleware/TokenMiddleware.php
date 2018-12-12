@@ -89,14 +89,14 @@ class TokenMiddleware implements MiddlewareInterface
             ], 403);
         }
 
-        $data = new ArrayObject([
+        $data = [
             'debug'     => $this->debug,
             'consumer'  => $this->consumer,
             'referer'   => $this->referer,
             'timestamp' => $this->timestamp,
             'query'     => $this->query,
             'error'     => $error ?? null,
-        ], ArrayObject::ARRAY_AS_PROPS);
+        ];
 
         return $handler->handle($request->withAttribute(self::TOKEN_ATTRIBUTE, $data));
     }
