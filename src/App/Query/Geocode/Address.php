@@ -82,8 +82,8 @@ class Address
                 ]
             )
             ->order([
-                'a.hnr',
                 new Expression('REGEXP_REPLACE(a.hnr,\'^([0-9]+).*\',\'\\1\')::int'),
+                'a.hnr',
             ]);
 
         $whereStreets = (new Predicate())
