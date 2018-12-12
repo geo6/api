@@ -50,40 +50,40 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/test/location', App\Handler\LocationHandler::class, 'test.location');
     $app->get('/test/zone', App\Handler\ZoneHandler::class, 'test.zone');
 
-    $app->get('/ping', [TokenMiddleware::class, DbAdapterMiddleware::class, PingHandler::class], 'api.ping');
+    $app->get('/ping', [DbAdapterMiddleware::class, TokenMiddleware::class, PingHandler::class], 'api.ping');
 
-    $app->get('/geocode/getDatabaseList', [TokenMiddleware::class, DbAdapterMiddleware::class, DatabaseHandler::class], 'api.geocode.database');
+    $app->get('/geocode/getDatabaseList', [DbAdapterMiddleware::class, TokenMiddleware::class, DatabaseHandler::class], 'api.geocode.database');
 
-    $app->get('/geocode/getZoneList/{locality}', [TokenMiddleware::class, DbAdapterMiddleware::class, ZoneHandler::class], 'api.geocode.zone');
+    $app->get('/geocode/getZoneList/{locality}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZoneHandler::class], 'api.geocode.zone');
 
-    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{locality}/{postalcode}/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.source.3');
-    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{locality}/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.source.2');
-    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.source.1');
-    $app->get('/geocode/getStreetList/{locality}/{postalcode}/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.3');
-    $app->get('/geocode/getStreetList/{locality}/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.2');
-    $app->get('/geocode/getStreetList/{street}', [TokenMiddleware::class, DbAdapterMiddleware::class, StreetHandler::class], 'api.geocode.street.1');
+    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{locality}/{postalcode}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.source.3');
+    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{locality}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.source.2');
+    $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.source.1');
+    $app->get('/geocode/getStreetList/{locality}/{postalcode}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.3');
+    $app->get('/geocode/getStreetList/{locality}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.2');
+    $app->get('/geocode/getStreetList/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.1');
 
-    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{locality}/{postalcode}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.source.4');
-    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{locality}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.source.3');
-    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.source.2');
-    $app->get('/geocode/getAddressList/{locality}/{postalcode}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.4');
-    $app->get('/geocode/getAddressList/{locality}/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.3');
-    $app->get('/geocode/getAddressList/{street}/[{number}]', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.2');
-    $app->get('/geocode/getAddressList/{address}', [TokenMiddleware::class, DbAdapterMiddleware::class, AddressHandler::class], 'api.geocode.address.1');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{locality}/{postalcode}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.4');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{locality}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.3');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|picc}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.2');
+    $app->get('/geocode/getAddressList/{locality}/{postalcode}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.4');
+    $app->get('/geocode/getAddressList/{locality}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.3');
+    $app->get('/geocode/getAddressList/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.2');
+    $app->get('/geocode/getAddressList/{address}', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.1');
 
-    $app->get('/geocode/getPOIList/{source}/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi.source');
-    $app->get('/geocode/getPOIList/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi');
+    $app->get('/geocode/getPOIList/{source}/{poi}', [DbAdapterMiddleware::class, TokenMiddleware::class, POIHandler::class], 'api.geocode.poi.source');
+    $app->get('/geocode/getPOIList/{poi}', [DbAdapterMiddleware::class, TokenMiddleware::class, POIHandler::class], 'api.geocode.poi');
     // Backward compatibilty
-    $app->get('/geocode/getPOI/{source}/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi.source.old');
-    $app->get('/geocode/getPOI/{poi}', [TokenMiddleware::class, DbAdapterMiddleware::class, POIHandler::class], 'api.geocode.poi.old');
+    $app->get('/geocode/getPOI/{source}/{poi}', [DbAdapterMiddleware::class, TokenMiddleware::class, POIHandler::class], 'api.geocode.poi.source.old');
+    $app->get('/geocode/getPOI/{poi}', [DbAdapterMiddleware::class, TokenMiddleware::class, POIHandler::class], 'api.geocode.poi.old');
 
-    $app->get('/xy/{x:[0-9.]+}/{y:[0-9.]+}', [TokenMiddleware::class, DbAdapterMiddleware::class, LocationHandler::class], 'api.xy');
-    $app->get('/latlng/{latitude:[\-0-9.]+}/{longitude:[\-0-9.]+}', [TokenMiddleware::class, DbAdapterMiddleware::class, LocationHandler::class], 'api.latlng');
+    $app->get('/xy/{x:[0-9.]+}/{y:[0-9.]+}', [DbAdapterMiddleware::class, TokenMiddleware::class, LocationHandler::class], 'api.xy');
+    $app->get('/latlng/{latitude:[\-0-9.]+}/{longitude:[\-0-9.]+}', [DbAdapterMiddleware::class, TokenMiddleware::class, LocationHandler::class], 'api.latlng');
     // Backward compatibilty
-    $app->get('/xy/{x:[0-9.]+},{y:[0-9.]+}', [TokenMiddleware::class, DbAdapterMiddleware::class, LocationHandler::class], 'api.xy.old');
-    $app->get('/latlng/{latitude:[\-0-9.]+},{longitude:[\-0-9.]+}', [TokenMiddleware::class, DbAdapterMiddleware::class, LocationHandler::class], 'api.latlng.old');
+    $app->get('/xy/{x:[0-9.]+},{y:[0-9.]+}', [DbAdapterMiddleware::class, TokenMiddleware::class, LocationHandler::class], 'api.xy.old');
+    $app->get('/latlng/{latitude:[\-0-9.]+},{longitude:[\-0-9.]+}', [DbAdapterMiddleware::class, TokenMiddleware::class, LocationHandler::class], 'api.latlng.old');
 
-    $app->get('/zones/{nis5:[0-9]{5}}', [TokenMiddleware::class, DbAdapterMiddleware::class, ZonesHandler::class], 'api.zones');
+    $app->get('/zones/{nis5:[0-9]{5}}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZonesHandler::class], 'api.zones');
 
     $app->get('/zones/map/{key}/{slug}[.png]', MapHandler::class, 'api.zones.maps');
 };
