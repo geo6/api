@@ -40,7 +40,7 @@ class MapFile
             $extent['minx'] - (0.05 * $dx),
             $extent['miny'] - (0.05 * $dy),
             $extent['maxx'] + (0.05 * $dx),
-            $extent['maxy'] + (0.05 * $dy)
+            $extent['maxy'] + (0.05 * $dy),
         ];
     }
 
