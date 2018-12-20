@@ -102,7 +102,7 @@ class TokenMiddleware implements MiddlewareInterface
 
             if ($token->check($access['secret']) !== true) {
                 throw new Exception('Invalid token!');
-            };
+            }
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
@@ -131,7 +131,7 @@ class TokenMiddleware implements MiddlewareInterface
      * Get list of databases that the user have the right to access.
      *
      * @param Adapter $adapter
-     * @param array $config
+     * @param array   $config
      *
      * @return array
      */

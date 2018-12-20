@@ -1,24 +1,23 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Token;
 
-use Jose\Component\Checker\HeaderCheckerManager;
+use Jose\Component\Checker;
 use Jose\Component\Checker\AlgorithmChecker;
+use Jose\Component\Checker\ClaimCheckerManager;
+use Jose\Component\Checker\HeaderCheckerManager;
+use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\Converter\JsonConverter;
 use Jose\Component\Core\Converter\StandardConverter;
-use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWS;
-use Jose\Component\Signature\JWSTokenSupport;
-use Jose\Component\Signature\Serializer\JWSSerializerManager;
-use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Algorithm;
+use Jose\Component\Signature\JWSTokenSupport;
 use Jose\Component\Signature\JWSVerifier;
-use Jose\Component\Signature\JWSLoader;
-use Jose\Component\Checker\ClaimCheckerManager;
-use Jose\Component\Checker;
+use Jose\Component\Signature\Serializer\CompactSerializer;
+use Jose\Component\Signature\Serializer\JWSSerializerManager;
 
 /**
  * @see https://jwt.io/
@@ -60,7 +59,7 @@ class JWT implements TokenInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getTimestamp() : int
     {
@@ -97,7 +96,7 @@ class JWT implements TokenInterface
                 new AlgorithmChecker([
                     'HS256',
                     'HS384',
-                    'HS512'
+                    'HS512',
                 ]),
             ],
             [

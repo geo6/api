@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Token;
 
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Geo6 implements TokenInterface
@@ -28,9 +27,9 @@ class Geo6 implements TokenInterface
     private $timestamp;
 
     /**
-     * @param string $consumer
-     * @param string $token
-     * @param integer $timestamp
+     * @param string                 $consumer
+     * @param string                 $token
+     * @param int                    $timestamp
      * @param ServerRequestInterface $request
      */
     public function __construct(string $consumer, string $token, int $timestamp, ServerRequestInterface $request)
@@ -53,7 +52,7 @@ class Geo6 implements TokenInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getTimestamp() : int
     {
