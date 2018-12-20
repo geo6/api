@@ -11,6 +11,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "jmikola/geojson": "^1.0",
         "mtymek/blast-base-url": "^1.0",
+        "web-token/jwt-checker": "^1.2",
+        "web-token/jwt-signature": "^1.2",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
         "zendframework/zend-db": "^2.9",

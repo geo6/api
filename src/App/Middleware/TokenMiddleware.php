@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Token\Geo6 as Geo6Token;
+use App\Token\JWT;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,35 +23,14 @@ class TokenMiddleware implements MiddlewareInterface
     /** @var array */
     private $access = [];
 
-    /** @var Adapter */
-    private $adapter;
-
     /** @var bool */
     private $debug = false;
-
-    /** @var string */
-    private $consumer;
-
-    /** @var string */
-    private $hostname;
 
     /** @var string */
     private $ip;
 
     /** @var string */
-    private $method;
-
-    /** @var string */
-    private $query;
-
-    /** @var string */
     private $referer;
-
-    /** @var string */
-    private $token;
-
-    /** @var int */
-    private $timestamp;
 
     /**
      * @param array $access
@@ -71,20 +52,57 @@ class TokenMiddleware implements MiddlewareInterface
     {
         $route = $request->getAttribute(RouteResult::class);
 
-        $this->adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+        $authorization = $request->getHeaderLine('Authorization');
+        if (strlen($authorization) > 0 && preg_match('/^Bearer (.+)$/', $authorization, $matches)) {
+            $token = new JWT($matches[1]);
+        } else {
+            $consumer = $request->getHeaderLine('X-Geo6-Consumer');
+            $token = $request->getHeaderLine('X-Geo6-Token');
+            $timestamp = intval($request->getHeaderLine('X-Geo6-Timestamp'));
 
-        $this->getTokenFromHeader($request);
+            $token = new Geo6Token($consumer, $token, $timestamp, $request);
+        }
 
-        $server = $request->getServerParams();
+        $this->referer = $request->getHeaderLine('Referer');
+        $this->ip = ($request->getServerParams())['REMOTE_ADDR'] ?? '';
 
-        $this->hostname = $server['SERVER_NAME'] ?? '';
-        $this->ip = $server['REMOTE_ADDR'] ?? '';
-        $this->method = $request->getMethod();
-
-        $this->query = $this->getQuery($request->getUri()->getPath());
+        $timestamp = $token->getTimestamp();
+        $consumer = $token->getConsumer();
 
         try {
-            $this->checkToken();
+            if ($timestamp < (time() - (5 * 60))) {
+                throw new Exception(
+                    sprintf('Expired token. Token timestamp is "%s".', date('c', $timestamp))
+                );
+            }
+            if ($timestamp > (time() + (5 * 60))) {
+                throw new Exception(
+                    sprintf('Invalid timestamp. Token timestamp is "%s".', date('c', $timestamp))
+                );
+            }
+
+            if (strlen($consumer) === 0 || !in_array($consumer, array_keys($this->access), true)) {
+                throw new Exception(
+                    sprintf('Invalid consumer "%s".', $consumer)
+                );
+            }
+
+            $access = $this->access[$consumer];
+
+            if (isset($access['referer']) && !in_array(parse_url($this->referer, PHP_URL_HOST), $access['referer'], true)) {
+                throw new Exception(
+                    sprintf('Unauthorized referer "%s".', $this->referer)
+                );
+            }
+            if (isset($access['ip']) && !in_array($this->ip, $access['ip'], true)) {
+                throw new Exception(
+                    sprintf('Unauthorized ip "%s".', $this->ip)
+                );
+            }
+
+            if ($token->check($access['secret']) !== true) {
+                throw new Exception('Invalid token!');
+            };
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
@@ -95,13 +113,14 @@ class TokenMiddleware implements MiddlewareInterface
             ], 403);
         }
 
+        $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
+
         $data = [
             'debug'     => $this->debug,
-            'consumer'  => $this->consumer,
-            'database'  => $this->getDatabases(),
+            'consumer'  => $consumer,
+            'database'  => $this->getDatabases($adapter, $this->access[$consumer]['database'] ?? []),
             'referer'   => $this->referer,
-            'timestamp' => $this->timestamp,
-            'query'     => $this->query,
+            'timestamp' => $timestamp,
             'error'     => $error ?? null,
         ];
 
@@ -109,94 +128,14 @@ class TokenMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
+     * Get list of databases that the user have the right to access.
      *
-     * @return void
-     */
-    private function getTokenFromHeader(ServerRequestInterface $request) : void
-    {
-        $this->referer = $request->getHeaderLine('Referer');
-
-        $this->consumer = $request->getHeaderLine('X-Geo6-Consumer');
-        $this->token = $request->getHeaderLine('X-Geo6-Token');
-        $this->timestamp = intval($request->getHeaderLine('X-Geo6-Timestamp'));
-    }
-
-    /**
-     * @param string $secret
+     * @param Adapter $adapter
+     * @param array $config
      *
-     * @return string
+     * @return array
      */
-    private function generateToken(string $secret) : string
-    {
-        $token = $this->consumer.'__';
-        $token .= $this->timestamp.'__';
-        $token .= $this->hostname.'__';
-        $token .= $this->method.'__';
-        $token .= $this->query;
-
-        return crypt($token, '$6$'.$secret.'$');
-    }
-
-    private function checkToken() : void
-    {
-        if (strlen($this->consumer) === 0 || !in_array($this->consumer, array_keys($this->access), true)) {
-            throw new Exception(
-                sprintf('Invalid consumer "%s".', $this->consumer)
-            );
-        }
-
-        $access = $this->access[$this->consumer];
-
-        if (isset($access['referer']) && !in_array(parse_url($this->referer, PHP_URL_HOST), $access['referer'], true)) {
-            throw new Exception(
-                sprintf('Unauthorized referer "%s".', $this->referer)
-            );
-        }
-        if (isset($access['ip']) && !in_array($this->ip, $access['ip'], true)) {
-            throw new Exception(
-                sprintf('Unauthorized ip "%s".', $this->ip)
-            );
-        }
-
-        if ($this->timestamp < (time() - (5 * 60))) {
-            throw new Exception(
-                sprintf('Expired token. Token timestamp is "%s".', date('c', $this->timestamp))
-            );
-        }
-        if ($this->timestamp > (time() + (5 * 60))) {
-            throw new Exception(
-                sprintf('Invalid timestamp. Token timestamp is "%s".', date('c', $this->timestamp))
-            );
-        }
-
-        $token = $this->generateToken($access['secret']);
-        if (hash_equals($token, $this->token) !== true) {
-            throw new Exception(
-                'Invalid token.'
-            );
-        }
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    private function getQuery(string $path) : string
-    {
-        if (preg_match('/^(\/geocode\/[a-z]+)/i', $path, $matches) === 1) {
-            return $matches[1];
-        } elseif (preg_match('/^(\/(?:xy|latlng))/i', $path, $matches) === 1) {
-            return $matches[1];
-        } elseif (preg_match('/^(\/zones)/i', $path, $matches) === 1) {
-            return $matches[1];
-        }
-
-        return $path;
-    }
-
-    private function getDatabases() : array
+    private static function getDatabases(Adapter $adapter, array $config) : array
     {
         $address = [
             'crab',
@@ -206,10 +145,8 @@ class TokenMiddleware implements MiddlewareInterface
             'urbis',
         ];
 
-        $database = $this->access[$this->consumer]['database'] ?? [];
-
-        if (isset($database['address'])) {
-            $address = array_merge($address, $database['address']);
+        if (isset($config['address'])) {
+            $address = array_merge($address, $config['address']);
             $address = array_unique($address);
             sort($address);
         }
@@ -221,13 +158,13 @@ class TokenMiddleware implements MiddlewareInterface
             }
         }
 
-        if (isset($database['poi'])) {
-            $poi = array_merge($poi, $database['poi']);
+        if (isset($config['poi'])) {
+            $poi = array_merge($poi, $config['poi']);
             $poi = array_unique($poi);
             sort($poi);
         }
 
-        $metadata = new Metadata($this->adapter);
+        $metadata = new Metadata($adapter);
         $sources_poi = $metadata->getTableNames('poi');
 
         foreach ($poi as $i => $p) {
