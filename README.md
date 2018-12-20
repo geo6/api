@@ -1,9 +1,10 @@
 # GEO-6 API
 
+<https://api-v2.geo6.be/>
+
 ## Authentication
 
-You will require a *ConsumerId* and a *SecretKey* to access the API. You can have a look at the available functionalities here : <https://api-v2.geo6.be/>.  
-Please [contact us](https://geo6.be/contact.html) to ask for an access.
+You will require a *ConsumerId* and a *SecretKey* to access the API. Please [contact us](https://geo6.be/contact.html) to ask for an access.
 
 The API authentication is based on [JSON Web Token](https://jwt.io/).  
 
