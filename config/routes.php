@@ -85,5 +85,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/zones/{nis5:[0-9]{5}}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZonesHandler::class], 'api.zones');
 
-    $app->get('/zones/map/{key}/{slug}[.png]', MapHandler::class, 'api.zones.maps');
+    $app->get('/zones/map/{key}/{slug}.png', MapHandler::class, 'api.zones.maps.png');
+    $app->get('/zones/map/{key}/{slug}', MapHandler::class, 'api.zones.maps');
 };
