@@ -20,15 +20,12 @@ class StreetHandler implements RequestHandlerInterface
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $source = $request->getAttribute('source');
+        $nis5 = $request->getAttribute('nis5');
         $locality = $request->getAttribute('locality');
         $postalcode = $request->getAttribute('postalcode');
         $street = $request->getAttribute('street');
 
-        if (!is_null($locality) && preg_match('/^(?:B-)?[0-9]{4}$/', $locality) === 1 && is_null($postalcode)) {
-            $postalcode = $locality;
-
-            $locality = null;
-        }
+        $nis5 = !is_null($nis5) ? intval($nis5) : $nis5;
 
         $sources = $token['database']['address'];
 
@@ -36,6 +33,7 @@ class StreetHandler implements RequestHandlerInterface
             $json = [
                 'query' => [
                     'source'     => $source,
+                    'nis5'       => $nis5,
                     'locality'   => $locality,
                     'postalcode' => $postalcode,
                     'street'     => $street,
@@ -52,13 +50,13 @@ class StreetHandler implements RequestHandlerInterface
         $features = [];
 
         if (!is_null($source)) {
-            $results = Street::get($adapter, $source, $street, $locality, $postalcode);
+            $results = Street::get($adapter, $source, $street, $nis5, $locality, $postalcode);
             foreach ($results as $result) {
                 $features[] = Street::toGeoJSON($adapter, $result);
             }
         } else {
             foreach ($sources as $s) {
-                $results = Street::get($adapter, $s, $street, $locality, $postalcode);
+                $results = Street::get($adapter, $s, $street, $nis5, $locality, $postalcode);
                 foreach ($results as $result) {
                     $features[] = Street::toGeoJSON($adapter, $result);
                 }
@@ -72,6 +70,7 @@ class StreetHandler implements RequestHandlerInterface
         $json = [
             'query' => [
                 'source'     => $source,
+                'nis5'       => $nis5,
                 'locality'   => $locality,
                 'postalcode' => $postalcode,
                 'street'     => $street,

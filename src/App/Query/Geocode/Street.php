@@ -20,7 +20,8 @@ class Street
     /**
      * @param Adapter     $adapter
      * @param string      $source
-     * @param string      $street
+     * @param string|null $street
+     * @param int|null    $nis5
      * @param string|null $locality
      * @param string|null $postalcode
      *
@@ -29,7 +30,8 @@ class Street
     public static function get(
         Adapter $adapter,
         string $source,
-        string $street,
+        ? string $street,
+        ? int $nis5,
         ? string $locality,
         ? string $postalcode
     ) : ResultSet {
@@ -38,56 +40,52 @@ class Street
         /*
          * Get NIS5.
          */
-        if (!is_null($locality)) {
-            if (preg_match('/^[0-9]{5}$/', $locality) === 1) {
-                $nis5 = intval($locality);
+        if (is_null($nis5) && !is_null($locality)) {
+            $nis5 = [];
 
-                $locality = null;
-            } else {
-                $nis5 = [];
+            $nis5 = array_merge(
+                $nis5,
+                array_column(Municipality::get($adapter, $locality)->toArray(), 'nis5')
+            );
 
-                $nis5 = array_merge(
-                    $nis5,
-                    array_column(Municipality::get($adapter, $locality)->toArray(), 'nis5')
-                );
-
-                $postalcodes = PostalCode::get($adapter, $locality);
-                foreach ($postalcodes as $pc) {
-                    $nis5 = array_merge($nis5, $pc['nis5']);
-                }
-
-                $nis5 = array_unique($nis5);
+            $postalcodes = PostalCode::get($adapter, $locality);
+            foreach ($postalcodes as $pc) {
+                $nis5 = array_merge($nis5, $pc['nis5']);
             }
-        } elseif (!is_null($postalcode)) {
+
+            $nis5 = array_unique($nis5);
+        } elseif (is_null($nis5) && !is_null($postalcode)) {
             $nis5 = PostalCode::getByCode($adapter, $postalcode)->nis5;
         }
 
-        if ((!is_null($locality) || !is_null($postalcode)) && (!isset($nis5) || count($nis5) === 0)) {
+        if (is_null($nis5) || (is_array($nis5) && count($nis5) === 0)) {
             return (new ResultSet())->initialize([]);
         }
 
         /**
          * Get alias street identifier.
          */
-        $select = $sql->select()
-            ->from(sprintf('%s_street_alias', $source))
-            ->columns(['strid']);
-        $select
-            ->where
-            ->nest()
-            ->expression(
-                'to_tsvector(\'french\', unaccent(name)) @@ plainto_tsquery(\'french\', unaccent(?))',
-                $street
-            )
-            ->or
-            ->expression(
-                'to_tsvector(\'dutch\', unaccent(name)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
-                $street
-            )
-            ->unnest();
+        if (!is_null($street)) {
+            $select = $sql->select()
+                ->from(sprintf('%s_street_alias', $source))
+                ->columns(['strid']);
+            $select
+                ->where
+                ->nest()
+                ->expression(
+                    'to_tsvector(\'french\', unaccent(name)) @@ plainto_tsquery(\'french\', unaccent(?))',
+                    $street
+                )
+                ->or
+                ->expression(
+                    'to_tsvector(\'dutch\', unaccent(name)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
+                    $street
+                )
+                ->unnest();
 
-        $qsz = $sql->buildSqlString($select);
-        $streets = array_column($adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE)->toArray(), 'strid');
+            $qsz = $sql->buildSqlString($select);
+            $streets = array_column($adapter->query($qsz, $adapter::QUERY_MODE_EXECUTE)->toArray(), 'strid');
+        }
 
         /**
          * Get streets.
@@ -115,38 +113,40 @@ class Street
                 ]
             );
 
-        $whereName = (new Predicate())
-            ->nest()
-            ->expression(
-                'to_tsvector(\'french\', unaccent(s.name_fr)) @@ plainto_tsquery(\'french\', unaccent(?))',
-                $street
-            )
-            ->or
-            ->expression(
-                'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
-                $street
-            )
-            ->unnest();
-
-        if (count($streets) === 0) {
-            $select->where->addPredicate($whereName);
-        } else {
-            $whereNameAlias = (new Predicate())
-                ->in('s.strid', $streets);
-
-            $select->where
+        if (!is_null($street)) {
+            $whereName = (new Predicate())
                 ->nest()
-                ->addPredicate($whereName)
-                ->addPredicate($whereNameAlias, 'OR')
+                ->expression(
+                    'to_tsvector(\'french\', unaccent(s.name_fr)) @@ plainto_tsquery(\'french\', unaccent(?))',
+                    $street
+                )
+                ->or
+                ->expression(
+                    'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
+                    $street
+                )
                 ->unnest();
+
+            if (count($streets) === 0) {
+                $select->where->addPredicate($whereName);
+            } else {
+                $whereNameAlias = (new Predicate())
+                    ->in('s.strid', $streets);
+
+                $select->where
+                    ->nest()
+                    ->addPredicate($whereName)
+                    ->addPredicate($whereNameAlias, 'OR')
+                    ->unnest();
+            }
         }
 
-        if (isset($nis5) && is_array($nis5)) {
+        if (is_array($nis5)) {
             $whereNIS5 = (new Predicate())
                 ->in('s.nis5', $nis5);
 
             $select->where->addPredicate($whereNIS5);
-        } elseif (isset($nis5) && is_int($nis5)) {
+        } elseif (is_int($nis5)) {
             $whereNIS5 = (new Predicate())
                 ->equalTo('s.nis5', $nis5);
 

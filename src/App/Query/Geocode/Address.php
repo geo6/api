@@ -39,7 +39,7 @@ class Address
         /**
          * Get streets.
          */
-        $streets = array_column(Street::get($adapter, $source, $street, $locality, $postalcode)->toArray(), 'strid');
+        $streets = array_column(Street::get($adapter, $source, $street, null, $locality, $postalcode)->toArray(), 'strid');
 
         if (count($streets) === 0) {
             return (new ResultSet())->initialize([]);
