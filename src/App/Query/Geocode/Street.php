@@ -62,7 +62,7 @@ class Street
             return (new ResultSet())->initialize([]);
         }
 
-        /**
+        /*
          * Get alias street identifier.
          */
         if (!is_null($street)) {
