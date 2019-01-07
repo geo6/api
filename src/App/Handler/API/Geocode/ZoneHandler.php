@@ -35,7 +35,7 @@ class ZoneHandler implements RequestHandlerInterface
             $features = [$feature];
         } elseif (!is_null($nis5)) {
             $query = [
-                'nis5' => !is_null($nis5) ? intval($nis5) : $nis5,
+                'nis5' => intval($nis5),
             ];
 
             $result = Municipality::getById($adapter, intval($nis5));
