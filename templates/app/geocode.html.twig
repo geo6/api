@@ -53,6 +53,14 @@
     <div>
         <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-zone" style="cursor:pointer;">
             <span class="badge badge-primary">GET</span>
+            <code>/geocode/getZoneList/:nis5</code>
+        </h4>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-zone" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
+            <code>/geocode/getZoneList/:postalcode</code>
+        </h4>
+        <h4 class="text-nowrap" data-toggle="collapse" data-target="#api-zone" style="cursor:pointer;">
+            <span class="badge badge-primary">GET</span>
             <code>/geocode/getZoneList/:locality</code>
         </h4>
         <hr>
@@ -61,9 +69,19 @@
             <h5>Parameters</h5>
             <table class="table table-bordered table-sm">
                 <tr>
+                    <th class="col-3"><code>:nis5</code></th>
+                    <td class="col-3"><em>integer</em></td>
+                    <td class="col-6"><a href="https://statbel.fgov.be/fr/propos-de-statbel/methodologie/classifications/geographie" target="_blank">NIS-5 code</a></td>
+                </tr>
+                <tr>
+                    <th class="col-3"><code>:postalcode</code></th>
+                    <td class="col-3"><em>string</em></td>
+                    <td class="col-6">Postal code</td>
+                </tr>
+                <tr>
                     <th class="col-3"><code>:locality</code></th>
                     <td class="col-3"><em>string</em></td>
-                    <td class="col-6">Municipality, Locality, Postal Code, NIS-5, ...</td>
+                    <td class="col-6">Municipality, Locality, ...</td>
                 </tr>
             </table>
 
