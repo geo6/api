@@ -54,6 +54,8 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/geocode/getDatabaseList', [DbAdapterMiddleware::class, TokenMiddleware::class, DatabaseHandler::class], 'api.geocode.database');
 
+    $app->get('/geocode/getZoneList/{nis5:[0-9]{5}}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZoneHandler::class], 'api.geocode.zone.nis5');
+    $app->get('/geocode/getZoneList/{postalcode:[0-9]{4}}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZoneHandler::class], 'api.geocode.zone.postalcode');
     $app->get('/geocode/getZoneList/{locality}', [DbAdapterMiddleware::class, TokenMiddleware::class, ZoneHandler::class], 'api.geocode.zone');
 
     $app->get('/geocode/getStreetList/{source:urbis|crab|picc}/{locality}/{postalcode}/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.source.3');
