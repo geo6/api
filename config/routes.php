@@ -72,10 +72,18 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/geocode/getStreetList/{locality}/[{street}]', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street.2');
     $app->get('/geocode/getStreetList/{street}', [DbAdapterMiddleware::class, TokenMiddleware::class, StreetHandler::class], 'api.geocode.street');
 
-    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{locality}/{postalcode}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.4');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{nis5:[0-9]{5}}/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.4.nis5');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{locality}/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.4');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{nis5:[0-9]{5}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.3.nis5');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.3.postalcode');
     $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{locality}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.3');
     $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.2');
-    $app->get('/geocode/getAddressList/{locality}/{postalcode}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.4');
+    $app->get('/geocode/getAddressList/{source:urbis|crab|icar|picc}/{address}', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.source.1');
+
+    $app->get('/geocode/getAddressList/{nis5:[0-9]{5}}/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.4.nis5');
+    $app->get('/geocode/getAddressList/{locality}/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.4');
+    $app->get('/geocode/getAddressList/{nis5:[0-9]{5}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.3.nis5');
+    $app->get('/geocode/getAddressList/{postalcode:[0-9]{4}}/[{street}/[{number}]]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.3.postalcode');
     $app->get('/geocode/getAddressList/{locality}/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.3');
     $app->get('/geocode/getAddressList/{street}/[{number}]', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.2');
     $app->get('/geocode/getAddressList/{address}', [DbAdapterMiddleware::class, TokenMiddleware::class, AddressHandler::class], 'api.geocode.address.1');

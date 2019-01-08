@@ -49,17 +49,14 @@ class AddressHandler implements RequestHandlerInterface
             }
         } else {
             $source = $request->getAttribute('source');
+            $nis5 = $request->getAttribute('nis5');
             $locality = $request->getAttribute('locality');
             $postalcode = $request->getAttribute('postalcode');
             $street = $request->getAttribute('street');
             $number = $request->getAttribute('number');
         }
 
-        if (!is_null($locality) && preg_match('/^(?:B-)?[0-9]{4}$/', $locality) === 1 && is_null($postalcode)) {
-            $postalcode = $locality;
-
-            $locality = null;
-        }
+        $nis5 = !is_null($nis5) ? intval($nis5) : $nis5;
 
         $sources = $token['database']['address'];
 
@@ -67,6 +64,7 @@ class AddressHandler implements RequestHandlerInterface
             $json = [
                 'query' => [
                     'source'     => $source,
+                    'nis5'       => $nis5,
                     'locality'   => $locality,
                     'postalcode' => $postalcode,
                     'street'     => $street,
@@ -83,7 +81,8 @@ class AddressHandler implements RequestHandlerInterface
         $json = [
             'query' => [
                 'source'     => $source,
-                'locality'   => !is_null($locality) && preg_match('/^[0-9]{5}$/', $locality) === 1 ? intval($locality) : $locality,
+                'nis5'       => $nis5,
+                'locality'   => $locality,
                 'postalcode' => $postalcode,
                 'street'     => $street,
                 'number'     => $number,
@@ -95,14 +94,10 @@ class AddressHandler implements RequestHandlerInterface
             $json['token'] = $token;
         }
 
-        if (is_null($street)) {
-            return new JsonResponse($json);
-        }
-
         if (!is_null($source)) {
-            $results = Address::get($adapter, $source, $number ?? '', $street, $locality, $postalcode);
+            $results = Address::get($adapter, $source, $number ?? '', $street, $nis5, $locality, $postalcode);
             if ($results->count() === 0 && !is_null($number)) {
-                $results = Address::get($adapter, $source, $number, $street, $locality, $postalcode, true);
+                $results = Address::get($adapter, $source, $number, $street, $nis5, $locality, $postalcode, true);
             }
 
             foreach ($results as $result) {
@@ -110,9 +105,9 @@ class AddressHandler implements RequestHandlerInterface
             }
         } else {
             foreach ($sources as $s) {
-                $results = Address::get($adapter, $s, $number ?? '', $street, $locality, $postalcode);
+                $results = Address::get($adapter, $s, $number ?? '', $street, $nis5, $locality, $postalcode);
                 if ($results->count() === 0 && !is_null($number)) {
-                    $results = Address::get($adapter, $s, $number, $street, $locality, $postalcode, true);
+                    $results = Address::get($adapter, $s, $number, $street, $nis5, $locality, $postalcode, true);
                 }
 
                 foreach ($results as $result) {

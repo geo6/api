@@ -20,8 +20,9 @@ class Address
     /**
      * @param Adapter     $adapter
      * @param string      $source
-     * @param string      $number
-     * @param string      $street
+     * @param string|null $number
+     * @param string|null $street
+     * @param int|null    $nis5
      * @param string|null $locality
      * @param string|null $postalcode
      *
@@ -30,8 +31,9 @@ class Address
     public static function get(
         Adapter $adapter,
         string $source,
-        string $number,
-        string $street,
+        ? string $number,
+        ? string $street,
+        ? int $nis5,
         ? string $locality,
         ? string $postalcode,
         bool $alternateNumber = false
@@ -39,7 +41,7 @@ class Address
         /**
          * Get streets.
          */
-        $streets = array_column(Street::get($adapter, $source, $street, null, $locality, $postalcode)->toArray(), 'strid');
+        $streets = array_column(Street::get($adapter, $source, $street, $nis5, $locality, $postalcode)->toArray(), 'strid');
 
         if (count($streets) === 0) {
             return (new ResultSet())->initialize([]);
