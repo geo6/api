@@ -115,6 +115,16 @@ class TokenMiddleware implements MiddlewareInterface
 
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
 
+        if ($this->debug === true) {
+            $this->access[$consumer]['database'] = [
+                'address' => [
+                    // 'picc',
+                    'icar',
+                ],
+                'poi' => [],
+            ];
+        }
+
         $data = [
             'debug'     => $this->debug,
             'consumer'  => $consumer,
@@ -152,7 +162,7 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         foreach ($address as $i => $a) {
-            if (!in_array($a, ['crab', 'picc', 'urbis'])) {
+            if (!in_array($a, ['crab', 'icar', 'picc', 'urbis'])) {
                 unset($address[$i]);
                 $address = array_values($address);
             }
