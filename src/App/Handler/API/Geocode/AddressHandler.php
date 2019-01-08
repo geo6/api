@@ -26,6 +26,7 @@ class AddressHandler implements RequestHandlerInterface
             $parsed = \Postal\Parser::parse_address($expanded[0]);
 
             $source = null;
+            $nis5 = null;
             $locality = null;
             $postalcode = null;
             $street = null;
@@ -54,9 +55,9 @@ class AddressHandler implements RequestHandlerInterface
             $postalcode = $request->getAttribute('postalcode');
             $street = $request->getAttribute('street');
             $number = $request->getAttribute('number');
-        }
 
-        $nis5 = !is_null($nis5) ? intval($nis5) : $nis5;
+            $nis5 = !is_null($nis5) ? intval($nis5) : $nis5;
+        }
 
         $sources = $token['database']['address'];
 
