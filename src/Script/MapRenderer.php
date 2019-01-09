@@ -199,13 +199,13 @@ class MapRenderer
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from(['z' => 'mun_zones'])
+            ->from(['z' => 'zone'])
             ->columns([
                 $this->layer,
                 'nis5' => new Expression('array_to_json(array_agg(z.nis5))'),
             ])
             ->join(
-                ['m' => 'municipalities'],
+                ['m' => 'municipality'],
                 'm.nis5 = z.nis5',
                 [
                     'mun_name_fr' => new Expression('array_to_json(array_agg(m.name_fr))'),
@@ -291,7 +291,7 @@ class MapRenderer
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from('municipalities')
+            ->from('municipality')
             ->columns([
                 'nis5',
                 'name_fr',

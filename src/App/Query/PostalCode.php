@@ -23,7 +23,7 @@ class PostalCode
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from('postalcodes')
+            ->from('postalcode')
             ->columns([
                 'postalcode',
             ]);
@@ -65,7 +65,7 @@ class PostalCode
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from('postalcodes')
+            ->from('postalcode')
             ->columns([
                 'postalcode',
                 'name_fr',

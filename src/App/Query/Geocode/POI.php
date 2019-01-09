@@ -40,7 +40,7 @@ class POI
                 'latitude'  => new Expression('ST_Y(poi.the_geog::geometry)'),
             ])
             ->join(
-                ['m' => 'municipalities'],
+                ['m' => 'municipality'],
                 'm.nis5 = poi.nis5',
                 [
                     'mun_name_fr' => 'name_fr',

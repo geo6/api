@@ -26,7 +26,7 @@ class Zone
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from('mun_zones')
+            ->from('zone')
             ->columns([
                 'judicialdistrict',
                 // 'judicialdistrict_before2012',

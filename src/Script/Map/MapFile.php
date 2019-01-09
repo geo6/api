@@ -299,7 +299,7 @@ class MapFile
         $layer->type = 'polygon';
 
         $layer->connection = 'host='.$host.' port='.$port.' dbname='.$dbname.' user='.$user.' password='.$password;
-        $layer->data = 'the_geom from (SELECT nis5, the_geog::geometry AS the_geom FROM municipalities WHERE nis5 IN('.implode(',', $municipalities).')) as subquery using unique nis5 using srid=4326';
+        $layer->data = 'the_geom from (SELECT nis5, the_geog::geometry AS the_geom FROM municipality WHERE nis5 IN('.implode(',', $municipalities).')) as subquery using unique nis5 using srid=4326';
 
         $class = new \MapFile\Model\LayerClass();
 

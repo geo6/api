@@ -40,7 +40,7 @@ class LocationHandler implements RequestHandlerInterface
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from(['m' => 'municipalities'])
+            ->from(['m' => 'municipality'])
             ->columns([
                 'nis5',
                 'name_fr',
