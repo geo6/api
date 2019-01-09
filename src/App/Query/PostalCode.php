@@ -97,8 +97,6 @@ class PostalCode
             'name_fr'     => null,
             'name_nl'     => null,
             'nis5'        => [],
-            'locality_fr' => null,
-            'locality_nl' => null,
         ];
 
         $level = null;
@@ -157,11 +155,6 @@ class PostalCode
             }
         }
 
-        if (count($locality) === 1) {
-            $data['locality_fr'] = $locality[0]['name_fr'];
-            $data['locality_nl'] = $locality[0]['name_nl'];
-        }
-
         return new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
     }
 
@@ -174,11 +167,6 @@ class PostalCode
     private static function getComponents(Adapter $adapter, ArrayObject $postalcode) : array
     {
         $components = [
-            [
-                'type'    => 'locality',
-                'name_fr' => $postalcode->locality_fr,
-                'name_nl' => $postalcode->locality_nl,
-            ],
             [
                 'type'    => 'postal_code',
                 'id'      => $postalcode->postalcode,

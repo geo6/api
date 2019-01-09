@@ -57,8 +57,6 @@ class Address
             ->columns([
                 'hnr',
                 'postalcode',
-                'locality_fr',
-                'locality_nl',
                 'locationtype',
                 'source',
                 'date',
@@ -127,14 +125,6 @@ class Address
     {
         $postalcode = PostalCode::getByCode($adapter, $address->postalcode);
 
-        if (!is_null($address->locality_fr) || !is_null($address->locality_nl)) {
-            $locality_fr = $address->locality_fr;
-            $locality_nl = $address->locality_nl;
-        } else {
-            $locality_fr = $postalcode->locality_fr;
-            $locality_nl = $postalcode->locality_nl;
-        }
-
         $components = [
             [
                 'type'    => 'location_type',
@@ -150,11 +140,6 @@ class Address
                 'type'    => 'street',
                 'name_fr' => $address->name_fr,
                 'name_nl' => $address->name_nl,
-            ],
-            [
-                'type'    => 'locality',
-                'name_fr' => $locality_fr ?? null,
-                'name_nl' => $locality_nl ?? null,
             ],
             [
                 'type'    => 'postal_code',
