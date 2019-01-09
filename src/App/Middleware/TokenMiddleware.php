@@ -118,7 +118,6 @@ class TokenMiddleware implements MiddlewareInterface
         if ($this->debug === true) {
             $this->access[$consumer]['database'] = [
                 'address' => [
-                    // 'picc',
                     'icar',
                 ],
                 'poi' => [],
@@ -162,7 +161,7 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         foreach ($address as $i => $a) {
-            if (!in_array($a, ['crab', 'icar', 'picc', 'urbis'])) {
+            if (!in_array($a, ['crab', 'icar', 'urbis'])) {
                 unset($address[$i]);
                 $address = array_values($address);
             }
