@@ -99,9 +99,7 @@ class Street
                 'nis5',
                 'source',
                 'date',
-                'nbr_address' => is_null($postalcode) ?
-                    new Expression(sprintf('(SELECT COUNT(*) FROM %s_address a WHERE a.strid = s.strid)', $source)) :
-                    new Expression(sprintf('(SELECT COUNT(*) FROM %s_address a WHERE a.strid = s.strid AND a.postalcode = ?)', $source), $postalcode),
+                'nbr_address' => 'count',
             ])
             ->join(
                 ['m' => 'municipality'],
