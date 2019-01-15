@@ -58,7 +58,7 @@ class Street
             $nis5 = PostalCode::getByCode($adapter, $postalcode)->nis5;
         }
 
-        if (is_null($nis5) || (is_array($nis5) && count($nis5) === 0)) {
+        if (is_array($nis5) && count($nis5) === 0) {
             return (new ResultSet())->initialize([]);
         }
 
