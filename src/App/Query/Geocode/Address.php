@@ -69,6 +69,7 @@ class Address
                 [
                     'name_fr',
                     'name_nl',
+                    'name_de',
                     'nis5',
                 ]
             )
@@ -140,6 +141,7 @@ class Address
                 'type'    => 'street',
                 'name_fr' => $address->name_fr,
                 'name_nl' => $address->name_nl,
+                'name_de' => $address->name_de,
             ],
             [
                 'type'    => 'postal_code',
@@ -179,6 +181,11 @@ class Address
             $formatted_nl = sprintf('%s %s, %s %s', $address->hnr, $address->name_nl, $address->postalcode, $address->mun_name_nl);
         }
 
+        $formatted_de = null;
+        if (!is_null($address->name_de)) {
+            $formatted_de = sprintf('%s %s, %s %s', $address->hnr, $address->name_de, $address->postalcode, $address->mun_name_fr ?? $address->mun_name_nl);
+        }
+
         return new Feature(
             new Point([
                 round(floatval($address->longitude), 6),
@@ -189,6 +196,7 @@ class Address
                 'source'       => sprintf('%s (%s)', $address->source, date('d/m/Y', strtotime($address->date))),
                 'formatted_fr' => $formatted_fr,
                 'formatted_nl' => $formatted_nl,
+                'formatted_de' => $formatted_de,
                 'components'   => self::getComponents($adapter, $address),
             ]
         );

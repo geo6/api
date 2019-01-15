@@ -96,6 +96,7 @@ class Street
                 'strid',
                 'name_fr',
                 'name_nl',
+                'name_de',
                 'nis5',
                 'source',
                 'date',
@@ -121,6 +122,11 @@ class Street
                 ->or
                 ->expression(
                     'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
+                    $street
+                )
+                ->or
+                ->expression(
+                    'to_tsvector(\'german\', unaccent(s.name_de)) @@ plainto_tsquery(\'german\', unaccent(?))',
                     $street
                 )
                 ->unnest();
@@ -184,6 +190,7 @@ class Street
                 'type'    => 'street',
                 'name_fr' => !is_null($street->name_fr) ? $street->name_fr : null,
                 'name_nl' => !is_null($street->name_nl) ? $street->name_nl : null,
+                'name_de' => !is_null($street->name_de) ? $street->name_de : null,
             ],
             [
                 'type'    => 'municipality',
@@ -217,11 +224,17 @@ class Street
             $formatted_nl = sprintf('%s, %s', $street->name_nl, $street->mun_name_nl);
         }
 
+        $formatted_de = null;
+        if (!is_null($street->name_de)) {
+            $formatted_de = sprintf('%s, %s', $street->name_de, $street->mun_name_fr ?? $street->mun_name_nl);
+        }
+
         return new Feature(null, [
             'type'         => 'street',
             'source'       => sprintf('%s (%s)', $street->source, date('d/m/Y', strtotime($street->date))),
             'formatted_fr' => $formatted_fr,
             'formatted_nl' => $formatted_nl,
+            'formatted_de' => $formatted_de,
             'nbr_address'  => $street->nbr_address,
             'components'   => self::getComponents($adapter, $street),
         ]);
