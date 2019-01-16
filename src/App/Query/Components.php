@@ -124,6 +124,7 @@ class Components
             'id'      => 'be',
             'name_fr' => 'Belgique',
             'name_nl' => 'België',
+            'name_de' => 'Belgien',
         ];
     }
 }
