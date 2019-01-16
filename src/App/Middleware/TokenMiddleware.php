@@ -118,7 +118,7 @@ class TokenMiddleware implements MiddlewareInterface
         if ($this->debug === true) {
             $this->access[$consumer]['database'] = [
                 'address' => [],
-                'poi' => [],
+                'poi'     => [],
             ];
         }
 
