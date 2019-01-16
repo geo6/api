@@ -117,9 +117,7 @@ class TokenMiddleware implements MiddlewareInterface
 
         if ($this->debug === true) {
             $this->access[$consumer]['database'] = [
-                'address' => [
-                    'icar',
-                ],
+                'address' => [],
                 'poi' => [],
             ];
         }
@@ -148,6 +146,7 @@ class TokenMiddleware implements MiddlewareInterface
     {
         $address = [
             'crab',
+            'icar',
             'urbis',
         ];
         $poi = [
