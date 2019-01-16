@@ -27,34 +27,42 @@ class Components
             case '20001':
                 $component['name_fr'] = 'Brabant flamand';
                 $component['name_nl'] = 'Vlaams-Brabant';
+                $component['name_de'] = 'Flämisch-Brabant';
                 break;
             case '20002':
                 $component['name_fr'] = 'Brabant wallon';
                 $component['name_nl'] = 'Waals-Brabant';
+                $component['name_de'] = 'Wallonisch-Brabant';
                 break;
             case '30000':
                 $component['name_fr'] = 'Flandre occidentale';
                 $component['name_nl'] = 'West-Vlaanderen';
+                $component['name_de'] = 'Westflandern';
                 break;
             case '40000':
                 $component['name_fr'] = 'Flandre orientale';
                 $component['name_nl'] = 'Oost-Vlaanderen';
+                $component['name_de'] = 'Ostflandern';
                 break;
             case '50000':
                 $component['name_fr'] = 'Hainaut';
                 $component['name_nl'] = 'Henegouwen';
+                $component['name_de'] = 'Hennegau';
                 break;
             case '60000':
                 $component['name_fr'] = 'Liège';
                 $component['name_nl'] = 'Luik';
+                $component['name_de'] = 'Lüttich';
                 break;
             case '70000':
                 $component['name_fr'] = 'Limbourg';
                 $component['name_nl'] = 'Limburg';
+                $component['name_de'] = 'Limburg';
                 break;
             case '80000':
                 $component['name_fr'] = 'Luxembourg';
                 $component['name_nl'] = 'Luxemburg';
+                $component['name_de'] = 'Luxemburg';
                 break;
             case '90000':
                 $component['name_fr'] = 'Namur';
@@ -63,6 +71,7 @@ class Components
             default:
                 $component['name_fr'] = null;
                 $component['name_nl'] = null;
+                $component['name_de'] = null;
                 break;
         }
 
@@ -102,10 +111,12 @@ class Components
             case '90000':
                 $component['name_fr'] = 'Région wallonne';
                 $component['name_nl'] = 'Waals gewest';
+                $component['name_de'] = 'Wallonische Region';
                 break;
             default:
                 $component['name_fr'] = null;
                 $component['name_nl'] = null;
+                $component['name_de'] = null;
                 break;
         }
 
