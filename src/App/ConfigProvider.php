@@ -32,6 +32,8 @@ class ConfigProvider
     {
         return [
             'invokables' => [
+                Handler\API\Address\ExpandHandler::class   => Handler\API\Address\ExpandHandler::class,
+                Handler\API\Address\ParseHandler::class    => Handler\API\Address\ParseHandler::class,
                 Handler\API\Geocode\DatabaseHandler::class => Handler\API\Geocode\DatabaseHandler::class,
                 Handler\API\Geocode\POIHandler::class      => Handler\API\Geocode\POIHandler::class,
                 Handler\API\Geocode\StreetHandler::class   => Handler\API\Geocode\StreetHandler::class,

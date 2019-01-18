@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Handler\API\Address\ExpandHandler;
+use App\Handler\API\Address\ParseHandler;
 use App\Handler\API\Geocode\AddressHandler;
 use App\Handler\API\Geocode\DatabaseHandler;
 use App\Handler\API\Geocode\POIHandler;
@@ -51,6 +53,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/test/zone', App\Handler\ZoneHandler::class, 'test.zone');
 
     $app->get('/ping', [DbAdapterMiddleware::class, TokenMiddleware::class, PingHandler::class], 'api.ping');
+
+    $app->get('/address/expand/{address}', [DbAdapterMiddleware::class, TokenMiddleware::class, ExpandHandler::class], 'api.address.expand');
+    $app->get('/address/parse/{address}', [DbAdapterMiddleware::class, TokenMiddleware::class, ParseHandler::class], 'api.address.parse');
 
     $app->get('/geocode/getDatabaseList', [DbAdapterMiddleware::class, TokenMiddleware::class, DatabaseHandler::class], 'api.geocode.database');
 
