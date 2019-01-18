@@ -56,14 +56,14 @@ class ZonesHandler implements RequestHandlerInterface
             Components::getCountry(),
         ];
 
-/*
-        $zones = Zone::get($adapter, $nis5);
-        $keys = array_keys($zones->getArrayCopy());
-
-        foreach ($keys as $key) {
-            $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
-        }
-*/
+        /*
+                $zones = Zone::get($adapter, $nis5);
+                $keys = array_keys($zones->getArrayCopy());
+        
+                foreach ($keys as $key) {
+                    $components[] = Zone::toGeoJSON($adapter, $key, $zones->{$key}, $this->router);
+                }
+        */
 
         $json = [
             'query' => [
