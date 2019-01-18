@@ -60,7 +60,7 @@ class Municipality
         $sql = new Sql($adapter);
 
         $select = $sql->select()
-            ->from('municipalities')
+            ->from('municipality')
             ->columns([
                 'nis5',
                 'name_fr',
