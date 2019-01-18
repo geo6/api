@@ -47,6 +47,12 @@ class LocationHandler implements RequestHandlerInterface
                 'name_nl',
                 'parent',
             ])
+            ->join(
+                ['g' => 'municipality_geometry'],
+                'm.nis5 = g.nis5',
+                [],
+                'left'
+            )
             ->limit(1);
 
         if (!is_null($x) && !is_null($y)) {
