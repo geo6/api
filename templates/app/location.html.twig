@@ -34,7 +34,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': latlng.query, 'time': latlng.time, 'status': latlng.status, 'response': latlng.response} %}
+            {% include '@app/_response.html.twig' with {'query': latlng.query, 'time': latlng.time, 'status': latlng.status, 'response': latlng.response, 'error': latlng.error} %}
         </div>
     </div>
 
@@ -60,7 +60,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': xy.query, 'time': xy.time, 'status': xy.status, 'response': xy.response} %}
+            {% include '@app/_response.html.twig' with {'query': xy.query, 'time': xy.time, 'status': xy.status, 'response': xy.response, 'error': xy.error} %}
         </div>
     </div>
 

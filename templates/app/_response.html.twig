@@ -10,4 +10,11 @@
     <code style="font-size:inherit;">{{ query }}</code>
     <span class="float-right text-info">{{ time }} milliseconds</span>
 </div>
+
+{% if response is null %}
+<div class="alert alert-warning" role="alert">
+    {{ error }}
+</div>
+{% else %}
 <pre class="p-3 bg-secondary text-white" style="height:50vh;">{{ response | raw }}</pre>
+{% endif %}

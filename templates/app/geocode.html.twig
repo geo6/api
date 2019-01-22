@@ -20,7 +20,7 @@
         <hr>
 
         <div class="collapse show" id="api-database">
-            {% include '@app/_response.html.twig' with {'query': database.query, 'time': database.time, 'status': database.status, 'response': database.response} %}
+            {% include '@app/_response.html.twig' with {'query': database.query, 'time': database.time, 'status': database.status, 'response': database.response, 'response': database.response, 'error': database.error} %}
         </div>
     </div>
 
@@ -46,7 +46,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': poi.query, 'time': poi.time, 'status': poi.status, 'response': poi.response} %}
+            {% include '@app/_response.html.twig' with {'query': poi.query, 'time': poi.time, 'status': poi.status, 'response': poi.response, 'error': poi.error} %}
         </div>
     </div>
 
@@ -85,7 +85,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': zone.query, 'time': zone.time, 'status': zone.status, 'response': zone.response} %}
+            {% include '@app/_response.html.twig' with {'query': zone.query, 'time': zone.time, 'status': zone.status, 'response': zone.response, 'error': zone.error} %}
         </div>
     </div>
 
@@ -121,7 +121,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': street.query, 'time': street.time, 'status': street.status, 'response': street.response} %}
+            {% include '@app/_response.html.twig' with {'query': street.query, 'time': street.time, 'status': street.status, 'response': street.response, 'error': street.error} %}
         </div>
     </div>
 
@@ -142,7 +142,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': address.query, 'time': address.time, 'status': address.status, 'response': address.response} %}
+            {% include '@app/_response.html.twig' with {'query': address.query, 'time': address.time, 'status': address.status, 'response': address.response, 'error': address.error} %}
         </div>
     </div>
 
@@ -183,7 +183,7 @@
                 </tr>
             </table>
 
-            {% include '@app/_response.html.twig' with {'query': addressData.query, 'time': addressData.time, 'status': addressData.status, 'response': addressData.response} %}
+            {% include '@app/_response.html.twig' with {'query': addressData.query, 'time': addressData.time, 'status': addressData.status, 'response': addressData.response, 'error': addressData.error} %}
         </div>
     </div>
 
