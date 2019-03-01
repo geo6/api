@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d8af65789894bc9f7bc7af6222ff595",
+    "content-hash": "1a3043e98f0f3db31f1b1a929fa1ab44",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1034,16 +1034,16 @@
         },
         {
             "name": "web-token/jwt-checker",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-checker.git",
-                "reference": "beb9d08db1560c09bf4e0f3d70c7ee8d1f07f60e"
+                "reference": "c5ffe0775a2c64756c35d024f9b7264e6f1ca832"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/beb9d08db1560c09bf4e0f3d70c7ee8d1f07f60e",
-                "reference": "beb9d08db1560c09bf4e0f3d70c7ee8d1f07f60e",
+                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/c5ffe0775a2c64756c35d024f9b7264e6f1ca832",
+                "reference": "c5ffe0775a2c64756c35d024f9b7264e6f1ca832",
                 "shasum": ""
             },
             "require": {
@@ -1097,7 +1097,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2019-01-10T11:49:11+00:00"
+            "time": "2019-01-21T11:37:37+00:00"
         },
         {
             "name": "web-token/jwt-core",
