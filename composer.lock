@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f90ae9ef3dd4e099814ced1745f2705",
+    "content-hash": "6d8af65789894bc9f7bc7af6222ff595",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1101,16 +1101,16 @@
         },
         {
             "name": "web-token/jwt-core",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-core.git",
-                "reference": "6546d985182bf404e0fec7696c8408637e52a1d1"
+                "reference": "a16a68f488a4732ed7baf4b8ab6c0561f2dc6822"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/6546d985182bf404e0fec7696c8408637e52a1d1",
-                "reference": "6546d985182bf404e0fec7696c8408637e52a1d1",
+                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/a16a68f488a4732ed7baf4b8ab6c0561f2dc6822",
+                "reference": "a16a68f488a4732ed7baf4b8ab6c0561f2dc6822",
                 "shasum": ""
             },
             "require": {
@@ -1171,20 +1171,20 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2019-01-10T11:49:11+00:00"
+            "time": "2019-01-21T11:37:37+00:00"
         },
         {
             "name": "web-token/jwt-signature",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature.git",
-                "reference": "6a8c05a7752d5033df9253b75a6ca34d965b1437"
+                "reference": "2d82fbf6c7b14a3ae7066cc03efaad8fbdc82cee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature/zipball/6a8c05a7752d5033df9253b75a6ca34d965b1437",
-                "reference": "6a8c05a7752d5033df9253b75a6ca34d965b1437",
+                "url": "https://api.github.com/repos/web-token/jwt-signature/zipball/2d82fbf6c7b14a3ae7066cc03efaad8fbdc82cee",
+                "reference": "2d82fbf6c7b14a3ae7066cc03efaad8fbdc82cee",
                 "shasum": ""
             },
             "require": {
@@ -1251,11 +1251,11 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2019-01-10T11:49:11+00:00"
+            "time": "2019-01-21T11:37:37+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-ecdsa",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-ecdsa.git",
@@ -1322,7 +1322,7 @@
         },
         {
             "name": "web-token/jwt-signature-algorithm-eddsa",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-eddsa.git",
@@ -1389,7 +1389,7 @@
         },
         {
             "name": "web-token/jwt-signature-algorithm-hmac",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-hmac.git",
@@ -1456,7 +1456,7 @@
         },
         {
             "name": "web-token/jwt-signature-algorithm-none",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-none.git",
@@ -1523,7 +1523,7 @@
         },
         {
             "name": "web-token/jwt-signature-algorithm-rsa",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-rsa.git",
