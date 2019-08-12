@@ -9,7 +9,6 @@ use App\Middleware\TokenMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
 use App\Query\Zone;
-use GeoJson\Feature\Feature;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
