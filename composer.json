@@ -86,6 +86,7 @@
         "render": "Script\\MapRenderer::render",
         "serve": "php -S localhost:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "token": "Script\\Token::generate"
     }
 }
