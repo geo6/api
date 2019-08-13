@@ -8,21 +8,12 @@ use Composer\Composer;
 use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
-use ErrorException;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\Converter\StandardConverter;
 use Jose\Component\Core\JWK;
 use Jose\Component\Signature\Algorithm\HS512;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
-use PDO;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Expression;
-use Zend\Db\Sql\Sql;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\I18n\Filter\Alnum;
 
 class Token
 {
@@ -51,15 +42,15 @@ class Token
 
         // Calculate project root from composer.json, if necessary
         $this->projectRoot = realpath(dirname($composerFile)) ?? '';
-        $this->projectRoot = rtrim($this->projectRoot, '/\\') . '/';
+        $this->projectRoot = rtrim($this->projectRoot, '/\\').'/';
 
         // Parse the composer.json
         // $this->parseComposerDefinition($composer, $composerFile);
 
-        $this->config = require $this->projectRoot . 'config/autoload/local.php';
+        $this->config = require $this->projectRoot.'config/autoload/local.php';
 
         // Source path for this file
-        $this->installerSource = realpath(__DIR__) . '/';
+        $this->installerSource = realpath(__DIR__).'/';
     }
 
     public static function generate(Event $event): void
