@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3530002a69ba2fc096b9881a92bf40f",
+    "content-hash": "134fe3772e58ddf321f228624af0b657",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1040,16 +1040,16 @@
         },
         {
             "name": "web-token/jwt-checker",
-            "version": "v1.3.8",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-checker.git",
-                "reference": "c5ffe0775a2c64756c35d024f9b7264e6f1ca832"
+                "reference": "f839e2faa0a42344b844e385c5b892f717f3f099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/c5ffe0775a2c64756c35d024f9b7264e6f1ca832",
-                "reference": "c5ffe0775a2c64756c35d024f9b7264e6f1ca832",
+                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/f839e2faa0a42344b844e385c5b892f717f3f099",
+                "reference": "f839e2faa0a42344b844e385c5b892f717f3f099",
                 "shasum": ""
             },
             "require": {
@@ -1103,20 +1103,20 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2019-01-21T11:37:37+00:00"
+            "time": "2019-08-22T10:36:08+00:00"
         },
         {
             "name": "web-token/jwt-core",
-            "version": "v1.3.8",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-core.git",
-                "reference": "7e30915fa06deeb3a1fd8a9fa30916c77b73e8f9"
+                "reference": "2d6e2e6f39e9494e6634efe62f4d8b22a8f001e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/7e30915fa06deeb3a1fd8a9fa30916c77b73e8f9",
-                "reference": "7e30915fa06deeb3a1fd8a9fa30916c77b73e8f9",
+                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/2d6e2e6f39e9494e6634efe62f4d8b22a8f001e3",
+                "reference": "2d6e2e6f39e9494e6634efe62f4d8b22a8f001e3",
                 "shasum": ""
             },
             "require": {
@@ -1178,7 +1178,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2019-05-20T21:58:34+00:00"
+            "time": "2019-08-22T10:36:08+00:00"
         },
         {
             "name": "web-token/jwt-signature",
@@ -1597,7 +1597,7 @@
         },
         {
             "name": "web-token/jwt-util-ecc",
-            "version": "v1.3.8",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-util-ecc.git",
