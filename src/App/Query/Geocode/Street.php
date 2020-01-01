@@ -30,10 +30,10 @@ class Street
     public static function get(
         Adapter $adapter,
         string $source,
-        ? string $street,
-        ? int $nis5,
-        ? string $locality,
-        ? string $postalcode
+        ?string $street,
+        ?int $nis5,
+        ?string $locality,
+        ?string $postalcode
     ) : ResultSet {
         $sql = new Sql($adapter);
 
