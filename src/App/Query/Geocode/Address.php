@@ -31,11 +31,11 @@ class Address
     public static function get(
         Adapter $adapter,
         string $source,
-        ? string $number,
-        ? string $street,
-        ? int $nis5,
-        ? string $locality,
-        ? string $postalcode,
+        ?string $number,
+        ?string $street,
+        ?int $nis5,
+        ?string $locality,
+        ?string $postalcode,
         bool $alternateNumber = false
     ) : ResultSet {
         /**
