@@ -37,7 +37,7 @@ class Address
         ?string $locality,
         ?string $postalcode,
         bool $alternateNumber = false
-    ) : ResultSet {
+    ): ResultSet {
         /**
          * Get streets.
          */
@@ -122,7 +122,7 @@ class Address
      *
      * @return array
      */
-    private static function getComponents(Adapter $adapter, ArrayObject $address) : array
+    private static function getComponents(Adapter $adapter, ArrayObject $address): array
     {
         $postalcode = PostalCode::getByCode($adapter, $address->postalcode);
 
@@ -169,7 +169,7 @@ class Address
      *
      * @return Feature
      */
-    public static function toGeoJSON(Adapter $adapter, ArrayObject $address) : Feature
+    public static function toGeoJSON(Adapter $adapter, ArrayObject $address): Feature
     {
         $formatted_fr = null;
         if (!is_null($address->name_fr)) {

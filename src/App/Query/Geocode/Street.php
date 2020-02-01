@@ -34,7 +34,7 @@ class Street
         ?int $nis5,
         ?string $locality,
         ?string $postalcode
-    ) : ResultSet {
+    ): ResultSet {
         $sql = new Sql($adapter);
 
         /*
@@ -183,7 +183,7 @@ class Street
      *
      * @return array
      */
-    private static function getComponents(Adapter $adapter, ArrayObject $street) : array
+    private static function getComponents(Adapter $adapter, ArrayObject $street): array
     {
         $components = [
             [
@@ -212,7 +212,7 @@ class Street
      *
      * @return Feature
      */
-    public static function toGeoJSON(Adapter $adapter, ArrayObject $street) : Feature
+    public static function toGeoJSON(Adapter $adapter, ArrayObject $street): Feature
     {
         $formatted_fr = null;
         if (!is_null($street->name_fr)) {

@@ -13,7 +13,7 @@ use Zend\Diactoros\Stream;
 
 class MapHandler implements RequestHandlerInterface
 {
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $key = $request->getAttribute('key');
         $slug = $request->getAttribute('slug');

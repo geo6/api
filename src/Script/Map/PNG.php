@@ -62,7 +62,7 @@ class PNG
         imagedestroy($this->image);
     }
 
-    private function renderMap() : void
+    private function renderMap(): void
     {
         $process = new Process(
             sprintf(
@@ -83,7 +83,7 @@ class PNG
         });
     }
 
-    private function renderScale() : void
+    private function renderScale(): void
     {
         $process = new Process(
             sprintf(
@@ -103,7 +103,7 @@ class PNG
         });
     }
 
-    public function addScale() : void
+    public function addScale(): void
     {
         $path = sprintf('data/maps/%s/temp/%s-scale.png', $this->key, $this->slug);
 
@@ -123,7 +123,7 @@ class PNG
         imagedestroy($image);
     }
 
-    public function addCopyright() : void
+    public function addCopyright(): void
     {
         $copyright = 'Map Data © OpenStreetMap contributors, Statistics Belgium © '.date('Y').' GEO-6';
 
@@ -147,7 +147,7 @@ class PNG
         imagedestroy($image);
     }
 
-    public function addTitle(string $title, array $color) : void
+    public function addTitle(string $title, array $color): void
     {
         $bbox = imageftbbox(10, 0, self::FONTBOLD, $title);
 
@@ -173,7 +173,7 @@ class PNG
         imagedestroy($image);
     }
 
-    public function addListMunicipalities(array $municipalities, array $color) : void
+    public function addListMunicipalities(array $municipalities, array $color): void
     {
         $text = implode(', ', $municipalities);
         $text = wordwrap($text, 55);
@@ -202,7 +202,7 @@ class PNG
         imagedestroy($image);
     }
 
-    public function save() : bool
+    public function save(): bool
     {
         return imagepng($this->image, sprintf('data/maps/%s/%s.png', $this->key, $this->slug));
     }

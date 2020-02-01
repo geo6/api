@@ -9,15 +9,15 @@ interface TokenInterface
     /**
      * Return consumer identifier (from token).
      */
-    public function getConsumer() : string;
+    public function getConsumer(): string;
 
     /**
      * Return timestamp when the token is issued (from token).
      */
-    public function getTimestamp() : int;
+    public function getTimestamp(): int;
 
     /**
      * Check if token is valid.
      */
-    public function check(string $secret) : bool;
+    public function check(string $secret): bool;
 }

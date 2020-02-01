@@ -41,7 +41,7 @@ class MapRenderer
     /** @var string */
     private $projectRoot;
 
-    public static function render(Event $event) : void
+    public static function render(Event $event): void
     {
         $installer = new self($event->getIO(), $event->getComposer());
 
@@ -108,7 +108,7 @@ class MapRenderer
         $this->installerSource = realpath(__DIR__).'/';
     }
 
-    private function clear() : void
+    private function clear(): void
     {
         $directory = sprintf('data/maps/%s', $this->layer);
 
@@ -124,7 +124,7 @@ class MapRenderer
         }
     }
 
-    private function clearTemp() : void
+    private function clearTemp(): void
     {
         $directory = sprintf('data/maps/%s/temp', $this->layer);
 
@@ -142,7 +142,7 @@ class MapRenderer
         }
     }
 
-    private function requestLayer() : string
+    private function requestLayer(): string
     {
         $query = [
             sprintf(
@@ -185,7 +185,7 @@ class MapRenderer
         }
     }
 
-    private function getListZone() : array
+    private function getListZone(): array
     {
         $adapter = new Adapter(
             array_merge([
@@ -277,7 +277,7 @@ class MapRenderer
         return $list;
     }
 
-    private function getListMunicipality() : array
+    private function getListMunicipality(): array
     {
         $adapter = new Adapter(
             array_merge([
@@ -338,7 +338,7 @@ class MapRenderer
         return $list;
     }
 
-    private function generateMapFile(string $slug, array $extent, array $nis5) : void
+    private function generateMapFile(string $slug, array $extent, array $nis5): void
     {
         $mapfile = new Map\MapFile($this->layer, $slug, $extent);
 
@@ -385,7 +385,7 @@ class MapRenderer
         $mapfile->save();
     }
 
-    private function getColor() : array
+    private function getColor(): array
     {
         switch ($this->layer) {
             case 'civilprotection':
@@ -407,7 +407,7 @@ class MapRenderer
         }
     }
 
-    private function renderMap(string $name, string $slug, array $municipalities) : void
+    private function renderMap(string $name, string $slug, array $municipalities): void
     {
         $png = new Map\PNG($this->layer, $slug);
 
@@ -454,7 +454,7 @@ class MapRenderer
      *
      * @return string
      */
-    private static function removeAccents(string $string) : string
+    private static function removeAccents(string $string): string
     {
         if (preg_match('/[\x80-\xff]/', $string) !== 1) {
             return $string;

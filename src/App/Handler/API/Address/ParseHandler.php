@@ -12,7 +12,7 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class ParseHandler implements RequestHandlerInterface
 {
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 

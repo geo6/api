@@ -33,7 +33,7 @@ class ZoneHandler implements RequestHandlerInterface
         $this->template = $template;
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $data = Request::get(
             $request,

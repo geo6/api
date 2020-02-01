@@ -18,7 +18,7 @@ class PostalCode
      *
      * @return ResultSet
      */
-    public static function get(Adapter $adapter, string $name) : ResultSet
+    public static function get(Adapter $adapter, string $name): ResultSet
     {
         $sql = new Sql($adapter);
 
@@ -60,7 +60,7 @@ class PostalCode
      *
      * @return ArrayObject
      */
-    public static function getByCode(Adapter $adapter, string $code) : ArrayObject
+    public static function getByCode(Adapter $adapter, string $code): ArrayObject
     {
         $sql = new Sql($adapter);
 
@@ -90,7 +90,7 @@ class PostalCode
      *
      * @return ArrayObject
      */
-    private static function buildPostalCode(ResultSet $results) : ArrayObject
+    private static function buildPostalCode(ResultSet $results): ArrayObject
     {
         $data = [
             'postalcode'  => null,
@@ -164,7 +164,7 @@ class PostalCode
      *
      * @return array
      */
-    private static function getComponents(Adapter $adapter, ArrayObject $postalcode) : array
+    private static function getComponents(Adapter $adapter, ArrayObject $postalcode): array
     {
         $components = [
             [
@@ -185,7 +185,7 @@ class PostalCode
      *
      * @return Feature
      */
-    public static function toGeoJSON(Adapter $adapter, ArrayObject $postalcode) : Feature
+    public static function toGeoJSON(Adapter $adapter, ArrayObject $postalcode): Feature
     {
         return new Feature(null, [
             'type'         => 'postal_code',
