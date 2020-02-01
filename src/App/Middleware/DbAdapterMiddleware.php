@@ -23,7 +23,7 @@ class DbAdapterMiddleware implements MiddlewareInterface
         $this->postgresql = $postgresql;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $adapter = new Adapter(
             array_merge([

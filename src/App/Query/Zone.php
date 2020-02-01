@@ -21,7 +21,7 @@ class Zone
      *
      * @return ArrayObject
      */
-    public static function get(Adapter $adapter, int $nis5) : ArrayObject
+    public static function get(Adapter $adapter, int $nis5): ArrayObject
     {
         $sql = new Sql($adapter);
 
@@ -52,7 +52,7 @@ class Zone
      *
      * @return array
      */
-    public static function toGeoJSON(Adapter $adapter, string $key, string $value, RouterInterface $router) : array
+    public static function toGeoJSON(Adapter $adapter, string $key, string $value, RouterInterface $router): array
     {
         $filterChain = new FilterChain();
         $filterChain

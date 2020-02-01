@@ -13,7 +13,7 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class PingHandler implements RequestHandlerInterface
 {
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
         $server = $request->getServerParams();

@@ -10,7 +10,7 @@ use Zend\Expressive\Router\RouterInterface;
 
 class ZonesHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : RequestHandlerInterface
+    public function __invoke(ContainerInterface $container): RequestHandlerInterface
     {
         $router = $container->get(RouterInterface::class);
 
