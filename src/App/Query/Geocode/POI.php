@@ -22,7 +22,7 @@ class POI
      *
      * @return ResultSet
      */
-    public static function get(Adapter $adapter, string $table, string $name) : ResultSet
+    public static function get(Adapter $adapter, string $table, string $name): ResultSet
     {
         $sql = new Sql($adapter);
 
@@ -75,7 +75,7 @@ class POI
      *
      * @return array
      */
-    private static function getComponents(Adapter $adapter, ArrayObject $poi) : array
+    private static function getComponents(Adapter $adapter, ArrayObject $poi): array
     {
         $components = [
             [
@@ -104,7 +104,7 @@ class POI
      *
      * @return Feature
      */
-    public static function toGeoJSON(Adapter $adapter, string $table, ArrayObject $poi) : Feature
+    public static function toGeoJSON(Adapter $adapter, string $table, ArrayObject $poi): Feature
     {
         return new Feature(
             new Point([

@@ -53,7 +53,7 @@ class JWT implements TokenInterface
     /**
      * @return string
      */
-    public function getConsumer() : string
+    public function getConsumer(): string
     {
         return $this->subject;
     }
@@ -61,7 +61,7 @@ class JWT implements TokenInterface
     /**
      * @return int
      */
-    public function getTimestamp() : int
+    public function getTimestamp(): int
     {
         return $this->issuedAt;
     }
@@ -69,7 +69,7 @@ class JWT implements TokenInterface
     /**
      * @return JsonConverter
      */
-    private static function getJsonConverter() : JsonConverter
+    private static function getJsonConverter(): JsonConverter
     {
         return new StandardConverter();
     }
@@ -77,7 +77,7 @@ class JWT implements TokenInterface
     /**
      * @return JWSSerializerManager
      */
-    private static function getSerializeManager() : JWSSerializerManager
+    private static function getSerializeManager(): JWSSerializerManager
     {
         $jsonConverter = self::getJsonConverter();
 
@@ -89,7 +89,7 @@ class JWT implements TokenInterface
     /**
      * @return HeaderCheckerManager
      */
-    private static function getHeaderCheckerManager() : HeaderCheckerManager
+    private static function getHeaderCheckerManager(): HeaderCheckerManager
     {
         return HeaderCheckerManager::create(
             [
@@ -110,7 +110,7 @@ class JWT implements TokenInterface
      *
      * @return JWK
      */
-    private function generateToken(string $secret) : JWK
+    private function generateToken(string $secret): JWK
     {
         return JWK::create([
             'kty' => 'oct',
@@ -124,7 +124,7 @@ class JWT implements TokenInterface
      *
      * @return bool
      */
-    public function check(string $secret) : bool
+    public function check(string $secret): bool
     {
         $jwk = $this->generateToken($secret);
 
@@ -144,7 +144,7 @@ class JWT implements TokenInterface
     /**
      * @return void
      */
-    private function checkHeader() : void
+    private function checkHeader(): void
     {
         $headerCheckerManager = self::getHeaderCheckerManager();
         $headerCheckerManager->check($this->jws, 0, ['alg']);
@@ -153,7 +153,7 @@ class JWT implements TokenInterface
     /**
      * @return void
      */
-    private function checkClaims() : void
+    private function checkClaims(): void
     {
         $jsonConverter = self::getJsonConverter();
 

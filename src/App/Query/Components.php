@@ -13,7 +13,7 @@ class Components
      *
      * @return array
      */
-    public static function getProvince(?string $parent) : array
+    public static function getProvince(?string $parent): array
     {
         $component = [
             'type' => 'province',
@@ -85,7 +85,7 @@ class Components
      *
      * @return array
      */
-    public static function getRegion(?string $parent) : array
+    public static function getRegion(?string $parent): array
     {
         $component = [
             'type' => 'region',
@@ -128,7 +128,7 @@ class Components
      *
      * @return array
      */
-    public static function getCountry() : array
+    public static function getCountry(): array
     {
         return [
             'type'    => 'country',

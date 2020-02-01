@@ -48,7 +48,7 @@ class TokenMiddleware implements MiddlewareInterface
      *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteResult::class);
 
@@ -142,7 +142,7 @@ class TokenMiddleware implements MiddlewareInterface
      *
      * @return array
      */
-    private static function getDatabases(Adapter $adapter, array $config) : array
+    private static function getDatabases(Adapter $adapter, array $config): array
     {
         $address = [
             'crab',

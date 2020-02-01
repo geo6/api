@@ -18,7 +18,7 @@ class Municipality
      *
      * @return ResultSet
      */
-    public static function get(Adapter $adapter, string $name) : ResultSet
+    public static function get(Adapter $adapter, string $name): ResultSet
     {
         $sql = new Sql($adapter);
 
@@ -55,7 +55,7 @@ class Municipality
      *
      * @return ArrayObject
      */
-    public static function getById(Adapter $adapter, int $id) : ArrayObject
+    public static function getById(Adapter $adapter, int $id): ArrayObject
     {
         $sql = new Sql($adapter);
 
@@ -81,7 +81,7 @@ class Municipality
      *
      * @return array
      */
-    private static function getComponents(Adapter $adapter, ArrayObject $municipality) : array
+    private static function getComponents(Adapter $adapter, ArrayObject $municipality): array
     {
         $components = [
             [
@@ -104,7 +104,7 @@ class Municipality
      *
      * @return Feature
      */
-    public static function toGeoJSON(Adapter $adapter, ArrayObject $municipality) : Feature
+    public static function toGeoJSON(Adapter $adapter, ArrayObject $municipality): Feature
     {
         return new Feature(null, [
             'type'         => 'municipality',

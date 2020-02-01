@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 
 class DbAdapterMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container) : DbAdapterMiddleware
+    public function __invoke(ContainerInterface $container): DbAdapterMiddleware
     {
         $config = $container->get('config');
 

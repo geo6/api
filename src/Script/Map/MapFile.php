@@ -44,7 +44,7 @@ class MapFile
         ];
     }
 
-    public function addScalebar() : \MapFile\Model\Scalebar
+    public function addScalebar(): \MapFile\Model\Scalebar
     {
         $this->map->scalebar = new \MapFile\Model\Scalebar();
 
@@ -60,7 +60,7 @@ class MapFile
         return $this->map->scalebar;
     }
 
-    public function addLayerLand() : \MapFile\Model\Layer
+    public function addLayerLand(): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -86,7 +86,7 @@ class MapFile
         return $layer;
     }
 
-    public function addLayerLanduseGreen() : \MapFile\Model\Layer
+    public function addLayerLanduseGreen(): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -111,7 +111,7 @@ class MapFile
         return $layer;
     }
 
-    public function addLayerWater() : \MapFile\Model\Layer
+    public function addLayerWater(): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -135,7 +135,7 @@ class MapFile
         return $layer;
     }
 
-    public function addLayerRoad() : \MapFile\Model\Layer
+    public function addLayerRoad(): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -176,7 +176,7 @@ class MapFile
         return $layer;
     }
 
-    public function addLayerProvince() : \MapFile\Model\Layer
+    public function addLayerProvince(): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -203,7 +203,7 @@ class MapFile
         return $layer;
     }
 
-    public function addLayerCity(bool $city = true, bool $town = false) : \MapFile\Model\Layer
+    public function addLayerCity(bool $city = true, bool $town = false): \MapFile\Model\Layer
     {
         $layer = new \MapFile\Model\Layer();
 
@@ -290,7 +290,7 @@ class MapFile
         string $password,
         array $municipalities,
         array $color
-    ) : \MapFile\Model\Layer {
+    ): \MapFile\Model\Layer {
         $layer = new \MapFile\Model\Layer();
 
         $layer->name = $this->slug;
@@ -317,7 +317,7 @@ class MapFile
         return $layer;
     }
 
-    public function save() : void
+    public function save(): void
     {
         $directory = sprintf('data/maps/%s/temp', $this->key);
 
