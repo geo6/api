@@ -46,7 +46,7 @@ class Geo6 implements TokenInterface
     /**
      * @return string
      */
-    public function getConsumer() : string
+    public function getConsumer(): string
     {
         return $this->consumer;
     }
@@ -54,7 +54,7 @@ class Geo6 implements TokenInterface
     /**
      * @return int
      */
-    public function getTimestamp() : int
+    public function getTimestamp(): int
     {
         return $this->timestamp;
     }
@@ -64,7 +64,7 @@ class Geo6 implements TokenInterface
      *
      * @return string
      */
-    private function generateToken(string $secret) : string
+    private function generateToken(string $secret): string
     {
         $token = $this->consumer.'__';
         $token .= $this->timestamp.'__';
@@ -80,7 +80,7 @@ class Geo6 implements TokenInterface
      *
      * @return bool
      */
-    public function check(string $secret) : bool
+    public function check(string $secret): bool
     {
         $token = $this->generateToken($secret);
 
@@ -92,7 +92,7 @@ class Geo6 implements TokenInterface
      *
      * @return string
      */
-    private static function getQuery(string $path) : string
+    private static function getQuery(string $path): string
     {
         if (preg_match('/^(\/geocode\/[a-z]+)/i', $path, $matches) === 1) {
             return $matches[1];

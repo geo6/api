@@ -25,7 +25,7 @@ class ZonesHandler implements RequestHandlerInterface
         $this->router = $router;
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);

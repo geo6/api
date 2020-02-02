@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 class TokenMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container) : TokenMiddleware
+    public function __invoke(ContainerInterface $container): TokenMiddleware
     {
         $config = $container->get('config');
 

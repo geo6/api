@@ -14,7 +14,7 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class POIHandler implements RequestHandlerInterface
 {
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);

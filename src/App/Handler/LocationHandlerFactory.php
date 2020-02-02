@@ -12,7 +12,7 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LocationHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : RequestHandlerInterface
+    public function __invoke(ContainerInterface $container): RequestHandlerInterface
     {
         $router = $container->get(RouterInterface::class);
         $template = $container->get(TemplateRendererInterface::class);
