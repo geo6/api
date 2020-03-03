@@ -120,10 +120,10 @@ class AddressHandler implements RequestHandlerInterface
         }
 
         return [
-            'locality' => $locality,
+            'locality'   => $locality,
             'postalcode' => $postalcode,
-            'street' => $street,
-            'number' => $number,
+            'street'     => $street,
+            'number'     => $number,
         ];
     }
 
