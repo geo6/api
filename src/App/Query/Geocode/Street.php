@@ -74,12 +74,12 @@ class Street
                 ->nest()
                 ->expression(
                     'to_tsvector(\'french\', unaccent(name)) @@ to_tsquery(\'french\', unaccent(?))',
-                    $street . ':*'
+                    $street.':*'
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'dutch\', unaccent(name)) @@ to_tsquery(\'dutch\', unaccent(?))',
-                    $street . ':*'
+                    $street.':*'
                 )
                 ->unnest();
 
@@ -117,17 +117,17 @@ class Street
                 ->nest()
                 ->expression(
                     'to_tsvector(\'french\', unaccent(s.name_fr)) @@ to_tsquery(\'french\', unaccent(?))',
-                    $street . ':*'
+                    $street.':*'
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ to_tsquery(\'dutch\', unaccent(?))',
-                    $street . ':*'
+                    $street.':*'
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'german\', unaccent(s.name_de)) @@ to_tsquery(\'german\', unaccent(?))',
-                    $street . ':*'
+                    $street.':*'
                 )
                 ->unnest();
 
