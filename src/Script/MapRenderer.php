@@ -9,7 +9,6 @@ use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use ErrorException;
-use PDO;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Sql\Expression;
 use Laminas\Db\Sql\Sql;
@@ -17,6 +16,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\I18n\Filter\Alnum;
+use PDO;
 
 class MapRenderer
 {

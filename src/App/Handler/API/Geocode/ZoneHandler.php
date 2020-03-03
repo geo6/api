@@ -8,10 +8,10 @@ use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
 use App\Query\Municipality;
 use App\Query\PostalCode;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\JsonResponse;
 
 class ZoneHandler implements RequestHandlerInterface
 {

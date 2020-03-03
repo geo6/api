@@ -7,11 +7,11 @@ namespace App\Query;
 use ArrayObject;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Sql\Sql;
-use Mezzio\Router\RouterInterface;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\I18n\Filter\Alnum;
+use Mezzio\Router\RouterInterface;
 
 class Zone
 {

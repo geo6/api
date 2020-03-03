@@ -7,14 +7,14 @@ namespace App\Middleware;
 use App\Token\Geo6 as Geo6Token;
 use App\Token\JWT;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Metadata\Metadata;
 use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Router\RouteResult;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class TokenMiddleware implements MiddlewareInterface
 {
