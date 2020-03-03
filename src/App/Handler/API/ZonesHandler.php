@@ -9,11 +9,11 @@ use App\Middleware\TokenMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
 use App\Query\Zone;
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\JsonResponse;
-use Mezzio\Router\RouterInterface;
 
 class ZonesHandler implements RequestHandlerInterface
 {

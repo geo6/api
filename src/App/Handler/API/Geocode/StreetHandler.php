@@ -7,10 +7,10 @@ namespace App\Handler\API\Geocode;
 use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\Street;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\JsonResponse;
 
 class StreetHandler implements RequestHandlerInterface
 {

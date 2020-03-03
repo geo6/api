@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Handler\API\Address;
 
 use App\Middleware\TokenMiddleware;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\JsonResponse;
 
 class ParseHandler implements RequestHandlerInterface
 {

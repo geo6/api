@@ -15,9 +15,9 @@ use App\Handler\API\PingHandler;
 use App\Handler\API\ZonesHandler;
 use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
-use Psr\Container\ContainerInterface;
 use Mezzio\Application;
 use Mezzio\MiddlewareFactory;
+use Psr\Container\ContainerInterface;
 
 /*
  * Setup routes with a single request method:
