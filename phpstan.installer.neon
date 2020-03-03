@@ -8,6 +8,6 @@ parameters:
         - dist
     reportUnmatchedIgnoredErrors: true
     ignoreErrors:
-        - '#Class Zend\\Expressive\\Swoole\\ConfigProvider not found#'
+        - '#Class Mezzio\\Swoole\\ConfigProvider not found#'
     # universalObjectCratesClasses:
     #    - ArrayObject # see https://github.com/phpstan/phpstan/issues/600

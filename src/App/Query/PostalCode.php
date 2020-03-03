@@ -6,9 +6,9 @@ namespace App\Query;
 
 use ArrayObject;
 use GeoJson\Feature\Feature;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\Sql\Sql;
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\Sql\Sql;
 
 class PostalCode
 {
