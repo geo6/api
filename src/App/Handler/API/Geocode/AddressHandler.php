@@ -40,6 +40,7 @@ class AddressHandler implements RequestHandlerInterface
                     case 'postcode':
                         $postalcode = $component['value'];
                         break;
+                    case 'house':
                     case 'road':
                         $street = $component['value'];
                         break;
