@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Zend\ConfigAggregator\ArrayProvider;
-use Zend\ConfigAggregator\ConfigAggregator;
-use Zend\ConfigAggregator\PhpFileProvider;
+use Laminas\ConfigAggregator\ArrayProvider;
+use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\ConfigAggregator\PhpFileProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -17,19 +17,19 @@ $aggregator = new ConfigAggregator([
     new ArrayProvider($cacheConfig),
 
     \Blast\BaseUrl\ConfigProvider::class,
-    \Zend\Db\ConfigProvider::class,
-    \Zend\Expressive\ConfigProvider::class,
-    \Zend\Expressive\Helper\ConfigProvider::class,
-    \Zend\Expressive\Router\ConfigProvider::class,
-    \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
-    \Zend\Expressive\Twig\ConfigProvider::class,
-    \Zend\Filter\ConfigProvider::class,
-    \Zend\HttpHandlerRunner\ConfigProvider::class,
-    \Zend\I18n\ConfigProvider::class,
+    \Laminas\Db\ConfigProvider::class,
+    \Mezzio\ConfigProvider::class,
+    \Mezzio\Helper\ConfigProvider::class,
+    \Mezzio\Router\ConfigProvider::class,
+    \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
+    \Mezzio\Twig\ConfigProvider::class,
+    \Laminas\Filter\ConfigProvider::class,
+    \Laminas\HttpHandlerRunner\ConfigProvider::class,
+    \Laminas\I18n\ConfigProvider::class,
 
     // Swoole config to overwrite some services (if installed)
-    class_exists(\Zend\Expressive\Swoole\ConfigProvider::class)
-        ? \Zend\Expressive\Swoole\ConfigProvider::class
+    class_exists(\Mezzio\Swoole\ConfigProvider::class)
+        ? \Mezzio\Swoole\ConfigProvider::class
         : function () {
             return[];
         },
@@ -47,6 +47,6 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider(realpath(__DIR__).'/development.config.php'),
-], $cacheConfig['config_cache_path']);
+], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
 
 return $aggregator->getMergedConfig();

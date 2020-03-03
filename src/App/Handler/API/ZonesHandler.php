@@ -12,8 +12,8 @@ use App\Query\Zone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Expressive\Router\RouterInterface;
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Router\RouterInterface;
 
 class ZonesHandler implements RequestHandlerInterface
 {

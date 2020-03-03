@@ -11,10 +11,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Metadata\Metadata;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Expressive\Router\RouteResult;
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\Metadata\Metadata;
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Router\RouteResult;
 
 class TokenMiddleware implements MiddlewareInterface
 {

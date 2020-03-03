@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Query;
 
 use ArrayObject;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Sql;
-use Zend\Expressive\Router\RouterInterface;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\I18n\Filter\Alnum;
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\Sql\Sql;
+use Mezzio\Router\RouterInterface;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\I18n\Filter\Alnum;
 
 class Zone
 {
