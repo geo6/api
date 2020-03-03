@@ -104,17 +104,25 @@ class AddressHandler implements RequestHandlerInterface
         foreach ($parsed as $component) {
             switch ($component['label']) {
                 case 'city':
-                    $locality = $component['value'];
+                    if (is_null($locality)) {
+                        $locality = $component['value'];
+                    }
                     break;
                 case 'postcode':
-                    $postalcode = $component['value'];
+                    if (is_null($postalcode)) {
+                        $postalcode = $component['value'];
+                    }
                     break;
                 case 'house':
                 case 'road':
-                    $street = $component['value'];
+                    if (is_null($street)) {
+                        $street = $component['value'];
+                    }
                     break;
                 case 'house_number':
-                    $number = $component['value'];
+                    if (is_null($number)) {
+                        $number = $component['value'];
+                    }
                     break;
             }
         }
