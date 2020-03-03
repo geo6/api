@@ -66,6 +66,15 @@ class Street
          * Get alias street identifier.
          */
         if (!is_null($street)) {
+            preg_match_all('/(\S)+/', $street, $matches);
+
+            $ts_street = '';
+            foreach ($matches[0] as $i => $s) {
+                $ts_street .= ($i > 0 ? ' & ' : '');
+                $ts_street .= str_replace('\'', ' & ', $s);
+                $ts_street .= ':*';
+            }
+
             $select = $sql->select()
                 ->from(sprintf('%s_street_alias', $source))
                 ->columns(['strid']);
@@ -74,12 +83,12 @@ class Street
                 ->nest()
                 ->expression(
                     'to_tsvector(\'french\', unaccent(name)) @@ to_tsquery(\'french\', unaccent(?))',
-                    $street . ':*'
+                    $ts_street
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'dutch\', unaccent(name)) @@ to_tsquery(\'dutch\', unaccent(?))',
-                    $street . ':*'
+                    $ts_street
                 )
                 ->unnest();
 
@@ -113,21 +122,30 @@ class Street
             );
 
         if (!is_null($street)) {
+            preg_match_all('/(\S)+/', $street, $matches);
+
+            $ts_street = '';
+            foreach ($matches[0] as $i => $s) {
+                $ts_street .= ($i > 0 ? ' & ' : '');
+                $ts_street .= str_replace('\'', ' & ', $s);
+                $ts_street .= ':*';
+            }
+
             $whereName = (new Predicate())
                 ->nest()
                 ->expression(
                     'to_tsvector(\'french\', unaccent(s.name_fr)) @@ to_tsquery(\'french\', unaccent(?))',
-                    $street . ':*'
+                    $ts_street
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ to_tsquery(\'dutch\', unaccent(?))',
-                    $street . ':*'
+                    $ts_street
                 )
                 ->or
                 ->expression(
                     'to_tsvector(\'german\', unaccent(s.name_de)) @@ to_tsquery(\'german\', unaccent(?))',
-                    $street . ':*'
+                    $ts_street
                 )
                 ->unnest();
 
