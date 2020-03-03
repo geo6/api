@@ -73,13 +73,13 @@ class Street
                 ->where
                 ->nest()
                 ->expression(
-                    'to_tsvector(\'french\', unaccent(name)) @@ plainto_tsquery(\'french\', unaccent(?))',
-                    $street
+                    'to_tsvector(\'french\', unaccent(name)) @@ to_tsquery(\'french\', unaccent(?))',
+                    $street . ':*'
                 )
                 ->or
                 ->expression(
-                    'to_tsvector(\'dutch\', unaccent(name)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
-                    $street
+                    'to_tsvector(\'dutch\', unaccent(name)) @@ to_tsquery(\'dutch\', unaccent(?))',
+                    $street . ':*'
                 )
                 ->unnest();
 
@@ -116,18 +116,18 @@ class Street
             $whereName = (new Predicate())
                 ->nest()
                 ->expression(
-                    'to_tsvector(\'french\', unaccent(s.name_fr)) @@ plainto_tsquery(\'french\', unaccent(?))',
-                    $street
+                    'to_tsvector(\'french\', unaccent(s.name_fr)) @@ to_tsquery(\'french\', unaccent(?))',
+                    $street . ':*'
                 )
                 ->or
                 ->expression(
-                    'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ plainto_tsquery(\'dutch\', unaccent(?))',
-                    $street
+                    'to_tsvector(\'dutch\', unaccent(s.name_nl)) @@ to_tsquery(\'dutch\', unaccent(?))',
+                    $street . ':*'
                 )
                 ->or
                 ->expression(
-                    'to_tsvector(\'german\', unaccent(s.name_de)) @@ plainto_tsquery(\'german\', unaccent(?))',
-                    $street
+                    'to_tsvector(\'german\', unaccent(s.name_de)) @@ to_tsquery(\'german\', unaccent(?))',
+                    $street . ':*'
                 )
                 ->unnest();
 
