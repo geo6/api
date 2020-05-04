@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e180e6b6d1b180b4a2efed4bfa2c13a",
+    "content-hash": "72d88eac3f8adc8e19a36a91991ad16d",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1084,16 +1084,16 @@
         },
         {
             "name": "laminas/laminas-stratigility",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stratigility.git",
-                "reference": "2776cc08e1dd820bb68e17cd59605bdc9e5807b5"
+                "reference": "3f88aa174324bc9e6dd55715f401f9f25dbd722c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stratigility/zipball/2776cc08e1dd820bb68e17cd59605bdc9e5807b5",
-                "reference": "2776cc08e1dd820bb68e17cd59605bdc9e5807b5",
+                "url": "https://api.github.com/repos/laminas/laminas-stratigility/zipball/3f88aa174324bc9e6dd55715f401f9f25dbd722c",
+                "reference": "3f88aa174324bc9e6dd55715f401f9f25dbd722c",
                 "shasum": ""
             },
             "require": {
@@ -1108,7 +1108,7 @@
                 "laminas/laminas-diactoros": "<1.7.1"
             },
             "replace": {
-                "zendframework/zend-stratigility": "self.version"
+                "zendframework/zend-stratigility": "^3.2.0"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
@@ -1154,20 +1154,20 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2020-01-07T21:13:38+00:00"
+            "time": "2020-03-29T13:31:02+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-                "reference": "faf68f6109ceeff24241226033ab59640c7eb63b"
+                "reference": "bfbbdb6c998d50dbf69d2187cb78a5f1fa36e1e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/faf68f6109ceeff24241226033ab59640c7eb63b",
-                "reference": "faf68f6109ceeff24241226033ab59640c7eb63b",
+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/bfbbdb6c998d50dbf69d2187cb78a5f1fa36e1e9",
+                "reference": "bfbbdb6c998d50dbf69d2187cb78a5f1fa36e1e9",
                 "shasum": ""
             },
             "require": {
@@ -1206,20 +1206,20 @@
                 "laminas",
                 "zf"
             ],
-            "time": "2020-03-26T16:07:12+00:00"
+            "time": "2020-04-03T16:01:00+00:00"
         },
         {
             "name": "mezzio/mezzio",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio.git",
-                "reference": "a87783cb87e81b6f065619f72cc354a878773e39"
+                "reference": "6bd539f29c7b27cab7bcb6ea433222f8b1c0d099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/a87783cb87e81b6f065619f72cc354a878773e39",
-                "reference": "a87783cb87e81b6f065619f72cc354a878773e39",
+                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/6bd539f29c7b27cab7bcb6ea433222f8b1c0d099",
+                "reference": "6bd539f29c7b27cab7bcb6ea433222f8b1c0d099",
                 "shasum": ""
             },
             "require": {
@@ -1239,7 +1239,7 @@
                 "laminas/laminas-diactoros": "<1.7.1"
             },
             "replace": {
-                "zendframework/zend-expressive": "self.version"
+                "zendframework/zend-expressive": "^3.2.1"
             },
             "require-dev": {
                 "filp/whoops": "^1.1.10 || ^2.1.13",
@@ -1257,7 +1257,7 @@
             },
             "suggest": {
                 "filp/whoops": "^2.1 to use the Whoops error handler",
-                "laminas/laminas-auradi-config": "^1.0 to use Aura.Di dependency injection container",
+                "laminas/laminas-auradi-config": "^2.0 to use Aura.Di dependency injection container",
                 "laminas/laminas-pimple-config": "^1.0 to use Pimple for dependency injection container",
                 "laminas/laminas-servicemanager": "^3.3 to use laminas-servicemanager for dependency injection",
                 "mezzio/mezzio-helpers": "^3.0 for its UrlHelper, ServerUrlHelper, and BodyParseMiddleware",
@@ -1302,7 +1302,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2019-12-31T15:42:08+00:00"
+            "time": "2020-04-28T18:52:32+00:00"
         },
         {
             "name": "mezzio/mezzio-fastroute",
@@ -5616,12 +5616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "81541a731da2f245a08666de73169cb5da7ac573"
+                "reference": "478dd17a48d0eb007ff854f4b885034df5db7c29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/81541a731da2f245a08666de73169cb5da7ac573",
-                "reference": "81541a731da2f245a08666de73169cb5da7ac573",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/478dd17a48d0eb007ff854f4b885034df5db7c29",
+                "reference": "478dd17a48d0eb007ff854f4b885034df5db7c29",
                 "shasum": ""
             },
             "conflict": {
@@ -5711,6 +5711,7 @@
                 "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
+                "nzo/url-encryptor-bundle": "<5.0.1",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
                 "openid/php-openid": "<2.3",
@@ -5874,7 +5875,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2020-04-23T00:01:30+00:00"
+            "time": "2020-05-03T18:57:18+00:00"
         },
         {
             "name": "sebastian/code-unit",
