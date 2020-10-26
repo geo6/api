@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "ext-gd": "*",
-        "composer/composer": "^1.8",
+        "composer/composer": "^2.0",
         "filp/whoops": "^2.1.12",
         "jbelien/mapfile-php-library": "^2.0-beta",
         "phpstan/phpstan": "^0.10.6",
