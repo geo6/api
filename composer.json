@@ -25,7 +25,7 @@
         "laminas/laminas-i18n": "2.11.0",
         "laminas/laminas-servicemanager": "3.4.1",
         "laminas/laminas-stdlib": "3.3.0",
-        "laminas/laminas-dependency-plugin": "^1.0"
+        "laminas/laminas-dependency-plugin": "^2.0"
     },
     "require-dev": {
         "ext-gd": "*",
