@@ -8,7 +8,7 @@ stat_dir=$(dirname $script_dir)/data/statbel
 
 [ -d $osm_dir ] || mkdir -p $osm_dir
 rm -r $osm_dir/*
-wget -O "$osm_dir/simplified-land-polygons-complete-3857.zip" "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip"
+wget -O "$osm_dir/simplified-land-polygons-complete-3857.zip" "https://osmdata.openstreetmap.de/download/simplified-land-polygons-complete-3857.zip"
 unzip -o "$osm_dir/simplified-land-polygons-complete-3857.zip" -d $osm_dir
 wget -O "$osm_dir/belgium-latest-free.shp.zip" "http://download.geofabrik.de/europe/belgium-latest-free.shp.zip"
 unzip -o "$osm_dir/belgium-latest-free.shp.zip" -d $osm_dir
