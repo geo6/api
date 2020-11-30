@@ -210,7 +210,13 @@ class MapRenderer
                 [
                     'mun_name_fr' => new Expression('array_to_json(array_agg(m.name_fr))'),
                     'mun_name_nl' => new Expression('array_to_json(array_agg(m.name_nl))'),
-                    'extent'      => new Expression('Box2D(ST_Transform(ST_SetSRID(ST_Extent(m.the_geog::geometry), 4326), 3857))'),
+                ]
+            )
+            ->join(
+                ['mg' => 'municipality_geometry'],
+                'mg.nis5 = z.nis5',
+                [
+                    'extent' => new Expression('Box2D(ST_Transform(ST_SetSRID(ST_Extent(mg.the_geog::geometry), 4326), 3857))'),
                 ]
             )
             ->group([
@@ -296,8 +302,14 @@ class MapRenderer
                 'nis5',
                 'name_fr',
                 'name_nl',
-                'extent' => new Expression('Box2D(ST_Transform(the_geog::geometry, 3857))'),
             ])
+            ->join(
+                ['mg' => 'municipality_geometry'],
+                'mg.nis5 = z.nis5',
+                [
+                    'extent' => new Expression('Box2D(ST_Transform(mg.the_geog::geometry, 3857))'),
+                ]
+            )
             ->order([
                 'nis5',
             ]);
