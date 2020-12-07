@@ -23,7 +23,7 @@
         "mezzio/mezzio-twigrenderer": "2.6.1",
         "laminas/laminas-filter": "2.9.4",
         "laminas/laminas-i18n": "2.11.0",
-        "laminas/laminas-servicemanager": "3.4.1",
+        "laminas/laminas-servicemanager": "3.5.1",
         "laminas/laminas-stdlib": "3.3.1",
         "laminas/laminas-dependency-plugin": "2.1.0"
     },
