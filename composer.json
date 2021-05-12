@@ -3,7 +3,7 @@
     "type": "project",
     "description": "",
     "keywords": [],
-    "license": "",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^7.1",
         "ext-curl": "*",
