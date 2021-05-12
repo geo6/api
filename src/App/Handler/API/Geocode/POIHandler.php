@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
+use App\Handler\API\AbstractHandler;
 use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\POI;
-use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class POIHandler implements RequestHandlerInterface
+class POIHandler extends AbstractHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -32,11 +31,8 @@ class POIHandler implements RequestHandlerInterface
                 ],
                 'error' => sprintf('Access denied for "%s".', $source),
             ];
-            if ($token['debug'] === true) {
-                $json['token'] = $token;
-            }
 
-            return new JsonResponse($json, 403);
+            return self::response($request, $json, 403);
         }
 
         $features = [];
@@ -64,10 +60,7 @@ class POIHandler implements RequestHandlerInterface
             'type'     => 'FeatureCollection',
             'features' => $features,
         ];
-        if ($token['debug'] === true) {
-            $json['token'] = $token;
-        }
 
-        return new JsonResponse($json);
+        return self::response($request, $json);
     }
 }

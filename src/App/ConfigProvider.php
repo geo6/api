@@ -50,6 +50,7 @@ class ConfigProvider
                 Handler\API\ZonesHandler::class    => Handler\API\ZonesHandlerFactory::class,
 
                 Middleware\DbAdapterMiddleware::class => Middleware\DbAdapterMiddlewareFactory::class,
+                Middleware\QuotaMiddleware::class     => Middleware\QuotaMiddlewareFactory::class,
                 Middleware\TokenMiddleware::class     => Middleware\TokenMiddlewareFactory::class,
             ],
         ];

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Middleware\DbAdapterMiddleware;
+use App\Middleware\QuotaMiddleware;
+use App\Middleware\TokenMiddleware;
 use Blast\BaseUrl\BaseUrlMiddleware;
 use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Application;
@@ -67,6 +70,11 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
+    $app->pipe('/ping', [DbAdapterMiddleware::class, TokenMiddleware::class, QuotaMiddleware::class]);
+    $app->pipe('/address', [DbAdapterMiddleware::class, TokenMiddleware::class, QuotaMiddleware::class]);
+    $app->pipe('/geocode', [DbAdapterMiddleware::class, TokenMiddleware::class, QuotaMiddleware::class]);
+    $app->pipe('/xy', [DbAdapterMiddleware::class, TokenMiddleware::class, QuotaMiddleware::class]);
+    $app->pipe('/latlng', [DbAdapterMiddleware::class, TokenMiddleware::class, QuotaMiddleware::class]);
 
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);

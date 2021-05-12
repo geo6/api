@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace App\Handler\API;
 
 use App\Middleware\DbAdapterMiddleware;
-use App\Middleware\TokenMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
-use App\Query\Zone;
+// use App\Query\Zone;
 use Laminas\Db\Sql\Sql;
-use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class LocationHandler implements RequestHandlerInterface
+class LocationHandler extends AbstractHandler
 {
     /** @var RouterInterface */
     private $router;
@@ -29,7 +26,6 @@ class LocationHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
-        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $longitude = $request->getAttribute('longitude');
         $latitude = $request->getAttribute('latitude');
@@ -141,10 +137,7 @@ class LocationHandler implements RequestHandlerInterface
             'type'     => 'FeatureCollection',
             'features' => $features,
         ];
-        if ($token['debug'] === true) {
-            $json['token'] = $token;
-        }
 
-        return new JsonResponse($json);
+        return self::response($request, $json);
     }
 }

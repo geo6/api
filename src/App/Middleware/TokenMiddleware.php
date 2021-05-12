@@ -70,6 +70,12 @@ class TokenMiddleware implements MiddlewareInterface
         $consumer = $token->getConsumer();
 
         try {
+            if (strlen($consumer) === 0 || !in_array($consumer, array_keys($this->access), true)) {
+                throw new Exception(
+                    sprintf('Invalid consumer "%s".', $consumer)
+                );
+            }
+
             if ($timestamp < (time() - (5 * 60))) {
                 throw new Exception(
                     sprintf('Expired token. Token timestamp is "%s".', date('c', $timestamp))
@@ -78,12 +84,6 @@ class TokenMiddleware implements MiddlewareInterface
             if ($timestamp > (time() + (5 * 60))) {
                 throw new Exception(
                     sprintf('Invalid timestamp. Token timestamp is "%s".', date('c', $timestamp))
-                );
-            }
-
-            if (strlen($consumer) === 0 || !in_array($consumer, array_keys($this->access), true)) {
-                throw new Exception(
-                    sprintf('Invalid consumer "%s".', $consumer)
                 );
             }
 
