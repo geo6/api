@@ -6,7 +6,6 @@ namespace App\Handler\API;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
 use function time;
 
 class PingHandler extends AbstractHandler

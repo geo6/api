@@ -9,7 +9,6 @@ use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\Address;
 use Laminas\Db\Adapter\Adapter;
-use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

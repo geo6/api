@@ -72,7 +72,7 @@ class QuotaMiddleware implements MiddlewareInterface
 
         if ($this->debug === false && $this->ip !== $_SERVER['SERVER_ADDR'] && $route->getMatchedRouteName() !== 'api.ping' && isset($error)) {
             return new JsonResponse([
-                'error' => sprintf('Quota exceeded for action "%s".', $action)
+                'error' => sprintf('Quota exceeded for action "%s".', $action),
             ], 429);
         }
 
