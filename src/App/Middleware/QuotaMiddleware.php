@@ -18,6 +18,9 @@ class QuotaMiddleware implements MiddlewareInterface
 
     private const DIRECTORY = 'data/cache/quota';
 
+    /** @var string */
+    private $ip;
+
     /**
      * @param array $access
      * @param bool  $debug
@@ -34,6 +37,8 @@ class QuotaMiddleware implements MiddlewareInterface
         $route = $request->getAttribute(RouteResult::class);
 
         $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
+
+        $this->ip = ($request->getServerParams())['REMOTE_ADDR'] ?? '';
 
         try {
             $_route = explode('.', $route->getMatchedRouteName());
@@ -72,7 +77,7 @@ class QuotaMiddleware implements MiddlewareInterface
 
         if ($this->debug === false && $this->ip !== $_SERVER['SERVER_ADDR'] && $route->getMatchedRouteName() !== 'api.ping' && isset($error)) {
             return new JsonResponse([
-                'error' => sprintf('Quota exceeded for action "%s".', $action),
+                'error' => $error,
             ], 429);
         }
 
