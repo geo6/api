@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
+use App\Handler\API\AbstractHandler;
 use App\Middleware\TokenMiddleware;
-use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class DatabaseHandler implements RequestHandlerInterface
+class DatabaseHandler extends AbstractHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -20,10 +19,7 @@ class DatabaseHandler implements RequestHandlerInterface
             'address' => $token['database']['address'],
             'poi'     => $token['database']['poi'],
         ];
-        if ($token['debug'] === true) {
-            $json['token'] = $token;
-        }
 
-        return new JsonResponse($json);
+        return self::response($request, $json);
     }
 }

@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Handler\API;
 
-use App\Middleware\TokenMiddleware;
-use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+
 use function time;
 
-class PingHandler implements RequestHandlerInterface
+class PingHandler extends AbstractHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
         $server = $request->getServerParams();
 
-        return new JsonResponse([
+        $json = [
             'now'        => time(),
-            'token'      => $token,
             'ip'         => $server['REMOTE_ADDR'] ?? null,
             'referer'    => $server['HTTP_REFERER'] ?? null,
             'user-agent' => $server['HTTP_USER_AGENT'] ?? null,
-        ]);
+        ];
+
+        return self::response($request, $json);
     }
 }

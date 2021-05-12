@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace App\Handler\API;
 
 use App\Middleware\DbAdapterMiddleware;
-use App\Middleware\TokenMiddleware;
 use App\Query\Components;
 use App\Query\Municipality;
-use App\Query\Zone;
-use Laminas\Diactoros\Response\JsonResponse;
+// use App\Query\Zone;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class ZonesHandler implements RequestHandlerInterface
+class ZonesHandler extends AbstractHandler
 {
     /** @var RouterInterface */
     private $router;
@@ -28,7 +25,6 @@ class ZonesHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $adapter = $request->getAttribute(DbAdapterMiddleware::DBADAPTER_ATTRIBUTE);
-        $token = $request->getAttribute(TokenMiddleware::TOKEN_ATTRIBUTE);
 
         $nis5 = intval($request->getAttribute('nis5'));
 
@@ -77,10 +73,7 @@ class ZonesHandler implements RequestHandlerInterface
             ],
             'geometry' => null,
         ];
-        if ($token['debug'] === true) {
-            $json['token'] = $token;
-        }
 
-        return new JsonResponse($json);
+        return self::response($request, $json);
     }
 }

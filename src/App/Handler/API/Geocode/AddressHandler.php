@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler\API\Geocode;
 
+use App\Handler\API\AbstractHandler;
 use App\Middleware\DbAdapterMiddleware;
 use App\Middleware\TokenMiddleware;
 use App\Query\Geocode\Address;
@@ -11,9 +12,8 @@ use Laminas\Db\Adapter\Adapter;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class AddressHandler implements RequestHandlerInterface
+class AddressHandler extends AbstractHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -44,7 +44,7 @@ class AddressHandler implements RequestHandlerInterface
                 }
             }
 
-            return new JsonResponse($result);
+            return self::response($request, $result);
         } else {
             $source = $request->getAttribute('source');
             $nis5 = $request->getAttribute('nis5');
@@ -66,16 +66,13 @@ class AddressHandler implements RequestHandlerInterface
                     ],
                     'error' => sprintf('Access denied for "%s".', $source),
                 ];
-                if ($token['debug'] === true) {
-                    $json['token'] = $token;
-                }
 
-                return new JsonResponse($json, 403);
+                return self::response($request, $json, 403);
             }
 
             $result = self::getResult($adapter, $source, $number ?? '', $street, $nis5, $locality, $postalcode, $token);
 
-            return new JsonResponse($result);
+            return self::response($request, $result);
         }
     }
 
@@ -180,9 +177,6 @@ class AddressHandler implements RequestHandlerInterface
             'type'     => 'FeatureCollection',
             'features' => [],
         ];
-        if ($token['debug'] === true) {
-            $json['token'] = $token;
-        }
 
         if (!is_null($source)) {
             $json['features'] = self::getFeatures($adapter, $source, $number, $street, $nis5, $locality, $postalcode);
