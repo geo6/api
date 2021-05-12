@@ -56,10 +56,12 @@ class QuotaMiddleware implements MiddlewareInterface
 
             $quota[$action] = isset($quota[$action]) ? $quota[$action] + 1 : 1;
 
-            file_put_contents(
-                sprintf('%s/%s.json', self::DIRECTORY, $token['consumer']),
-                json_encode($quota, JSON_PRETTY_PRINT)
-            );
+            if (strlen($token['consumer']) > 0) {
+                file_put_contents(
+                    sprintf('%s/%s.json', self::DIRECTORY, $token['consumer']),
+                    json_encode($quota, JSON_PRETTY_PRINT)
+                );
+            }
 
             if ($quota[$action] > $limit) {
                 throw new Exception(sprintf('Quota exceeded for action "%s".', $action));
@@ -94,15 +96,6 @@ class QuotaMiddleware implements MiddlewareInterface
             }
         }
 
-        if (!isset($count)) {
-            $count = [
-                'address'  => 0,
-                'geocode'  => 0,
-                'location' => 0,
-                'zones'    => 0,
-            ];
-        }
-
-        return $count;
+        return $count ?? [];
     }
 }
