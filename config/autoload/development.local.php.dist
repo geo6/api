@@ -19,9 +19,15 @@ return [
         'invokables' => [
         ],
         'factories'  => [
-            ErrorResponseGenerator::class       => Container\WhoopsErrorResponseGeneratorFactory::class,
-            'Mezzio\Whoops'            => Container\WhoopsFactory::class,
-            'Mezzio\WhoopsPageHandler' => Container\WhoopsPageHandlerFactory::class,
+            ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
+            'Mezzio\Whoops'               => Container\WhoopsFactory::class,
+            'Mezzio\WhoopsPageHandler'    => Container\WhoopsPageHandlerFactory::class,
+        ],
+    ],
+
+    'router' => [
+        'fastroute' => [
+            'cache_enabled' => false,
         ],
     ],
 
