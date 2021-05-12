@@ -15,32 +15,37 @@ jobs:
       matrix:
         php-version: ['7.3', '7.4', '8.0']
     steps:
-    - uses: actions/checkout@v2
-    - name: Use PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        extensions: curl, gd, intl
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-    # - name: Run test suite
-    #   run: composer run-script test
+      - uses: actions/checkout@v2
+      - name: Use PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: curl, gd, intl
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      # - name: Run test suite
+      #   run: composer run-script test
 
   phpcs:
     name: PHP_CodeSniffer
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: curl, gd, intl
       - run: composer install --prefer-dist --no-progress
       - run: ./vendor/squizlabs/php_codesniffer/bin/phpcs --config-set ignore_warnings_on_exit 1
       - run: composer run-script cs-check
@@ -50,5 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: curl, gd, intl
       - run: composer install --prefer-dist --no-progress
       - run: composer run-script analyze
