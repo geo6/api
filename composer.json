@@ -78,6 +78,7 @@
             "@analyze"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
+        "clear-routes-cache": "php bin/clear-routes-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "development-disable": "laminas-development-mode disable",
